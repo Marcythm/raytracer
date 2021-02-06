@@ -1,25 +1,13 @@
 #include "config.hpp"
-#include "vec3.hpp"
 #include "p3d.hpp"
+#include "vec3.hpp"
 #include "rgb.hpp"
 #include "ray.hpp"
+#include "sphere.hpp"
 
-constexpr auto hit_sphere(const p3d &center, const f64 radius, const Ray &ray) -> f64 {
-	const Vec3 oc = ray.origin() - center;
-	const f64 a = ray.direction().length2();
-	const f64 half_b = dot(oc, ray.direction());
-	const f64 c = oc.length2() - radius * radius;
-	const f64 discriminant = half_b * half_b - a * c;
-	if (discriminant < 0)
-		return -1.0;
-	return (-half_b - std::sqrt(discriminant)) / a;
-}
-
-constexpr auto ray_color(const Ray &ray) -> RGB {
-	if (const f64 t = hit_sphere(p3d(0, 0, -1), 0.5, ray); t > 0.0) {
-		const Vec3 normal = (ray.at(t) - p3d(0, 0, -1)).unit();
-		return 0.5 * RGB(normal.x() + 1, normal.y() + 1, normal.z() + 1);
-	}
+auto ray_color(const Ray &ray) -> RGB {
+	if (const auto &[succ, rec] = sphere(p3d(0, 0, -1), 0.5).hit(ray, 0.0, 1e9); succ)
+		return 0.5 * RGB(rec.normal.x() + 1, rec.normal.y() + 1, rec.normal.z() + 1);
 	const f64 t = 0.5 * (ray.direction().unit().y() + 1.0);
 	return (1.0 - t) * RGB(1.0, 1.0, 1.0) + t * RGB(0.5, 0.7, 1.0);
 }
