@@ -6,13 +6,13 @@
 
 constexpr auto hit_sphere(const p3d &center, const f64 radius, const Ray &ray) -> f64 {
 	const Vec3 oc = ray.origin() - center;
-	const f64 a = dot(ray.direction(), ray.direction());
-	const f64 b = 2.0 * dot(oc, ray.direction());
-	const f64 c = dot(oc, oc) - radius * radius;
-	const f64 discriminant = b * b - 4 * a * c;
+	const f64 a = ray.direction().length2();
+	const f64 half_b = dot(oc, ray.direction());
+	const f64 c = oc.length2() - radius * radius;
+	const f64 discriminant = half_b * half_b - a * c;
 	if (discriminant < 0)
 		return -1.0;
-	return (-b - std::sqrt(discriminant)) / (2.0 * a);
+	return (-half_b - std::sqrt(discriminant)) / a;
 }
 
 constexpr auto ray_color(const Ray &ray) -> RGB {
@@ -27,7 +27,7 @@ constexpr auto ray_color(const Ray &ray) -> RGB {
 auto main() -> i32 {
 	// Image
 	constexpr f64 aspect_ratio = 16.0 / 9.0;
-	constexpr i32 image_width = 400;
+	constexpr i32 image_width = 4000;
 	constexpr i32 image_height = static_cast<i32>(image_width / aspect_ratio);
 
 	// Camera
