@@ -13,6 +13,7 @@ auto main() -> i32 {
 	constexpr i32 image_width = 400;
 	constexpr i32 image_height = static_cast<i32>(image_width / aspect_ratio);
 	constexpr i32 samples_per_pixel = 100;
+	constexpr i32 max_depth = 50;
 
 	// World
 	HittableList world;
@@ -38,7 +39,7 @@ auto main() -> i32 {
 			for (i32 s = 0; s < samples_per_pixel; ++s) {
 				const f64 u = (i + random_f64()) / (image_width - 1);
 				const f64 v = (j + random_f64()) / (image_height - 1);
-				pixel_color += camera.get_ray(u, v).color(world);
+				pixel_color += camera.get_ray(u, v).color(world, max_depth);
 			}
 			pixel_color.print(std::cout, samples_per_pixel) << '\n';
 		}
