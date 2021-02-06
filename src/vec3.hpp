@@ -16,6 +16,7 @@ public:
     constexpr auto y() const -> f64 { return py; }
     constexpr auto z() const -> f64 { return pz; }
 
+    constexpr auto operator = (const Self &rhs) -> Self& { return px = rhs.px, py = rhs.py, pz = rhs.pz, *this; }
     constexpr auto operator - () const -> Self { return Vec3(-px, -py, -pz); }
 
     constexpr auto operator += (const Self &rhs) -> Self& { px += rhs.px; py += rhs.py; pz += rhs.pz; return *this; }

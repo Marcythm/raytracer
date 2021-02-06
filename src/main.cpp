@@ -6,7 +6,7 @@
 #include "sphere.hpp"
 
 auto ray_color(const Ray &ray) -> RGB {
-	if (const auto &[succ, rec] = sphere(p3d(0, 0, -1), 0.5).hit(ray, 0.0, 1e9); succ)
+	if (const auto &[succ, rec] = Sphere(p3d(0, 0, -1), 0.5).hit(ray, 0.0, 1e9); succ)
 		return 0.5 * RGB(rec.normal.x() + 1, rec.normal.y() + 1, rec.normal.z() + 1);
 	const f64 t = 0.5 * (ray.direction().unit().y() + 1.0);
 	return (1.0 - t) * RGB(1.0, 1.0, 1.0) + t * RGB(0.5, 0.7, 1.0);
@@ -15,7 +15,7 @@ auto ray_color(const Ray &ray) -> RGB {
 auto main() -> i32 {
 	// Image
 	constexpr f64 aspect_ratio = 16.0 / 9.0;
-	constexpr i32 image_width = 4000;
+	constexpr i32 image_width = 400;
 	constexpr i32 image_height = static_cast<i32>(image_width / aspect_ratio);
 
 	// Camera

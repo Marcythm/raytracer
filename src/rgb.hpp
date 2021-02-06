@@ -16,6 +16,8 @@ public:
     constexpr auto g() const -> f64 { return pg; }
     constexpr auto b() const -> f64 { return pb; }
 
+    constexpr auto operator = (const Self &rhs) -> Self& { return pr = rhs.pr, pg = rhs.pg, pb = rhs.pb, *this; }
+
     constexpr auto operator - () const -> Self { return RGB(-pr, -pg, -pb); }
 
     constexpr auto operator += (const Self &rhs) -> Self& { pr += rhs.pr; pg += rhs.pg; pb += rhs.pb; return *this; }
