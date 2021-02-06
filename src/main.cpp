@@ -1,12 +1,9 @@
-#include "config.hpp"
-#include "p3d.hpp"
-#include "vec3.hpp"
-#include "rgb.hpp"
-#include "ray.hpp"
+#include "lib.hpp"
 #include "sphere.hpp"
+#include "hittablelist.hpp"
 
-auto ray_color(const Ray &ray) -> RGB {
-	if (const auto &[succ, rec] = Sphere(p3d(0, 0, -1), 0.5).hit(ray, 0.0, 1e9); succ)
+auto ray_color(const Ray &ray, const Hittable &world) -> RGB {
+	if (const auto &[succ, rec] = world.hit(ray, 0.0, infinity); succ)
 		return 0.5 * RGB(rec.normal.x() + 1, rec.normal.y() + 1, rec.normal.z() + 1);
 	const f64 t = 0.5 * (ray.direction().unit().y() + 1.0);
 	return (1.0 - t) * RGB(1.0, 1.0, 1.0) + t * RGB(0.5, 0.7, 1.0);
@@ -17,6 +14,11 @@ auto main() -> i32 {
 	constexpr f64 aspect_ratio = 16.0 / 9.0;
 	constexpr i32 image_width = 400;
 	constexpr i32 image_height = static_cast<i32>(image_width / aspect_ratio);
+
+	// World
+	HittableList world;
+	world.push(std::make_shared<Sphere>(p3d(0, 0, -1), 0.5));
+	world.push(std::make_shared<Sphere>(p3d(0, -100.5, -1), 100));
 
 	// Camera
 	constexpr f64 viewport_height = 2.0;
@@ -42,7 +44,7 @@ auto main() -> i32 {
 			f64 v = f64(j) / (image_height - 1);
 			Ray ray(origin, lower_left_corner + u * horizontal + v * vertical);
 
-			std::cout << ray_color(ray) << '\n';
+			std::cout << ray_color(ray, world) << '\n';
 		}
 	}
 	std::cerr << "\nDone.\n";

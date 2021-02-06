@@ -21,5 +21,6 @@ struct HitRecord {
 };
 
 struct Hittable {
+    virtual ~Hittable() = default;
     virtual auto hit(const Ray &ray, const f64 t_min, const f64 t_max) const -> std::pair<bool, HitRecord> = 0;
 };
