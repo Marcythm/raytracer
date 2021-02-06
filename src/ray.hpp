@@ -20,4 +20,6 @@ public:
     constexpr auto direction() const -> Vec3 { return _direction; }
 
     constexpr auto at(const f64 t) const -> p3d { return _origin + t * _direction; }
+
+    auto color(const Hittable &world) -> RGB;
 };

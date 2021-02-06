@@ -168,3 +168,14 @@ template <typename T>
 #ifdef _LIBCPP_STRING
 	using str = std::string;
 #endif
+
+class p3d;
+class Vec3;
+class RGB;
+class Ray;
+class Camera;
+
+struct HitRecord;
+struct Hittable;
+struct Sphere;
+class  HittableList;

@@ -3,7 +3,6 @@
 #include "config.hpp"
 #include "p3d.hpp"
 #include "vec3.hpp"
-#include "rgb.hpp"
 #include "ray.hpp"
 
 struct HitRecord {

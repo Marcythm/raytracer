@@ -7,13 +7,6 @@
 #include "hittablelist.hpp"
 #include "camera.hpp"
 
-auto ray_color(const Ray &ray, const Hittable &world) -> RGB {
-	if (const auto &[succ, rec] = world.hit(ray, 0.0, infinity); succ)
-		return 0.5 * RGB(rec.normal.x() + 1, rec.normal.y() + 1, rec.normal.z() + 1);
-	const f64 t = 0.5 * (ray.direction().unit().y() + 1.0);
-	return (1.0 - t) * RGB(1.0, 1.0, 1.0) + t * RGB(0.5, 0.7, 1.0);
-}
-
 auto main() -> i32 {
 	// Image
 	constexpr f64 aspect_ratio = 16.0 / 9.0;
@@ -45,7 +38,7 @@ auto main() -> i32 {
 			for (i32 s = 0; s < samples_per_pixel; ++s) {
 				const f64 u = (i + random_f64()) / (image_width - 1);
 				const f64 v = (j + random_f64()) / (image_height - 1);
-				pixel_color += ray_color(camera.get_ray(u, v), world);
+				pixel_color += camera.get_ray(u, v).color(world);
 			}
 			pixel_color.print(std::cout, samples_per_pixel) << '\n';
 		}
