@@ -4,18 +4,22 @@
 #include "rgb.hpp"
 #include "ray.hpp"
 
-constexpr auto hit_sphere(const p3d &center, const f64 radius, const Ray &ray) -> bool {
+constexpr auto hit_sphere(const p3d &center, const f64 radius, const Ray &ray) -> f64 {
 	const Vec3 oc = ray.origin() - center;
 	const f64 a = dot(ray.direction(), ray.direction());
 	const f64 b = 2.0 * dot(oc, ray.direction());
 	const f64 c = dot(oc, oc) - radius * radius;
 	const f64 discriminant = b * b - 4 * a * c;
-	return (discriminant > 0);
+	if (discriminant < 0)
+		return -1.0;
+	return (-b - std::sqrt(discriminant)) / (2.0 * a);
 }
 
 constexpr auto ray_color(const Ray &ray) -> RGB {
-	if (hit_sphere(p3d(0, 0, -1), 0.5, ray))
-		return RGB(1, 0, 0);
+	if (const f64 t = hit_sphere(p3d(0, 0, -1), 0.5, ray); t > 0.0) {
+		const Vec3 normal = (ray.at(t) - p3d(0, 0, -1)).unit();
+		return 0.5 * RGB(normal.x() + 1, normal.y() + 1, normal.z() + 1);
+	}
 	const f64 t = 0.5 * (ray.direction().unit().y() + 1.0);
 	return (1.0 - t) * RGB(1.0, 1.0, 1.0) + t * RGB(0.5, 0.7, 1.0);
 }
