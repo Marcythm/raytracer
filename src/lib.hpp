@@ -16,7 +16,6 @@ inline auto random_f64(const f64 min, const f64 max) -> f64 {
     return min + (max - min) * random_f64();
 }
 
-#include "p3d.hpp"
-#include "vec3.hpp"
-#include "rgb.hpp"
-#include "ray.hpp"
+inline auto clamp(const f64 x, const f64 min, const f64 max) -> f64 {
+    return x < min ? min : x > max ? max : x;
+}

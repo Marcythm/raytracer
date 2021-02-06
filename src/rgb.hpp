@@ -1,6 +1,7 @@
 #pragma once
 
 #include "config.hpp"
+#include "lib.hpp"
 
 class RGB {
     using Self = RGB;
@@ -49,5 +50,10 @@ public:
         return o << static_cast<i32>(255.999 * rhs.pr) << ' '
                  << static_cast<i32>(255.999 * rhs.pg) << ' '
                  << static_cast<i32>(255.999 * rhs.pb);
+    }
+    auto print(std::ostream &o, const i32 samples_per_pixel) -> std::ostream& {
+        return o << static_cast<i32>(256 * clamp(pr / samples_per_pixel, 0.0, 0.999)) << ' '
+                 << static_cast<i32>(256 * clamp(pg / samples_per_pixel, 0.0, 0.999)) << ' '
+                 << static_cast<i32>(256 * clamp(pb / samples_per_pixel, 0.0, 0.999));
     }
 };

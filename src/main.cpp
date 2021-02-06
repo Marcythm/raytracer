@@ -1,6 +1,11 @@
-#include "lib.hpp"
+#include "config.hpp"
+#include "p3d.hpp"
+#include "vec3.hpp"
+#include "rgb.hpp"
+#include "ray.hpp"
 #include "sphere.hpp"
 #include "hittablelist.hpp"
+#include "camera.hpp"
 
 auto ray_color(const Ray &ray, const Hittable &world) -> RGB {
 	if (const auto &[succ, rec] = world.hit(ray, 0.0, infinity); succ)
@@ -14,6 +19,7 @@ auto main() -> i32 {
 	constexpr f64 aspect_ratio = 16.0 / 9.0;
 	constexpr i32 image_width = 400;
 	constexpr i32 image_height = static_cast<i32>(image_width / aspect_ratio);
+	constexpr i32 samples_per_pixel = 100;
 
 	// World
 	HittableList world;
@@ -24,12 +30,7 @@ auto main() -> i32 {
 	constexpr f64 viewport_height = 2.0;
 	constexpr f64 viewport_width = viewport_height * aspect_ratio;
 	constexpr f64 focal_length = 1.0;
-
-	constexpr p3d origin(0, 0, 0);
-	constexpr Vec3 horizontal(viewport_width, 0, 0);
-	constexpr Vec3 vertical(0, viewport_height, 0);
-	constexpr p3d lower_left_corner = origin - horizontal / 2 - vertical / 2 - Vec3(0, 0, focal_length);
-
+	constexpr Camera camera(viewport_height, viewport_width, focal_length);
 
 	// Render
 	std::cout.tie(0);
@@ -40,11 +41,13 @@ auto main() -> i32 {
 	for (i32 j = image_height - 1; j >= 0; --j) {
 		std::cerr << "Scanlines remaining: " << j << '\n' << std::flush;
 		for (i32 i = 0; i < image_width; ++i) {
-			f64 u = f64(i) / (image_width - 1);
-			f64 v = f64(j) / (image_height - 1);
-			Ray ray(origin, lower_left_corner + u * horizontal + v * vertical);
-
-			std::cout << ray_color(ray, world) << '\n';
+			RGB pixel_color(0, 0, 0);
+			for (i32 s = 0; s < samples_per_pixel; ++s) {
+				const f64 u = (i + random_f64()) / (image_width - 1);
+				const f64 v = (j + random_f64()) / (image_height - 1);
+				pixel_color += ray_color(camera.get_ray(u, v), world);
+			}
+			pixel_color.print(std::cout, samples_per_pixel) << '\n';
 		}
 	}
 	std::cerr << "\nDone.\n";
