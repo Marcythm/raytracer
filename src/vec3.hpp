@@ -1,6 +1,7 @@
 #pragma once
 
 #include "config.hpp"
+#include "lib.hpp"
 
 class Vec3 {
     using Self = Vec3;
@@ -53,8 +54,8 @@ public:
         return lhs.px * rhs.px + lhs.py * rhs.py + lhs.pz * rhs.pz;
     }
 
-    friend constexpr auto cross(const Self &lhs, const Self &rhs) -> Vec3 {
-        return Vec3(
+    friend constexpr auto cross(const Self &lhs, const Self &rhs) -> Self {
+        return Self(
             lhs.py * rhs.pz - lhs.pz * rhs.py,
             lhs.pz * rhs.px - lhs.px * rhs.pz,
             lhs.px * rhs.py - lhs.py * rhs.px
@@ -63,5 +64,18 @@ public:
 
     friend auto operator << (std::ostream &o, const Self &rhs) -> std::ostream& {
         return o << rhs.px << ' ' << rhs.py << ' ' << rhs.pz;
+    }
+
+public:
+    static auto random() -> Self {
+        return Self(random_f64(), random_f64(), random_f64());
+    }
+    static auto random(const f64 min, const f64 max) -> Self {
+        return Self(random_f64(min, max), random_f64(min, max), random_f64(min, max));
+    }
+    static auto random_in_unit_sphere() -> Self {
+        for ( ; ; )
+            if (Self p = random(-1, 1); p.length2() < 1)
+                return p;
     }
 };
