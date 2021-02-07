@@ -78,4 +78,10 @@ public:
             if (Self p = random(-1, 1); p.length2() < 1)
                 return p;
     }
+    static auto random_unit_vector() -> Self {
+        const f64 a = random_f64(0, 2 * constants::pi);
+        const f64 z = random_f64(-1, 1);
+        const f64 r = std::sqrt(1 - z * z);
+        return Self(r * std::cos(a), r * std::sin(a), z);
+    }
 };

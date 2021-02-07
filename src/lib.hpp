@@ -2,10 +2,7 @@
 
 #include "config.hpp"
 
-constexpr f64 infinity = std::numeric_limits<f64>::infinity();
-constexpr f64 pi = 3.1415926535897932385;
-
-inline auto deg2rad(const f64 deg) -> f64 { return deg * pi / 180.0; }
+inline auto deg2rad(const f64 deg) -> f64 { return deg * constants::pi / 180.0; }
 
 inline auto random_f64() -> f64 {
     static std::uniform_real_distribution<f64> distribution(0.0, 1.0);

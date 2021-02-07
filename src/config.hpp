@@ -179,13 +179,16 @@ namespace constants {
 	constexpr i32 samples_per_pixel = 100;
 	constexpr i32 max_depth = 50;
 	constexpr f64 GAMMA = 2;
-	constexpr f64 eps = 1e-5;
 
 	// Camera
 	constexpr f64 viewport_height = 2.0;
 	constexpr f64 viewport_width = viewport_height * aspect_ratio;
 	constexpr f64 focal_length = 1.0;
 
+
+	constexpr f64 infinity = std::numeric_limits<f64>::infinity();
+	constexpr f64 eps = 1e-5;
+	constexpr f64 pi = 3.1415926535897932385;
 }
 
 /* classes */
