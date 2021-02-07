@@ -169,6 +169,8 @@ template <typename T>
 	using str = std::string;
 #endif
 
+/* classes */
+
 class p3d;
 class Vec3;
 class RGB;
