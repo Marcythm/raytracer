@@ -11,6 +11,7 @@ class Metal: public Material {
 
 public:
     Metal(const RGB &_albedo): albedo(_albedo) {}
+    ~Metal() = default;
 
     auto scatter(const Ray &ray, const HitRecord &rec) const -> std::optional<std::pair<Ray, RGB>> override {
         Vec3 reflected = ray.direction().unit().reflect_on(rec.normal);

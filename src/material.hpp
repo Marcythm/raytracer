@@ -6,5 +6,6 @@
 #include "ray.hpp"
 
 struct Material {
+    virtual ~Material() = default;
     virtual auto scatter(const Ray &ray, const HitRecord &rec) const -> std::optional<std::pair<Ray, RGB>> = 0;
 };
