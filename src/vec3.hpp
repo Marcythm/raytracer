@@ -30,6 +30,13 @@ public:
 
     auto unit() const -> Vec3 { return *this / length(); }
     auto reflect_on(const Self &normal) const -> Self { return *this - 2 * dot(*this, normal) * normal; }
+    auto refract_on(const Self &normal, const f64 etai_over_etat) const -> Self {
+        // assert(length2() == 1); assert(normal.length2() == 1);
+        const f64 cos_theta = dot(-*this, normal);
+        Vec3 r_out_perp = etai_over_etat * (*this + cos_theta * normal);
+        Vec3 r_out_para = -std::sqrt(std::fabs(1.0 - r_out_perp.length2())) * normal;
+        return r_out_perp + r_out_para;
+    }
 
 public:
     friend constexpr auto operator + (const Self &lhs, const Self &rhs) -> Self {

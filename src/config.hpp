@@ -186,6 +186,7 @@ class HittableList;
 struct Material;
 class Lambertian;
 class Metal;
+class Dielectric;
 
 enum class diffuse_render_method: bool {
     hemispherical_scattering = false,

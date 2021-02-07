@@ -9,14 +9,15 @@
 #include "material.hpp"
 #include "lambertian.hpp"
 #include "metal.hpp"
+#include "dielectric.hpp"
 
 auto main() -> i32 {
 	// World
 	HittableList world;
 
 	auto material_ground = std::make_shared<Lambertian>(RGB(0.8, 0.8, 0.0));
-	auto material_center = std::make_shared<Lambertian>(RGB(0.7, 0.3, 0.3));
-	auto material_left   = std::make_shared<Metal>(RGB(0.8, 0.8, 0.8), 0.3);
+	auto material_center = std::make_shared<Dielectric>(1.5);
+	auto material_left   = std::make_shared<Dielectric>(1.5);
 	auto material_right  = std::make_shared<Metal>(RGB(0.8, 0.6, 0.2), 1.0);
 
 	world.push(std::make_shared<Sphere>(p3d( 0.0, -100.5, -1.0), 100.0, material_ground));
@@ -32,6 +33,7 @@ auto main() -> i32 {
 	std::cout << "P3\n";
 	std::cout << constants::image_width << ' ' << constants::image_height << '\n';
 	std::cout << "255\n";
+
 
 	for (i32 j = constants::image_height - 1; j >= 0; --j) {
 		std::cerr << "Scanlines remaining: " << j << '\n' << std::flush;
