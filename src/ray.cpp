@@ -4,7 +4,7 @@
 
 auto Ray::color(const Hittable &world, const i32 depth) -> RGB {
     if (depth <= 0) return RGB(0, 0, 0);
-    if (const auto &[succ, rec] = world.hit(*this, 0.0, infinity); succ)
+    if (const auto &[succ, rec] = world.hit(*this, constants::eps, infinity); succ)
         return 0.5 * Ray(rec.p, rec.p + rec.normal + Vec3::random_in_unit_sphere()).color(world, depth - 1);
     const f64 t = 0.5 * (direction().unit().y() + 1.0);
     return (1.0 - t) * RGB(1.0, 1.0, 1.0) + t * RGB(0.5, 0.7, 1.0);

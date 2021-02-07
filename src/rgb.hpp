@@ -47,13 +47,8 @@ public:
     }
 
     friend auto operator << (std::ostream &o, const Self &rhs) -> std::ostream& {
-        return o << static_cast<i32>(255.999 * rhs.pr) << ' '
-                 << static_cast<i32>(255.999 * rhs.pg) << ' '
-                 << static_cast<i32>(255.999 * rhs.pb);
-    }
-    auto print(std::ostream &o, const i32 samples_per_pixel, const f64 GAMMA) -> std::ostream& {
-        return o << static_cast<i32>(256 * clamp(std::pow(pr / samples_per_pixel, 1 / GAMMA), 0.0, 0.999)) << ' '
-                 << static_cast<i32>(256 * clamp(std::pow(pg / samples_per_pixel, 1 / GAMMA), 0.0, 0.999)) << ' '
-                 << static_cast<i32>(256 * clamp(std::pow(pb / samples_per_pixel, 1 / GAMMA), 0.0, 0.999));
+        return o << static_cast<i32>(256 * clamp(std::pow(rhs.pr / constants::samples_per_pixel, 1 / constants::GAMMA), 0.0, 0.999)) << ' '
+                 << static_cast<i32>(256 * clamp(std::pow(rhs.pg / constants::samples_per_pixel, 1 / constants::GAMMA), 0.0, 0.999)) << ' '
+                 << static_cast<i32>(256 * clamp(std::pow(rhs.pb / constants::samples_per_pixel, 1 / constants::GAMMA), 0.0, 0.999));
     }
 };

@@ -169,6 +169,25 @@ template <typename T>
 	using str = std::string;
 #endif
 
+/* constants */
+namespace constants {
+
+	// Image
+	constexpr f64 aspect_ratio = 16.0 / 9.0;
+	constexpr i32 image_width = 400;
+	constexpr i32 image_height = static_cast<i32>(image_width / aspect_ratio);
+	constexpr i32 samples_per_pixel = 100;
+	constexpr i32 max_depth = 50;
+	constexpr f64 GAMMA = 2;
+	constexpr f64 eps = 1e-5;
+
+	// Camera
+	constexpr f64 viewport_height = 2.0;
+	constexpr f64 viewport_width = viewport_height * aspect_ratio;
+	constexpr f64 focal_length = 1.0;
+
+}
+
 /* classes */
 
 class p3d;
