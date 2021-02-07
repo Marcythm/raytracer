@@ -10,8 +10,8 @@
 auto main() -> i32 {
 	// World
 	HittableList world;
-	world.push(std::make_shared<Sphere>(p3d(0, 0, -1), 0.5));
-	world.push(std::make_shared<Sphere>(p3d(0, -100.5, -1), 100));
+	// world.push(std::make_shared<Sphere>(p3d(0, 0, -1), 0.5));
+	// world.push(std::make_shared<Sphere>(p3d(0, -100.5, -1), 100));
 
 	// Camera
 	constexpr Camera camera(constants::viewport_height, constants::viewport_width, constants::focal_length);

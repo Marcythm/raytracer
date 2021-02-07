@@ -180,8 +180,8 @@ class Camera;
 
 struct HitRecord;
 struct Hittable;
-struct Sphere;
-class  HittableList;
+class Sphere;
+class HittableList;
 
 struct Material;
 

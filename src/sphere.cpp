@@ -19,6 +19,7 @@ auto Sphere::hit(const Ray &ray, const f64 t_min, const f64 t_max) const -> std:
             rec.p = ray.at(t);
             rec.normal = (rec.p - center) / radius;
             rec.t = t;
+            rec.material = material;
             rec.set_face_normal(ray);
             return std::make_pair(true, rec);
         }
@@ -28,6 +29,7 @@ auto Sphere::hit(const Ray &ray, const f64 t_min, const f64 t_max) const -> std:
             rec.normal = (rec.p - center) / radius;
             rec.t = t;
             rec.set_face_normal(ray);
+            rec.material = material;
             return std::make_pair(true, rec);
         }
     }
