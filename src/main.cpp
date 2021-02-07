@@ -16,8 +16,8 @@ auto main() -> i32 {
 
 	auto material_ground = std::make_shared<Lambertian>(RGB(0.8, 0.8, 0.0));
 	auto material_center = std::make_shared<Lambertian>(RGB(0.7, 0.3, 0.3));
-	auto material_left   = std::make_shared<Metal>(RGB(0.8, 0.8, 0.8));
-	auto material_right  = std::make_shared<Metal>(RGB(0.8, 0.6, 0.2));
+	auto material_left   = std::make_shared<Metal>(RGB(0.8, 0.8, 0.8), 0.3);
+	auto material_right  = std::make_shared<Metal>(RGB(0.8, 0.6, 0.2), 1.0);
 
 	world.push(std::make_shared<Sphere>(p3d( 0.0, -100.5, -1.0), 100.0, material_ground));
 	world.push(std::make_shared<Sphere>(p3d( 0.0, 	0.0, -1.0), 0.5, material_center));
