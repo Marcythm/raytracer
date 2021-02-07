@@ -13,20 +13,16 @@
 
 auto main() -> i32 {
 	// World
-	auto material_ground = std::make_shared<Lambertian>(RGB(0.8, 0.8, 0.0));
-	auto material_center = std::make_shared<Lambertian>(RGB(0.1, 0.2, 0.5));
-	auto material_left   = std::make_shared<Dielectric>(1.5);
-	auto material_right  = std::make_shared<Metal>(RGB(0.8, 0.6, 0.2), 1.0);
+	const f64 R = std::cos(constants::pi / 4);
+	auto material_left  = std::make_shared<Lambertian>(RGB(0, 0, 1));
+	auto material_right = std::make_shared<Lambertian>(RGB(1, 0, 0));
 
 	HittableList world;
-	world.push(std::make_shared<Sphere>(p3d( 0.0, -100.5, -1.0), 100.0, material_ground));
-	world.push(std::make_shared<Sphere>(p3d( 0.0, 	0.0, -1.0), 0.5, material_center));
-	world.push(std::make_shared<Sphere>(p3d(-1.0, 	0.0, -1.0), 0.5, material_left));
-	world.push(std::make_shared<Sphere>(p3d(-1.0, 	0.0, -1.0), -0.4, material_left));
-	world.push(std::make_shared<Sphere>(p3d( 1.0, 	0.0, -1.0), 0.5, material_right));
+	world.push(std::make_shared<Sphere>(p3d(-R, 0, -1), R, material_left));
+	world.push(std::make_shared<Sphere>(p3d( R, 0, -1), R, material_right));
 
 	// Camera
-	constexpr Camera camera(constants::viewport_height, constants::viewport_width, constants::focal_length);
+	const Camera camera(90, constants::aspect_ratio);
 
 	// Render
 	std::cout.tie(0);
