@@ -96,4 +96,9 @@ public:
         Self in_unit_sphere = random_in_unit_sphere();
         return (dot(in_unit_sphere, normal) > 0.0) ? in_unit_sphere : -in_unit_sphere;
     }
+    static auto random_in_unit_disk() -> Self {
+        for ( ; ; )
+            if (Self p(random_f64(-1, 1), random_f64(-1, 1), 0); p.length2() < 1)
+                return p;
+    }
 };

@@ -26,7 +26,13 @@ auto main() -> i32 {
 	world.push(std::make_shared<Sphere>(p3d( 1.0,    0.0, -1.0),   0.5, material_right));
 
 	// Camera
-	const Camera camera(p3d(-2, 2, 1), p3d(0, 0, -1), Vec3(0, 1, 0), 20, constants::aspect_ratio);
+	const p3d lookfrom(3, 3, 2);
+	const p3d lookat(0, 0, -1);
+	const Vec3 viewup(0, 1, 0);
+	const f64 focus_distance = (lookfrom - lookat).length();
+	const f64 aperture = 2.0;
+
+	const Camera camera(lookfrom, lookat, viewup, 20, constants::aspect_ratio, aperture, focus_distance);
 	// const Camera camera(p3d(-2, 2, 1), p3d(0, 0, -1), Vec3(0, 1, 0), 90, constants::aspect_ratio);
 
 	// Render
