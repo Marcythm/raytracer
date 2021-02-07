@@ -29,6 +29,7 @@ public:
     constexpr auto length2() const -> f64 { return px * px + py * py + pz * pz; }
 
     auto unit() const -> Vec3 { return *this / length(); }
+    auto reflect_on(const Self &normal) const -> Self { return *this - 2 * dot(*this, normal) * normal; }
 
 public:
     friend constexpr auto operator + (const Self &lhs, const Self &rhs) -> Self {

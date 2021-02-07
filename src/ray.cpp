@@ -1,14 +1,15 @@
 #include "rgb.hpp"
 #include "ray.hpp"
 #include "hittable.hpp"
+#include "material.hpp"
 
-auto Ray::color(const Hittable &world, const i32 depth) -> RGB {
+auto Ray::color(const Hittable &world, const i32 depth) const -> RGB {
     if (depth <= 0) return RGB(0, 0, 0);
-    if (const auto &[succ, rec] = world.hit(*this, constants::eps, constants::infinity); succ) {
-        if constexpr (constants::diffuse_render_method_type == diffuse_render_method::true_lambertian_reflection)
-            return 0.5 * Ray(rec.p, rec.p + rec.normal + Vec3::random_unit_vector()).color(world, depth - 1);
-        else
-            return 0.5 * Ray(rec.p, rec.p + Vec3::random_in_hemisphere(rec.normal)).color(world, depth - 1);
+    if (const auto &hit = world.hit(*this, constants::eps, constants::infinity); hit.has_value()) {
+        if (const auto &scatter = hit.value().material->scatter(*this, hit.value()); scatter.has_value()) {
+            const auto &[scattered, attenuation] = scatter.value();
+            return attenuation * scattered.color(world, depth - 1);
+        } else return RGB(0, 0, 0);
     }
     const f64 t = 0.5 * (direction().unit().y() + 1.0);
     return (1.0 - t) * RGB(1.0, 1.0, 1.0) + t * RGB(0.5, 0.7, 1.0);

@@ -4,7 +4,7 @@
 #include "hittable.hpp"
 #include "sphere.hpp"
 
-auto Sphere::hit(const Ray &ray, const f64 t_min, const f64 t_max) const -> std::pair<bool, HitRecord> {
+auto Sphere::hit(const Ray &ray, const f64 t_min, const f64 t_max) const -> std::optional<HitRecord> {
     const Vec3 oc = ray.origin() - center;
     const f64 a = ray.direction().length2();
     const f64 half_b = dot(oc, ray.direction());
@@ -21,7 +21,7 @@ auto Sphere::hit(const Ray &ray, const f64 t_min, const f64 t_max) const -> std:
             rec.t = t;
             rec.material = material;
             rec.set_face_normal(ray);
-            return std::make_pair(true, rec);
+            return std::optional(rec);
         }
         if (const f64 t = (-half_b + root) / a; t_min < t and t < t_max) {
             HitRecord rec;
@@ -30,8 +30,8 @@ auto Sphere::hit(const Ray &ray, const f64 t_min, const f64 t_max) const -> std:
             rec.t = t;
             rec.set_face_normal(ray);
             rec.material = material;
-            return std::make_pair(true, rec);
+            return std::optional(rec);
         }
     }
-    return std::make_pair(false, HitRecord());
+    return std::optional<HitRecord>();
 }

@@ -184,6 +184,7 @@ class Sphere;
 class HittableList;
 
 struct Material;
+class Lambertian;
 
 enum class diffuse_render_method: bool {
     hemispherical_scattering = false,
