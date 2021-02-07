@@ -183,6 +183,8 @@ struct Hittable;
 struct Sphere;
 class  HittableList;
 
+struct Material;
+
 enum class diffuse_render_method: bool {
     hemispherical_scattering = false,
     true_lambertian_reflection = true,
