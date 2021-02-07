@@ -22,6 +22,7 @@ auto main() -> i32 {
 	world.push(std::make_shared<Sphere>(p3d( 0.0, -100.5, -1.0), 100.0, material_ground));
 	world.push(std::make_shared<Sphere>(p3d( 0.0, 	0.0, -1.0), 0.5, material_center));
 	world.push(std::make_shared<Sphere>(p3d(-1.0, 	0.0, -1.0), 0.5, material_left));
+	world.push(std::make_shared<Sphere>(p3d(-1.0, 	0.0, -1.0), -0.4, material_left));
 	world.push(std::make_shared<Sphere>(p3d( 1.0, 	0.0, -1.0), 0.5, material_right));
 
 	// Camera
