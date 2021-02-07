@@ -73,15 +73,19 @@ public:
     static auto random(const f64 min, const f64 max) -> Self {
         return Self(random_f64(min, max), random_f64(min, max), random_f64(min, max));
     }
-    static auto random_in_unit_sphere() -> Self {
-        for ( ; ; )
-            if (Self p = random(-1, 1); p.length2() < 1)
-                return p;
-    }
     static auto random_unit_vector() -> Self {
         const f64 a = random_f64(0, 2 * constants::pi);
         const f64 z = random_f64(-1, 1);
         const f64 r = std::sqrt(1 - z * z);
         return Self(r * std::cos(a), r * std::sin(a), z);
+    }
+    static auto random_in_unit_sphere() -> Self {
+        for ( ; ; )
+            if (Self p = random(-1, 1); p.length2() < 1)
+                return p;
+    }
+    static auto random_in_hemisphere(const Vec3 &normal) -> Self {
+        Self in_unit_sphere = random_in_unit_sphere();
+        return (dot(in_unit_sphere, normal) > 0.0) ? in_unit_sphere : -in_unit_sphere;
     }
 };

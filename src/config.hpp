@@ -169,6 +169,25 @@ template <typename T>
 	using str = std::string;
 #endif
 
+
+/* classes */
+
+class p3d;
+class Vec3;
+class RGB;
+class Ray;
+class Camera;
+
+struct HitRecord;
+struct Hittable;
+struct Sphere;
+class  HittableList;
+
+enum class diffuse_render_method: bool {
+    hemispherical_scattering = false,
+    true_lambertian_reflection = true,
+};
+
 /* constants */
 namespace constants {
 
@@ -189,17 +208,6 @@ namespace constants {
 	constexpr f64 infinity = std::numeric_limits<f64>::infinity();
 	constexpr f64 eps = 1e-5;
 	constexpr f64 pi = 3.1415926535897932385;
+
+	constexpr diffuse_render_method diffuse_render_method_type = diffuse_render_method::true_lambertian_reflection;
 }
-
-/* classes */
-
-class p3d;
-class Vec3;
-class RGB;
-class Ray;
-class Camera;
-
-struct HitRecord;
-struct Hittable;
-struct Sphere;
-class  HittableList;
