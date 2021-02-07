@@ -197,10 +197,10 @@ enum class diffuse_render_method: bool {
 namespace constants {
 
 	// Image
-	constexpr f64 aspect_ratio = 16.0 / 9.0;
-	constexpr i32 image_width = 400;
+	constexpr f64 aspect_ratio = 3.0 / 2.0; // 16.0 / 9.0;
+	constexpr i32 image_width = 1200; // 400;
 	constexpr i32 image_height = static_cast<i32>(image_width / aspect_ratio);
-	constexpr i32 samples_per_pixel = 100;
+	constexpr i32 samples_per_pixel = 500; // 100;
 	constexpr i32 max_depth = 50;
 	constexpr f64 GAMMA = 2;
 

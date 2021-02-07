@@ -45,9 +45,6 @@ public:
     friend constexpr auto operator - (const Self &lhs, const Self &rhs) -> Self {
         return Self(lhs.px - rhs.px, lhs.py - rhs.py, lhs.pz - rhs.pz);
     }
-    friend constexpr auto operator * (const Self &lhs, const Self &rhs) -> Self {
-        return Self(lhs.px * rhs.px, lhs.py * rhs.py, lhs.pz * rhs.pz);
-    }
     friend constexpr auto operator * (const Self &lhs, const f64   rhs) -> Self {
         return Self(lhs.px * rhs, lhs.py * rhs, lhs.pz * rhs);
     }
@@ -68,10 +65,6 @@ public:
             lhs.pz * rhs.px - lhs.px * rhs.pz,
             lhs.px * rhs.py - lhs.py * rhs.px
         );
-    }
-
-    friend auto operator << (std::ostream &o, const Self &rhs) -> std::ostream& {
-        return o << rhs.px << ' ' << rhs.py << ' ' << rhs.pz;
     }
 
 public:

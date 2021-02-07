@@ -19,8 +19,6 @@ public:
 
     constexpr auto operator = (const Self &rhs) -> Self& { return pr = rhs.pr, pg = rhs.pg, pb = rhs.pb, *this; }
 
-    constexpr auto operator - () const -> Self { return RGB(-pr, -pg, -pb); }
-
     constexpr auto operator += (const Self &rhs) -> Self& { pr += rhs.pr; pg += rhs.pg; pb += rhs.pb; return *this; }
     constexpr auto operator -= (const Self &rhs) -> Self& { pr -= rhs.pr; pg -= rhs.pg; pb -= rhs.pb; return *this; }
     constexpr auto operator *= (const f64   rhs) -> Self& { pr *= rhs;    pg *= rhs;    pb *= rhs;    return *this; }
@@ -50,5 +48,13 @@ public:
         return o << static_cast<i32>(256 * clamp(std::pow(rhs.pr / constants::samples_per_pixel, 1 / constants::GAMMA), 0.0, 0.999)) << ' '
                  << static_cast<i32>(256 * clamp(std::pow(rhs.pg / constants::samples_per_pixel, 1 / constants::GAMMA), 0.0, 0.999)) << ' '
                  << static_cast<i32>(256 * clamp(std::pow(rhs.pb / constants::samples_per_pixel, 1 / constants::GAMMA), 0.0, 0.999));
+    }
+
+public:
+    static auto random() -> Self {
+        return Self(random_f64(), random_f64(), random_f64());
+    }
+    static auto random(const f64 min, const f64 max) -> Self {
+        return Self(random_f64(min, max), random_f64(min, max), random_f64(min, max));
     }
 };

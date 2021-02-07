@@ -32,8 +32,4 @@ public:
     friend constexpr auto operator - (const Self &lhs, const Self &rhs) -> Vec3 {
         return Vec3(lhs.px - rhs.px, lhs.py - rhs.py, lhs.pz - rhs.pz);
     }
-
-    friend auto operator << (std::ostream &o, const Self &rhs) -> std::ostream& {
-        return o << rhs.px << ' ' << rhs.py << ' ' << rhs.pz;
-    }
 };
