@@ -1,7 +1,9 @@
 pub mod utilities;
 pub mod ray;
+pub mod hittable;
 
 use utilities::{p3d::P3d, vec3::Vec3, rgb::RGB};
+use hittable::{sphere::Sphere};
 use ray::Ray;
 
 // Image
