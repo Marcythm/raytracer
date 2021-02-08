@@ -27,20 +27,16 @@ impl Hittable for Sphere {
 
             let t = (-half_b - root) / a;
             if t_min < t && t < t_max {
-                let mut rec = HitRecord::default();
-                rec.p = ray.at(t);
-                rec.normal = (rec.p - self.center) / self.radius;
-                rec.t = t;
+                let ray_at = ray.at(t);
+                let mut rec = HitRecord::new(ray_at, (ray_at - self.center) / self.radius, t);
                 rec.set_face_normal(&ray);
                 return Some(rec);
             }
 
             let t = (-half_b + root) / a;
             if t_min < t && t < t_max {
-                let mut rec = HitRecord::default();
-                rec.p = ray.at(t);
-                rec.normal = (rec.p - self.center) / self.radius;
-                rec.t = t;
+                let ray_at = ray.at(t);
+                let mut rec = HitRecord::new(ray_at, (ray_at - self.center) / self.radius, t);
                 rec.set_face_normal(&ray);
                 return Some(rec);
             }

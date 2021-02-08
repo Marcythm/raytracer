@@ -1,4 +1,5 @@
 pub mod sphere;
+pub mod hittablelist;
 
 use crate::utilities::{p3d::P3d, vec3::Vec3};
 use crate::ray::Ray;
@@ -12,6 +13,10 @@ pub struct HitRecord {
 }
 
 impl HitRecord {
+    pub fn new(p: P3d, normal: Vec3, t: f64) -> Self {
+        Self { p, normal, t, front_face: false }
+    }
+
     pub fn set_face_normal(&mut self, ray: &Ray) {
         self.front_face = Vec3::dot(&ray.direction(), &self.normal) < 0.0;
         if !self.front_face {
