@@ -4,6 +4,7 @@
 #include "rgb.hpp"
 #include "ray.hpp"
 #include "sphere.hpp"
+#include "movingsphere.hpp"
 #include "hittablelist.hpp"
 #include "camera.hpp"
 #include "material.hpp"
@@ -28,7 +29,8 @@ auto random_scene() -> HittableList {
 					// diffuse
 					const auto albedo = RGB::random() * RGB::random();
 					const auto sphere_material = std::make_shared<Lambertian>(albedo);
-					scene.push(Sphere(center, 0.2, sphere_material));
+					const auto center2 = center + Vec3(0.0, random_f64(0.0, 0.5), 0.0);
+					scene.push(MovingSphere(center, center2, 0.0, 1.0, 0.2, sphere_material));
 				} else if (which_material < 0.95) {
 					// metal
 					const auto albedo = RGB::random(0.5, 1.0);
@@ -66,7 +68,7 @@ auto main() -> i32 {
 	const f64 focus_distance = 10.0;
 	const f64 aperture = 0.1;
 
-	const Camera camera(lookfrom, lookat, viewup, 20.0, constants::aspect_ratio, aperture, focus_distance);
+	const Camera camera(lookfrom, lookat, viewup, 20.0, constants::aspect_ratio, aperture, focus_distance, 0.0, 1.0);
 
 	// Render
 	std::cout.tie(0);
