@@ -79,6 +79,15 @@ impl Vec3 {
             -in_unit_sphere
         }
     }
+
+    pub fn random_in_unit_disk(rng: &mut SmallRng) -> Self {
+        loop {
+            let p = Self(rng.gen_range(-1.0, 1.0), rng.gen_range(-1.0, 1.0), 0.0);
+            if p.length2() < 1.0 {
+                return p;
+            }
+        }
+    }
 }
 
 impl Neg for Vec3 {
