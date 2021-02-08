@@ -1,4 +1,4 @@
-pub use crate::utilities::{p3d::P3d, vec3::Vec3, rgb::RGB};
+use crate::utilities::{p3d::P3d, vec3::Vec3, rgb::RGB};
 
 #[derive(Debug, Clone, Copy, Default)]
 pub struct Ray {
