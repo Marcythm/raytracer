@@ -6,7 +6,7 @@ pub use p3d::P3d;
 pub use vec3::Vec3;
 pub use rgb::RGB;
 
-pub use rand::{Rng, rngs::SmallRng};
+pub use rand::{Rng, rngs::SmallRng, SeedableRng};
 
 
 // Image

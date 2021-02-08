@@ -1,4 +1,5 @@
 use std::ops::{Neg, Add, AddAssign, Sub, SubAssign, Mul, MulAssign, Div, DivAssign};
+use crate::utilities::*;
 
 #[derive(Debug, Clone, Copy, Default)]
 pub struct Vec3(f64, f64, f64);
@@ -32,6 +33,23 @@ impl Vec3 {
             u.2 * v.0 - u.0 * v.1,
             u.0 * v.1 - u.1 * v.0,
         )
+    }
+
+    pub fn random(rng: &mut SmallRng, min: f64, max: f64) -> Self {
+        Self(
+            rng.gen_range(min, max),
+            rng.gen_range(min, max),
+            rng.gen_range(min, max),
+        )
+    }
+
+    pub fn random_in_unit_sphere(rng: &mut SmallRng) -> Self {
+        loop {
+            let p = Vec3::random(rng, -1.0, 1.0);
+            if p.length2() < 1.0 {
+                return p;
+            }
+        }
     }
 }
 

@@ -16,7 +16,7 @@ fn main() {
 
     // Camera
     let camera = Camera::new();
-    let mut rng = rand::thread_rng();
+    let mut rng = SmallRng::from_entropy();
 
     // Render
     println!("P3");
@@ -30,7 +30,7 @@ fn main() {
             for _ in 0..SAMPLES_PER_PIXEL {
                 let u = (i as f64 + rng.gen_range(0.0, 1.0)) / (IMAGE_WIDTH - 1) as f64;
                 let v = (j as f64 + rng.gen_range(0.0, 1.0)) / (IMAGE_HEIGHT - 1) as f64;
-                pixel_color += camera.get_ray(u, v).color(&world);
+                pixel_color += camera.get_ray(u, v).color(&world, &mut rng);
             }
             println!("{}", pixel_color);
         }

@@ -27,9 +27,9 @@ impl Ray {
         self.origin + t * self.direction
     }
 
-    pub fn color<T: Hittable>(&self, world: &T) -> RGB {
+    pub fn color<T: Hittable>(&self, world: &T, rng: &mut SmallRng) -> RGB {
         if let Some(rec) = world.hit(&self, 0.0, INFINITY) {
-            0.5 * RGB::new(rec.normal.x() + 1.0, rec.normal.y() + 1.0, rec.normal.z() + 1.0)
+            0.5 * Ray::between(rec.p, rec.p + rec.normal + Vec3::random_in_unit_sphere(rng)).color(world, rng)
         } else {
             let t = 0.5 * (self.direction.unit().y() + 1.0);
             (1.0 - t) * RGB::new(1.0, 1.0, 1.0) + t * RGB::new(0.5, 0.7, 1.0)
