@@ -19,6 +19,7 @@ pub const SAMPLES_PER_PIXEL : i32 = 100;
 pub const VIEWPORT_HEIGHT : f64 = 2.0;
 pub const VIEWPORT_WIDTH  : f64 = ASPECT_RATIO * VIEWPORT_HEIGHT;
 pub const FOCAL_LENGTH    : f64 = 1.0;
+pub const MAX_DEPTH       : i32 = 50;
 
 // Constants
 pub const INFINITY: f64 = 1e15;
