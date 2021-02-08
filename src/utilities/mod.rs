@@ -8,6 +8,7 @@ pub use rgb::RGB;
 
 pub const INFINITY: f64 = 1e15;
 pub use std::f64::consts::PI;
+pub use rand::{Rng, rngs::SmallRng};
 
 pub fn deg2rad(deg: f64) -> f64 {
     deg * PI / 180.0
