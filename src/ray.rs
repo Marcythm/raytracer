@@ -11,9 +11,9 @@ impl Ray {
     pub fn new(origin: P3d, direction: Vec3) -> Self {
         Self { origin, direction }
     }
-    pub fn between(origin: P3d, destination: P3d) -> Self {
+    pub fn from_to(from: P3d, to: P3d) -> Self {
         // generate a ray from origin to destination
-        Self { origin, direction: destination - origin }
+        Self { origin: from, direction: to - from }
     }
 
     pub fn origin(&self) -> P3d {
