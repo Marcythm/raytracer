@@ -2,9 +2,11 @@ pub mod utilities;
 pub mod ray;
 pub mod camera;
 pub mod hittable;
+pub mod material;
 
 use utilities::*;
 use hittable::*;
+use material::*;
 use ray::Ray;
 use camera::Camera;
 
