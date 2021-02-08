@@ -38,14 +38,14 @@ impl Ray {
 
     pub fn hit_sphere(&self, center: P3d, radius: f64) -> f64 {
         let oc = self.origin - center;
-        let a = Vec3::dot(&self.direction, &self.direction);
-        let b = 2.0 * Vec3::dot(&oc, &self.direction);
+        let a = self.direction.length2();
+        let half_b = Vec3::dot(&oc, &self.direction);
         let c = oc.length2() - radius * radius;
-        let discriminant = b * b - 4.0 * a * c;
+        let discriminant = half_b * half_b - a * c;
         if discriminant < 0.0 {
             -1.0
         } else {
-            (-b - discriminant.sqrt()) / (2.0 * a)
+            (-half_b - discriminant.sqrt()) / a
         }
     }
 }
