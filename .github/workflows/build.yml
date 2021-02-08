@@ -4,29 +4,32 @@ on:
       - release
     # Sequence of patterns matched against refs/tags
 
-name: Upload Release Asset
+name: Release Rendered Image
 
 jobs:
   build:
-    name: Upload Release Asset
+    name: Release Rendered Image
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Build project
         run: |
-          cargo b --release; time ./target/release/raytracer-rs > image.ppm
+          cargo b --release;
+      - name: Render Image
+        run: |
+          ./target/release/raytracer-rs > image.ppm
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
+          tag_name: ${{ github.sha }}
+          release_name: Rendered Image of commit ${{ github.sha }}
           draft: false
           prerelease: true
-      - name: Upload Release Asset
+      - name: Release Rendered Image
         id: upload-release-asset
         uses: actions/upload-release-asset@v1
         env:
