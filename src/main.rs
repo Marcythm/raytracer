@@ -11,16 +11,26 @@ use camera::Camera;
 
 fn main() {
     // World
-    let r = (PI / 4.0).cos();
-    let material_left = Rc::new(Lambertian::new(RGB::new(0.0, 0.0, 1.0)));
-    let material_right = Rc::new(Lambertian::new(RGB::new(1.0, 0.0, 0.0)));
+    let material_ground = Rc::new(Lambertian::new(RGB::new(0.8, 0.8, 0.0)));
+    let material_center = Rc::new(Lambertian::new(RGB::new(0.1, 0.2, 0.5)));
+    let material_left = Rc::new(Dielectric::new(1.5));
+    let material_right = Rc::new(Metal::new(RGB::new(0.8, 0.6, 0.2), 0.0));
 
     let mut world = HittableList::default();
-    world.push(Sphere::new(P3d::new(-r, 0.0, -1.0), r, material_left.clone()));
-    world.push(Sphere::new(P3d::new(r, 0.0, -1.0), r, material_right.clone()));
+    world.push(Sphere::new(P3d::new(0.0, -100.5, -1.0), 100.0, material_ground.clone()));
+    world.push(Sphere::new(P3d::new(0.0, 0.0, -1.0), 0.5, material_center.clone()));
+    world.push(Sphere::new(P3d::new(-1.0, 0.0, -1.0), 0.5, material_left.clone()));
+    world.push(Sphere::new(P3d::new(-1.0, 0.0, -1.0), -0.45, material_left.clone()));
+    world.push(Sphere::new(P3d::new(1.0, 0.0, -1.0), 0.5, material_right.clone()));
 
     // Camera
-    let camera = Camera::new(90.0, ASPECT_RATIO);
+    let lookfrom = P3d::new(-2.0, 2.0, 1.0);
+    let lookat = P3d::new(0.0, 0.0, -1.0);
+    let viewup = Vec3::new(0.0, 1.0, 0.0);
+    let camera = Camera::new(
+        lookfrom, lookat, viewup,
+        20.0, ASPECT_RATIO
+    );
     let mut rng = SmallRng::from_entropy();
 
     // Render

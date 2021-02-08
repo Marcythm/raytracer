@@ -11,6 +11,7 @@ pub struct Camera {
 
 impl Camera {
     pub fn new(
+        lookfrom: P3d, lookat: P3d, viewup: Vec3,
         vertical_field_of_view: f64, aspect_ratio: f64
     ) -> Self {
         let theta = deg2rad(vertical_field_of_view);
@@ -18,14 +19,18 @@ impl Camera {
         let viewport_height = 2.0 * h;
         let viewport_width = aspect_ratio * viewport_height;
 
-        let origin = P3d::new(0.0, 0.0, 0.0);
-        let horizontal = Vec3::new(viewport_width, 0.0, 0.0);
-        let vertical = Vec3::new(0.0, viewport_height, 0.0);
+        let w = -(lookat - lookfrom).unit();
+        let u = Vec3::cross(viewup, w).unit();
+        let v = Vec3::cross(w, u);
+
+        let origin = lookfrom;
+        let horizontal = viewport_width * u;
+        let vertical = viewport_height * v;
         Self {
             origin,
             horizontal,
             vertical,
-            lower_left_corner: origin - horizontal / 2.0 - vertical / 2.0 - Vec3::new(0.0, 0.0, FOCAL_LENGTH)
+            lower_left_corner: origin - horizontal / 2.0 - vertical / 2.0 - w
         }
     }
 
