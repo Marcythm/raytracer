@@ -4,8 +4,8 @@ use std::{fmt::{Display}, ops::{Add, AddAssign, Sub, SubAssign, Mul, MulAssign, 
 pub struct RGB(f64, f64, f64);
 
 impl RGB {
-    pub fn new(e0: f64, e1: f64, e2: f64) -> Self {
-        Self(e0, e1, e2)
+    pub fn new(r: f64, g: f64, b: f64) -> Self {
+        Self(r, g, b)
     }
 
     pub fn r(&self) -> f64 {

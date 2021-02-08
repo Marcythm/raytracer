@@ -6,8 +6,8 @@ pub use super::vec3::Vec3;
 pub struct P3d(f64, f64, f64);
 
 impl P3d {
-    pub fn new(e0: f64, e1: f64, e2: f64) -> Self {
-        Self(e0, e1, e2)
+    pub fn new(x: f64, y: f64, z: f64) -> Self {
+        Self(x, y, z)
     }
 
     pub fn x(&self) -> f64 {
