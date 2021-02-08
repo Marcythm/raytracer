@@ -1,5 +1,5 @@
 use std::ops::{Neg, Add, AddAssign, Sub, SubAssign, Mul, MulAssign, Div, DivAssign};
-use crate::utilities::*;
+use crate::utilities::prelude::*;
 
 #[derive(Debug, Clone, Copy, Default)]
 pub struct Vec3(f64, f64, f64);

@@ -1,5 +1,5 @@
-use crate::utilities::*;
-use crate::hittable::*;
+use crate::utilities::prelude::*;
+use crate::hittable::prelude::*;
 
 #[derive(Debug, Clone, Copy, Default)]
 pub struct Ray {

@@ -1,12 +1,16 @@
 pub mod sphere;
 pub mod hittablelist;
 
-pub use hittablelist::HittableList;
-pub use sphere::Sphere;
+pub mod prelude {
+    pub use super::hittablelist::HittableList;
+    pub use super::sphere::Sphere;
+    pub use super::HitRecord;
+    pub use super::Hittable;
+}
 
-use crate::utilities::*;
+use crate::utilities::prelude::*;
 use crate::ray::Ray;
-use crate::material::*;
+use crate::material::prelude::*;
 
 #[derive(Clone)]
 pub struct HitRecord {

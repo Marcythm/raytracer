@@ -4,15 +4,24 @@ pub mod camera;
 pub mod hittable;
 pub mod material;
 
-use utilities::*;
-use hittable::*;
-use material::*;
-use ray::Ray;
+use utilities::prelude::*;
+use hittable::prelude::*;
+use material::prelude::*;
 use camera::Camera;
 
 fn main() {
     // World
+    let material_ground = Rc::new(Lambertian::new(RGB::new(0.8, 0.8, 0.0)));
+    let material_center = Rc::new(Lambertian::new(RGB::new(0.7, 0.3, 0.3)));
+    let material_left = Rc::new(Metal::new(RGB::new(0.8, 0.8, 0.8)));
+    let material_right = Rc::new(Metal::new(RGB::new(0.8, 0.6, 0.2)));
+
     let mut world = HittableList::default();
+    world.push(Sphere::new(P3d::new(0.0, -100.5, -1.0), 100.0, material_ground));
+    world.push(Sphere::new(P3d::new(0.0, 0.0, -1.0), 0.5, material_center));
+    world.push(Sphere::new(P3d::new(-1.0, 0.0, -1.0), 0.5, material_left));
+    world.push(Sphere::new(P3d::new(1.0, 0.0, -1.0), 0.5, material_right));
+
     // world.push(Sphere::new(P3d::new(0.0, 0.0, -1.0), 0.5));
     // world.push(Sphere::new(P3d::new(0.0, -100.5, -1.0), 100.0));
 
@@ -37,4 +46,5 @@ fn main() {
             println!("{}", pixel_color);
         }
     }
+    eprintln!("\nDone.");
 }

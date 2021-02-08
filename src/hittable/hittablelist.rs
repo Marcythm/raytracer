@@ -1,5 +1,6 @@
+use crate::utilities::prelude::*;
 use crate::ray::Ray;
-use crate::hittable::*;
+use crate::hittable::prelude::*;
 
 #[derive(Clone, Default)]
 pub struct HittableList {

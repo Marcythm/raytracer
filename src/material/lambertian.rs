@@ -1,7 +1,7 @@
-use crate::utilities::*;
+use crate::utilities::prelude::*;
 use crate::ray::Ray;
-use crate::hittable::*;
-use crate::material::*;
+use crate::hittable::prelude::*;
+use crate::material::prelude::*;
 
 #[derive(Debug, Clone, Copy, Default)]
 pub struct Lambertian {

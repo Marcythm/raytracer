@@ -1,6 +1,7 @@
-use crate::utilities::*;
+use crate::utilities::prelude::*;
 use crate::ray::Ray;
-use crate::hittable::*;
+use crate::hittable::prelude::*;
+use crate::material::prelude::*;
 
 #[derive(Clone)]
 pub struct Sphere {

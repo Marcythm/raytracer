@@ -1,4 +1,4 @@
-use crate::utilities::*;
+use crate::utilities::prelude::*;
 use crate::ray::Ray;
 
 #[derive(Debug, Clone, Copy, Default)]

@@ -1,6 +1,6 @@
 use std::ops::{Add, AddAssign, Sub, SubAssign};
 
-use crate::utilities::*;
+use crate::utilities::prelude::*;
 
 #[derive(Debug, Clone, Copy, Default)]
 pub struct P3d(f64, f64, f64);
