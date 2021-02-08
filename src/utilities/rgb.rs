@@ -1,4 +1,5 @@
 use std::{fmt::{Display}, ops::{Add, AddAssign, Sub, SubAssign, Mul, MulAssign, Div, DivAssign}};
+use crate::utilities::*;
 
 #[derive(Debug, Clone, Copy, Default)]
 pub struct RGB(f64, f64, f64);
@@ -128,9 +129,9 @@ impl DivAssign<f64> for RGB {
 impl Display for RGB {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         write!(f, "{} {} {}",
-            (self.0 * 255.999) as i32,
-            (self.1 * 255.999) as i32,
-            (self.2 * 255.999) as i32,
+            (256.0 * clamp(self.0 / SAMPLES_PER_PIXEL as f64, 0.0, 0.999)) as i32,
+            (256.0 * clamp(self.1 / SAMPLES_PER_PIXEL as f64, 0.0, 0.999)) as i32,
+            (256.0 * clamp(self.2 / SAMPLES_PER_PIXEL as f64, 0.0, 0.999)) as i32,
         )
     }
 }

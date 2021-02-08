@@ -12,6 +12,7 @@ impl Ray {
         Self { origin, direction }
     }
     pub fn between(origin: P3d, destination: P3d) -> Self {
+        // generate a ray from origin to destination
         Self { origin, direction: destination - origin }
     }
 
