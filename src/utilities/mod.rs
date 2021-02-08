@@ -17,13 +17,14 @@ pub const SAMPLES_PER_PIXEL : i32 = 100;
 pub const GAMMA             : f64 = 2.0;
 
 // Camera
-pub const VIEWPORT_HEIGHT : f64 = 2.0;
-pub const VIEWPORT_WIDTH  : f64 = ASPECT_RATIO * VIEWPORT_HEIGHT;
-pub const FOCAL_LENGTH    : f64 = 1.0;
-pub const MAX_DEPTH       : i32 = 50;
+pub const VIEWPORT_HEIGHT   : f64 = 2.0;
+pub const VIEWPORT_WIDTH    : f64 = ASPECT_RATIO * VIEWPORT_HEIGHT;
+pub const FOCAL_LENGTH      : f64 = 1.0;
+pub const MAX_DEPTH         : i32 = 50;
 
 // Constants
-pub const INFINITY: f64 = 1e15;
+pub const INFINITY          : f64 = 1e15;
+pub const EPS               : f64 = 1e-5;
 pub use std::f64::consts::PI;
 
 pub fn deg2rad(deg: f64) -> f64 {

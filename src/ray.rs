@@ -31,7 +31,7 @@ impl Ray {
         if depth <= 0 {
             return RGB::new(0.0, 0.0, 0.0);
         }
-        if let Some(rec) = world.hit(&self, 0.0, INFINITY) {
+        if let Some(rec) = world.hit(&self, EPS, INFINITY) {
             0.5 * Ray::between(rec.p, rec.p + rec.normal + Vec3::random_in_unit_sphere(rng)).color(world, depth - 1, rng)
         } else {
             let t = 0.5 * (self.direction.unit().y() + 1.0);
