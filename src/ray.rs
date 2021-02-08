@@ -32,7 +32,11 @@ impl Ray {
             return RGB::new(0.0, 0.0, 0.0);
         }
         if let Some(rec) = world.hit(&self, EPS, INFINITY) {
-            0.5 * Ray::between(rec.p, rec.p + Vec3::random_in_hemisphere(rng, &rec.normal)).color(world, depth - 1, rng)
+            if let Some((scattered, attenuation)) = rec.material.scatter(self, &rec, rng) {
+                attenuation * scattered.color(world, depth - 1, rng)
+            } else {
+                RGB::new(0.0, 0.0, 0.0)
+            }
         } else {
             let t = 0.5 * (self.direction.unit().y() + 1.0);
             (1.0 - t) * RGB::new(1.0, 1.0, 1.0) + t * RGB::new(0.5, 0.7, 1.0)

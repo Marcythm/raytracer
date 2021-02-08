@@ -35,6 +35,12 @@ impl Vec3 {
         )
     }
 
+    pub fn reflect_on(&self, normal: &Self) -> Self {
+        (*self) - 2.0 * Self::dot(self, normal) * (*normal)
+    }
+}
+
+impl Vec3 {
     pub fn random(rng: &mut SmallRng, min: f64, max: f64) -> Self {
         Self(
             rng.gen_range(min, max),
