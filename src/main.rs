@@ -1,4 +1,5 @@
 pub mod utilities;
+pub mod ray;
 
 use utilities::{p3d::P3d, vec3::Vec3, rgb::RGB};
 
