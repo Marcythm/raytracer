@@ -47,7 +47,7 @@ impl Vec3 {
 }
 
 impl Vec3 {
-    pub fn random(rng: &mut SmallRng, min: f64, max: f64) -> Self {
+    pub fn random(min: f64, max: f64, rng: &mut SmallRng) -> Self {
         Self(
             rng.gen_range(min, max),
             rng.gen_range(min, max),
@@ -57,7 +57,7 @@ impl Vec3 {
 
     pub fn random_in_unit_sphere(rng: &mut SmallRng) -> Self {
         loop {
-            let p = Self::random(rng, -1.0, 1.0);
+            let p = Self::random( -1.0, 1.0, rng);
             if p.length2() < 1.0 {
                 return p;
             }

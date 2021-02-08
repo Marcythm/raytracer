@@ -20,6 +20,16 @@ impl RGB {
     }
 }
 
+impl RGB {
+    pub fn random(min: f64, max: f64, rng: &mut SmallRng) -> Self {
+        Self(
+            rng.gen_range(min, max),
+            rng.gen_range(min, max),
+            rng.gen_range(min, max),
+        )
+    }
+}
+
 impl Add for RGB {
     type Output = Self;
     fn add(self, rhs: Self) -> Self::Output {

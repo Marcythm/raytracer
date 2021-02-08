@@ -9,33 +9,68 @@ use hittable::prelude::*;
 use material::prelude::*;
 use camera::Camera;
 
-fn main() {
-    // World
-    let material_ground = Rc::new(Lambertian::new(RGB::new(0.8, 0.8, 0.0)));
-    let material_center = Rc::new(Lambertian::new(RGB::new(0.1, 0.2, 0.5)));
-    let material_left = Rc::new(Dielectric::new(1.5));
-    let material_right = Rc::new(Metal::new(RGB::new(0.8, 0.6, 0.2), 0.0));
-
+fn random_scene(rng: &mut SmallRng) -> HittableList {
     let mut world = HittableList::default();
-    world.push(Sphere::new(P3d::new(0.0, -100.5, -1.0), 100.0, material_ground.clone()));
-    world.push(Sphere::new(P3d::new(0.0, 0.0, -1.0), 0.5, material_center.clone()));
-    world.push(Sphere::new(P3d::new(-1.0, 0.0, -1.0), 0.5, material_left.clone()));
-    world.push(Sphere::new(P3d::new(-1.0, 0.0, -1.0), -0.45, material_left.clone()));
-    world.push(Sphere::new(P3d::new(1.0, 0.0, -1.0), 0.5, material_right.clone()));
+
+    let material_ground = Lambertian::new(RGB::new(0.5, 0.5, 0.5));
+    world.push(Sphere::new(P3d::new(0.0, -1000.0, 0.0), 1000.0, Rc::new(material_ground)));
+
+    for a in -11..11 {
+        for b in -11..11 {
+            let center = P3d::new(a as f64 + 0.9 * rng.gen_range(0.0, 1.0), 0.2, b as f64 + 0.9 * rng.gen_range(0.0, 1.0));
+
+            if (center - P3d::new(4.0, 0.2, 0.0)).length() > 0.9 {
+                let which_material = rng.gen_range(0.0, 1.0);
+
+                if which_material < 0.8 {
+                    // diffuse
+                    let albedo = RGB::random(0.0, 1.0, rng) * RGB::random(0.0, 1.0, rng);
+                    let sphere_material = Lambertian::new(albedo);
+                    world.push(Sphere::new(center, 0.2, Rc::new(sphere_material)));
+                } else if which_material < 0.95 {
+                    // metal
+                    let albedo = RGB::random(0.5, 1.0, rng);
+                    let fuzz = rng.gen_range(0.0, 0.5);
+                    let sphere_material = Metal::new(albedo, fuzz);
+                    world.push(Sphere::new(center, 0.2, Rc::new(sphere_material)));
+                } else {
+                    // glass
+                    let sphere_material = Dielectric::new(1.5);
+                    world.push(Sphere::new(center, 0.2, Rc::new(sphere_material)));
+                }
+            }
+        }
+    }
+
+    let material1 = Dielectric::new(1.5);
+    world.push(Sphere::new(P3d::new(0.0, 1.0, 0.0), 1.0, Rc::new(material1)));
+
+    let material2 = Lambertian::new(RGB::new(0.4, 0.2, 0.1));
+    world.push(Sphere::new(P3d::new(-4.0, 1.0, 0.0), 1.0, Rc::new(material2)));
+
+    let material3 = Metal::new(RGB::new(0.7, 0.6, 0.5), 0.0);
+    world.push(Sphere::new(P3d::new(4.0, 1.0, 0.0), 1.0, Rc::new(material3)));
+
+    world
+}
+
+fn main() {
+    let mut rng = SmallRng::from_entropy();
+
+    // World
+    let world = random_scene(&mut rng);
 
     // Camera
-    let lookfrom = P3d::new(3.0, 3.0, 2.0);
-    let lookat = P3d::new(0.0, 0.0, -1.0);
+    let lookfrom = P3d::new(13.0, 2.0, 3.0);
+    let lookat = P3d::new(0.0, 0.0,0.0);
     let viewup = Vec3::new(0.0, 1.0, 0.0);
-    let focus_distance = (lookat - lookfrom).length();
-    let aperture = 2.0;
+    let focus_distance = 10.0;
+    let aperture = 0.1;
     let camera = Camera::new(
         lookfrom, lookat, viewup,
         20.0, ASPECT_RATIO,
         aperture, focus_distance
     );
-
-    let mut rng = SmallRng::from_entropy();
 
     // Render
     println!("P3");
