@@ -1,0 +1,41 @@
+on:
+  push:
+    branches:
+      - release
+    # Sequence of patterns matched against refs/tags
+
+name: Release Rendered Image
+
+jobs:
+  build:
+    name: Release Rendered Image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Build project
+        run: |
+          cd src; make all;
+      - name: Render Image
+        run: |
+          ./main > ../image.ppm;
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.sha }}
+          release_name: Rendered Image of commit ${{ github.sha }}
+          draft: false
+          prerelease: true
+      - name: Release Rendered Image
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
+          asset_path: ./image.ppm
+          asset_name: image.ppm
+          asset_content_type: image/x-portable-pixmap
