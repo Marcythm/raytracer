@@ -1,6 +1,6 @@
-use crate::utilities::{p3d::P3d, vec3::Vec3};
+use crate::utilities::*;
 use crate::ray::Ray;
-use super::{HitRecord, Hittable};
+use crate::hittable::*;
 
 #[derive(Debug, Clone, Copy, Default)]
 pub struct Sphere {

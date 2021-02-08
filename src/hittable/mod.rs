@@ -1,7 +1,10 @@
 pub mod sphere;
 pub mod hittablelist;
 
-use crate::utilities::{p3d::P3d, vec3::Vec3};
+pub use hittablelist::HittableList;
+pub use sphere::Sphere;
+
+use crate::utilities::*;
 use crate::ray::Ray;
 
 #[derive(Debug, Clone, Copy, Default)]

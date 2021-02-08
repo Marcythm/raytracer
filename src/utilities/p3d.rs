@@ -1,6 +1,6 @@
 use std::ops::{Add, AddAssign, Sub, SubAssign};
 
-use crate::utilities::vec3::Vec3;
+use crate::utilities::*;
 
 #[derive(Debug, Clone, Copy, Default)]
 pub struct P3d(f64, f64, f64);

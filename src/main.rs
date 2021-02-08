@@ -2,8 +2,8 @@ pub mod utilities;
 pub mod ray;
 pub mod hittable;
 
-use utilities::{p3d::P3d, vec3::Vec3, rgb::RGB};
-use hittable::{sphere::Sphere};
+use utilities::*;
+use hittable::*;
 use ray::Ray;
 
 // Image
@@ -17,6 +17,11 @@ const VIEWPORT_WIDTH : f64 = ASPECT_RATIO * VIEWPORT_HEIGHT;
 const FOCAL_LENGTH   : f64 = 1.0;
 
 fn main() {
+    // World
+    let mut world = HittableList::default();
+    world.push(Sphere::new(P3d::new(0.0, 0.0, -1.0), 0.5));
+    world.push(Sphere::new(P3d::new(0.0, -100.5, -1.0), 100.0));
+
     // Camera
     let origin = P3d::new(0.0, 0.0, 0.0);
     let horizontal = Vec3::new(VIEWPORT_WIDTH, 0.0, 0.0);
@@ -33,7 +38,7 @@ fn main() {
         for i in 0..IMAGE_WIDTH {
             let u = i as f64 / (IMAGE_WIDTH - 1) as f64;
             let v = j as f64 / (IMAGE_HEIGHT - 1) as f64;
-            println!("{}", Ray::between(origin, lower_left_corner + u * horizontal + v * vertical).color());
+            println!("{}", Ray::between(origin, lower_left_corner + u * horizontal + v * vertical).color(&world));
         }
     }
 }
