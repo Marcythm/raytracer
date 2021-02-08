@@ -51,6 +51,13 @@ impl Vec3 {
             }
         }
     }
+
+    pub fn random_unit_vector(rng: &mut SmallRng) -> Self {
+        let a = rng.gen_range(0.0, 2.0 * PI);
+        let z = rng.gen_range(-1.0, 1.0);
+        let r = ((1.0 - z * z) as f64).sqrt();
+        Self(r * a.cos(), r * a.sin(), z)
+    }
 }
 
 impl Neg for Vec3 {
