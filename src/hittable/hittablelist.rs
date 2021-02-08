@@ -1,6 +1,5 @@
 use crate::ray::Ray;
-use super::{HitRecord, Hittable};
-use std::rc::Rc;
+use crate::hittable::*;
 
 #[derive(Clone, Default)]
 pub struct HittableList {
@@ -27,8 +26,8 @@ impl Hittable for HittableList {
 
         for object in &self.objects {
             if let Some(subsol) = object.hit(&ray, t_min, closest) {
-                sol = Some(subsol);
                 closest = subsol.t;
+                sol = Some(subsol);
             }
         }
 

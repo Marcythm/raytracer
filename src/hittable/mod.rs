@@ -6,18 +6,20 @@ pub use sphere::Sphere;
 
 use crate::utilities::*;
 use crate::ray::Ray;
+use crate::material::*;
 
-#[derive(Debug, Clone, Copy, Default)]
+#[derive(Clone)]
 pub struct HitRecord {
    pub p: P3d,
    pub normal: Vec3,
    pub t: f64,
+   pub material: Rc<dyn Material>,
    pub front_face: bool,
 }
 
 impl HitRecord {
-    pub fn new(p: P3d, normal: Vec3, t: f64) -> Self {
-        Self { p, normal, t, front_face: false }
+    pub fn new(p: P3d, normal: Vec3, t: f64, material: Rc<dyn Material>) -> Self {
+        Self { p, normal, t, material, front_face: false }
     }
 
     pub fn set_face_normal(&mut self, ray: &Ray) {

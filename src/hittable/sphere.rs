@@ -2,15 +2,16 @@ use crate::utilities::*;
 use crate::ray::Ray;
 use crate::hittable::*;
 
-#[derive(Debug, Clone, Copy, Default)]
+#[derive(Clone)]
 pub struct Sphere {
     center: P3d,
     radius: f64,
+    material: Rc<dyn Material>,
 }
 
 impl Sphere {
-    pub fn new(center: P3d, radius: f64) -> Self {
-        Self { center, radius }
+    pub fn new(center: P3d, radius: f64, material: Rc<dyn Material>) -> Self {
+        Self { center, radius, material }
     }
 }
 
@@ -28,7 +29,7 @@ impl Hittable for Sphere {
             let t = (-half_b - root) / a;
             if t_min < t && t < t_max {
                 let ray_at = ray.at(t);
-                let mut rec = HitRecord::new(ray_at, (ray_at - self.center) / self.radius, t);
+                let mut rec = HitRecord::new(ray_at, (ray_at - self.center) / self.radius, t, self.material.clone());
                 rec.set_face_normal(&ray);
                 return Some(rec);
             }
@@ -36,7 +37,7 @@ impl Hittable for Sphere {
             let t = (-half_b + root) / a;
             if t_min < t && t < t_max {
                 let ray_at = ray.at(t);
-                let mut rec = HitRecord::new(ray_at, (ray_at - self.center) / self.radius, t);
+                let mut rec = HitRecord::new(ray_at, (ray_at - self.center) / self.radius, t, self.material.clone());
                 rec.set_face_normal(&ray);
                 return Some(rec);
             }

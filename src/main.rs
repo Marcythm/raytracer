@@ -13,8 +13,8 @@ use camera::Camera;
 fn main() {
     // World
     let mut world = HittableList::default();
-    world.push(Sphere::new(P3d::new(0.0, 0.0, -1.0), 0.5));
-    world.push(Sphere::new(P3d::new(0.0, -100.5, -1.0), 100.0));
+    // world.push(Sphere::new(P3d::new(0.0, 0.0, -1.0), 0.5));
+    // world.push(Sphere::new(P3d::new(0.0, -100.5, -1.0), 100.0));
 
     // Camera
     let camera = Camera::new();
