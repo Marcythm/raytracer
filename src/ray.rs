@@ -26,7 +26,20 @@ impl Ray {
     }
 
     pub fn color(&self) -> RGB {
-        let t = 0.5 * (self.direction.unit().y() + 1.0);
-        (1.0 - t) * RGB::new(1.0, 1.0, 1.0) + t * RGB::new(0.5, 0.7, 1.0)
+        if self.hit_sphere(P3d::new(0.0, 0.0, -1.0), 0.5) {
+            RGB::new(1.0, 0.0, 0.0)
+        } else {
+            let t = 0.5 * (self.direction.unit().y() + 1.0);
+            (1.0 - t) * RGB::new(1.0, 1.0, 1.0) + t * RGB::new(0.5, 0.7, 1.0)
+        }
+    }
+
+    pub fn hit_sphere(&self, center: P3d, radius: f64) -> bool {
+        let oc = self.origin - center;
+        let a = Vec3::dot(&self.direction, &self.direction);
+        let b = 2.0 * Vec3::dot(&oc, &self.direction);
+        let c = oc.length2() - radius * radius;
+        let discriminant = b * b - 4.0 * a * c;
+        discriminant > 0.0
     }
 }
