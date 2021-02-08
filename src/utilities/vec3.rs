@@ -24,10 +24,10 @@ impl Vec3 {
 
     pub fn unit(&self) -> Self { *self / self.length() }
 
-    pub fn dot(u: &Self, v: &Self) -> f64 {
+    pub fn dot(u: Self, v: Self) -> f64 {
         u.0 * v.0 + u.1 * v.1 + u.2 * v.2
     }
-    pub fn cross(u: &Self, v: &Self) -> Self {
+    pub fn cross(u: Self, v: Self) -> Self {
         Self(
             u.1 * v.2 - u.2 * v.1,
             u.2 * v.0 - u.0 * v.1,
@@ -35,8 +35,14 @@ impl Vec3 {
         )
     }
 
-    pub fn reflect_on(&self, normal: &Self) -> Self {
-        (*self) - 2.0 * Self::dot(self, normal) * (*normal)
+    pub fn reflect_on(self, normal: Self) -> Self {
+        self - 2.0 * Self::dot(self, normal) * normal
+    }
+    pub fn refract_on(self, normal: Self, etai_over_etat: f64) -> Self {
+        let cos_theta = Self::dot(-self, normal);
+        let r_out_perp = etai_over_etat * (self + cos_theta * normal);
+        let r_out_para = -(1.0 - r_out_perp.length2()).abs().sqrt() * normal;
+        r_out_perp + r_out_para
     }
 }
 
@@ -65,9 +71,9 @@ impl Vec3 {
         Self(r * a.cos(), r * a.sin(), z)
     }
 
-    pub fn random_in_hemisphere(rng: &mut SmallRng, normal: &Self) -> Self {
+    pub fn random_in_hemisphere(rng: &mut SmallRng, normal: Self) -> Self {
         let in_unit_sphere = Self::random_in_unit_sphere(rng);
-        if Self::dot(&in_unit_sphere, normal) > 0.0 {
+        if Self::dot(in_unit_sphere, normal) > 0.0 {
             in_unit_sphere
         } else {
             -in_unit_sphere

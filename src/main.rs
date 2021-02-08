@@ -12,8 +12,8 @@ use camera::Camera;
 fn main() {
     // World
     let material_ground = Rc::new(Lambertian::new(RGB::new(0.8, 0.8, 0.0)));
-    let material_center = Rc::new(Lambertian::new(RGB::new(0.7, 0.3, 0.3)));
-    let material_left = Rc::new(Metal::new(RGB::new(0.8, 0.8, 0.8), 0.3));
+    let material_center = Rc::new(Dielectric::new(1.5));
+    let material_left = Rc::new(Dielectric::new(1.5));
     let material_right = Rc::new(Metal::new(RGB::new(0.8, 0.6, 0.2), 1.0));
 
     let mut world = HittableList::default();

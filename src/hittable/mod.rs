@@ -2,10 +2,11 @@ pub mod sphere;
 pub mod hittablelist;
 
 pub mod prelude {
-    pub use super::hittablelist::HittableList;
-    pub use super::sphere::Sphere;
     pub use super::HitRecord;
     pub use super::Hittable;
+
+    pub use super::hittablelist::HittableList;
+    pub use super::sphere::Sphere;
 }
 
 use crate::utilities::prelude::*;
@@ -27,7 +28,7 @@ impl HitRecord {
     }
 
     pub fn set_face_normal(&mut self, ray: &Ray) {
-        self.front_face = Vec3::dot(&ray.direction(), &self.normal) < 0.0;
+        self.front_face = Vec3::dot(ray.direction(), self.normal) < 0.0;
         if !self.front_face {
             self.normal = -self.normal;
         }
