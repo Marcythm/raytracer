@@ -3,22 +3,23 @@
 #include "config.hpp"
 #include "ray.hpp"
 #include "hittable.hpp"
+#include "aabb.hpp"
 
 struct HittableList: Hittable {
-    Vec<ptr<Hittable>> objects;
+    Vec<ptr<Hittable>> hittables;
 
 public:
     HittableList() = default;
     ~HittableList() = default;
 
-    auto clear() -> void { objects.clear(); }
+    auto clear() -> void { hittables.clear(); }
     template <typename T>
     auto push(const T &obj) -> void {
         if constexpr (std::is_convertible_v<T, ptr<Hittable>>)
-            objects.push_back(obj);
+            hittables.push_back(obj);
         else {
             static_assert(std::is_base_of_v<Hittable, T>, "try to add an object which is not hittable into a hittable list");
-            objects.emplace_back(std::make_shared<T>(obj));
+            hittables.emplace_back(std::make_shared<T>(obj));
         }
     }
 
