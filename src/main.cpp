@@ -17,12 +17,16 @@
 
 #include "texture.hpp"
 #include "solidcolor.hpp"
+#include "checkertexture.hpp"
 
 auto random_scene() -> HittableList {
 	HittableList scene;
 
-	const auto ground_material = std::make_shared<Lambertian>(RGB(0.5, 0.5, 0.5));
-	scene.push(Sphere(p3d(0.0, -1000.0, 0.0), 1000.0, ground_material));
+	// const auto ground_material = std::make_shared<Lambertian>(RGB(0.5, 0.5, 0.5));
+	// scene.push(Sphere(p3d(0.0, -1000.0, 0.0), 1000.0, ground_material));
+
+	const auto checker = std::make_shared<CheckerTexture>(RGB(0.2, 0.3, 0.1), RGB(0.9, 0.9, 0.9));
+	scene.push(Sphere(p3d(0.0, -1000.0, 0.0), 1000.0, std::make_shared<Lambertian>(checker)));
 
 	for (i32 a = -11; a < 11; ++a)
 		for (i32 b = -11; b < 11; ++b) {

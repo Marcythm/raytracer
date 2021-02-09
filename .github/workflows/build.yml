@@ -2,7 +2,6 @@ on:
   push:
     branches:
       - release
-    # Sequence of patterns matched against refs/tags
 
 name: Release Rendered Image
 
