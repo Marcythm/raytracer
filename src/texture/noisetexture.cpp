@@ -74,6 +74,20 @@ auto Perlin::noise(const p3d &p) const -> f64 {
     return perlin_interpolation(c, u, v, w);
 }
 
+auto Perlin::turbulence(const p3d &p, const i32 depth) const -> f64 {
+    f64 accum = 0.0;
+    p3d tmp_p = p;
+    f64 weight = 1.0;
+
+    for (i32 i = 0; i < depth; ++i) {
+        accum += weight * noise(tmp_p);
+        weight *= 0.5;
+        tmp_p *= 2.0;
+    }
+
+    return std::fabs(accum);
+}
+
 auto NoiseTexture::value(const f64, const f64, const p3d &p) const -> RGB {
-    return RGB(1.0, 1.0, 1.0) * 0.5 * (1.0 + noise.noise(scale * p));
+    return RGB(1.0, 1.0, 1.0) * noise.turbulence(scale * p);
 }

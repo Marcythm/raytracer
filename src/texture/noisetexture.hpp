@@ -18,6 +18,7 @@ public:
     ~Perlin();
 
     auto noise(const p3d &p) const -> f64;
+    auto turbulence(const p3d &p, const i32 depth = 7) const -> f64;
 };
 
 
