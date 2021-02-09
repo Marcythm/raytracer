@@ -1,9 +1,9 @@
 #pragma once
 
 #include "config.hpp"
-#include "p3d.hpp"
-#include "vec3.hpp"
+#include "lib.hpp"
 #include "ray.hpp"
+#include "hittable.hpp"
 
 struct Material {
     virtual ~Material() = default;

@@ -1,7 +1,4 @@
-#include "rgb.hpp"
 #include "ray.hpp"
-#include "hittable.hpp"
-#include "material.hpp"
 
 auto Ray::color(const Hittable &world, const i32 depth) const -> RGB {
     if (depth <= 0) return RGB(0, 0, 0);

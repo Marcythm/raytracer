@@ -175,13 +175,17 @@ template <typename T>
 struct p3d;
 struct Vec3;
 struct RGB;
+
 struct Ray;
 struct Camera;
+struct AABB;
+struct BVHNode;
 
 struct HitRecord;
 struct Hittable;
-struct Sphere;
 struct HittableList;
+struct Sphere;
+struct MovingSphere;
 
 struct Material;
 struct Lambertian;

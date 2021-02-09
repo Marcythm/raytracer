@@ -1,12 +1,15 @@
 #include "config.hpp"
-#include "p3d.hpp"
-#include "vec3.hpp"
-#include "rgb.hpp"
+#include "lib.hpp"
+
 #include "ray.hpp"
+#include "camera.hpp"
+#include "aabb.hpp"
+#include "bvhnode.hpp"
+
+#include "hittable.hpp"
 #include "sphere.hpp"
 #include "movingsphere.hpp"
-#include "hittablelist.hpp"
-#include "camera.hpp"
+
 #include "material.hpp"
 #include "lambertian.hpp"
 #include "metal.hpp"

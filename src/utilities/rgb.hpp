@@ -1,7 +1,7 @@
 #pragma once
 
 #include "config.hpp"
-#include "lib.hpp"
+#include "utility.hpp"
 
 struct RGB {
     using Self = RGB;

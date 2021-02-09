@@ -1,4 +1,9 @@
-#include "hittablelist.hpp"
+#include "hittable.hpp"
+
+auto HitRecord::set_face_normal(const Ray &ray) -> void {
+    front_face = (dot(ray.direction, normal) < 0);
+    if (not front_face) normal = -normal;
+}
 
 auto HittableList::hit(const Ray &ray, const f64 t_min, const f64 t_max) const -> std::optional<HitRecord> {
     std::optional<HitRecord> rec;

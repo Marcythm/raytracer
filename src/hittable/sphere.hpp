@@ -1,10 +1,6 @@
 #pragma once
 
-#include "config.hpp"
-#include "p3d.hpp"
-#include "ray.hpp"
 #include "hittable.hpp"
-#include "aabb.hpp"
 
 struct Sphere: Hittable {
     p3d center;
