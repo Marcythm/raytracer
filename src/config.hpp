@@ -193,6 +193,7 @@ struct Metal;
 struct Dielectric;
 
 struct Texture;
+struct SolidColor;
 
 enum class diffuse_render_method: bool {
     hemispherical_scattering = false,

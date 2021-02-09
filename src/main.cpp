@@ -16,6 +16,7 @@
 #include "dielectric.hpp"
 
 #include "texture.hpp"
+#include "solidcolor.hpp"
 
 auto random_scene() -> HittableList {
 	HittableList scene;
