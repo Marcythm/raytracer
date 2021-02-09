@@ -4,13 +4,14 @@
 
 struct Perlin {
     static constexpr i32 POINT_COUNT = 256;
-    f64 *random;
+    Vec3 *random;
     i32 *px, *py, *pz;
 
     static std::random_device seed;
     static std::mt19937 rng;
     static auto generate_permutation() -> i32*;
     static auto trilinear_interpolation(const f64 c[2][2][2], const f64 u, const f64 v, const f64 w) -> f64;
+    static auto perlin_interpolation(const Vec3 c[2][2][2], const f64 u, const f64 v, const f64 w) -> f64;
 
 public:
     Perlin();
