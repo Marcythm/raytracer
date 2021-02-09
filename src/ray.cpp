@@ -11,6 +11,6 @@ auto Ray::color(const Hittable &world, const i32 depth) const -> RGB {
             return attenuation * scattered.color(world, depth - 1);
         } else return RGB(0, 0, 0);
     }
-    const f64 t = 0.5 * (direction().unit().y() + 1.0);
+    const f64 t = 0.5 * (direction.unit().y + 1.0);
     return (1.0 - t) * RGB(1.0, 1.0, 1.0) + t * RGB(0.5, 0.7, 1.0);
 }

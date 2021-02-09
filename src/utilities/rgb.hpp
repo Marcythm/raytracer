@@ -3,51 +3,47 @@
 #include "config.hpp"
 #include "lib.hpp"
 
-class RGB {
+struct RGB {
     using Self = RGB;
 
-    f64 pr, pg, pb;
+    f64 r, g, b;
 
 public:
-    constexpr RGB(): pr(0), pg(0), pb(0) {}
-    constexpr RGB(const Self &other): pr(other.pr), pg(other.pg), pb(other.pb) {}
-    constexpr RGB(f64 e0, f64 e1, f64 e2): pr(e0), pg(e1), pb(e2) {}
+    constexpr RGB(): r(0), g(0), b(0) {}
+    constexpr RGB(const Self &other): r(other.r), g(other.g), b(other.b) {}
+    constexpr RGB(f64 _r, f64 _g, f64 _b): r(_r), g(_g), b(_b) {}
 
-    constexpr auto r() const -> f64 { return pr; }
-    constexpr auto g() const -> f64 { return pg; }
-    constexpr auto b() const -> f64 { return pb; }
+    constexpr auto operator = (const Self &rhs) -> Self& { return r = rhs.r, g = rhs.g, b = rhs.b, *this; }
 
-    constexpr auto operator = (const Self &rhs) -> Self& { return pr = rhs.pr, pg = rhs.pg, pb = rhs.pb, *this; }
-
-    constexpr auto operator += (const Self &rhs) -> Self& { pr += rhs.pr; pg += rhs.pg; pb += rhs.pb; return *this; }
-    constexpr auto operator -= (const Self &rhs) -> Self& { pr -= rhs.pr; pg -= rhs.pg; pb -= rhs.pb; return *this; }
-    constexpr auto operator *= (const f64   rhs) -> Self& { pr *= rhs;    pg *= rhs;    pb *= rhs;    return *this; }
-    constexpr auto operator /= (const f64   rhs) -> Self& { pr /= rhs;    pg /= rhs;    pb /= rhs;    return *this; }
+    constexpr auto operator += (const Self &rhs) -> Self& { r += rhs.r; g += rhs.g; b += rhs.b; return *this; }
+    constexpr auto operator -= (const Self &rhs) -> Self& { r -= rhs.r; g -= rhs.g; b -= rhs.b; return *this; }
+    constexpr auto operator *= (const f64   rhs) -> Self& { r *= rhs;   g *= rhs;   b *= rhs;   return *this; }
+    constexpr auto operator /= (const f64   rhs) -> Self& { r /= rhs;   g /= rhs;   b /= rhs;   return *this; }
 
 public:
     friend constexpr auto operator + (const Self &lhs, const Self &rhs) -> Self {
-        return Self(lhs.pr + rhs.pr, lhs.pg + rhs.pg, lhs.pb + rhs.pb);
+        return Self(lhs.r + rhs.r, lhs.g + rhs.g, lhs.b + rhs.b);
     }
     friend constexpr auto operator - (const Self &lhs, const Self &rhs) -> Self {
-        return Self(lhs.pr - rhs.pr, lhs.pg - rhs.pg, lhs.pb - rhs.pb);
+        return Self(lhs.r - rhs.r, lhs.g - rhs.g, lhs.b - rhs.b);
     }
     friend constexpr auto operator * (const Self &lhs, const Self &rhs) -> Self {
-        return Self(lhs.pr * rhs.pr, lhs.pg * rhs.pg, lhs.pb * rhs.pb);
+        return Self(lhs.r * rhs.r, lhs.g * rhs.g, lhs.b * rhs.b);
     }
     friend constexpr auto operator * (const Self &lhs, const f64   rhs) -> Self {
-        return Self(lhs.pr * rhs, lhs.pg * rhs, lhs.pb * rhs);
+        return Self(lhs.r * rhs, lhs.g * rhs, lhs.b * rhs);
     }
     friend constexpr auto operator * (const f64   lhs, const Self &rhs) -> Self {
-        return Self(lhs * rhs.pr, lhs * rhs.pg, lhs * rhs.pb);
+        return Self(lhs * rhs.r, lhs * rhs.g, lhs * rhs.b);
     }
     friend constexpr auto operator / (const Self &lhs, const f64   rhs) -> Self {
-        return Self(lhs.pr / rhs, lhs.pg / rhs, lhs.pb / rhs);
+        return Self(lhs.r / rhs, lhs.g / rhs, lhs.b / rhs);
     }
 
     friend auto operator << (std::ostream &o, const Self &rhs) -> std::ostream& {
-        return o << static_cast<i32>(256 * clamp(std::pow(rhs.pr / constants::samples_per_pixel, 1 / constants::GAMMA), 0.0, 0.999)) << ' '
-                 << static_cast<i32>(256 * clamp(std::pow(rhs.pg / constants::samples_per_pixel, 1 / constants::GAMMA), 0.0, 0.999)) << ' '
-                 << static_cast<i32>(256 * clamp(std::pow(rhs.pb / constants::samples_per_pixel, 1 / constants::GAMMA), 0.0, 0.999));
+        return o << static_cast<i32>(256 * clamp(std::pow(rhs.r / constants::samples_per_pixel, 1 / constants::GAMMA), 0.0, 0.999)) << ' '
+                 << static_cast<i32>(256 * clamp(std::pow(rhs.g / constants::samples_per_pixel, 1 / constants::GAMMA), 0.0, 0.999)) << ' '
+                 << static_cast<i32>(256 * clamp(std::pow(rhs.b / constants::samples_per_pixel, 1 / constants::GAMMA), 0.0, 0.999));
     }
 
 public:

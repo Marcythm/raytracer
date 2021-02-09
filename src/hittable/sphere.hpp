@@ -5,7 +5,7 @@
 #include "ray.hpp"
 #include "hittable.hpp"
 
-class Sphere: public Hittable {
+struct Sphere: Hittable {
     p3d center;
     f64 radius;
     ptr<Material> material;

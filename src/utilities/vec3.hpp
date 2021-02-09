@@ -3,33 +3,29 @@
 #include "config.hpp"
 #include "lib.hpp"
 
-class Vec3 {
+struct Vec3 {
     using Self = Vec3;
 
-    f64 px, py, pz;
+    f64 x, y, z;
 
 public:
-    constexpr Vec3(): px(0), py(0), pz(0) {}
-    constexpr Vec3(const Self &other): px(other.px), py(other.py), pz(other.pz) {}
-    constexpr Vec3(f64 e0, f64 e1, f64 e2): px(e0), py(e1), pz(e2) {}
+    constexpr Vec3(): x(0), y(0), z(0) {}
+    constexpr Vec3(const Self &other): x(other.x), y(other.y), z(other.z) {}
+    constexpr Vec3(f64 _x, f64 _y, f64 _z): x(_x), y(_y), z(_z) {}
 
-    constexpr auto x() const -> f64 { return px; }
-    constexpr auto y() const -> f64 { return py; }
-    constexpr auto z() const -> f64 { return pz; }
+    constexpr auto operator = (const Self &rhs) -> Self& { return x = rhs.x, y = rhs.y, z = rhs.z, *this; }
+    constexpr auto operator - () const -> Self { return Vec3(-x, -y, -z); }
 
-    constexpr auto operator = (const Self &rhs) -> Self& { return px = rhs.px, py = rhs.py, pz = rhs.pz, *this; }
-    constexpr auto operator - () const -> Self { return Vec3(-px, -py, -pz); }
+    constexpr auto operator += (const Self &rhs) -> Self& { x += rhs.x; y += rhs.y; z += rhs.z; return *this; }
+    constexpr auto operator -= (const Self &rhs) -> Self& { x -= rhs.x; y -= rhs.y; z -= rhs.z; return *this; }
+    constexpr auto operator *= (const f64   rhs) -> Self& { x *= rhs;   y *= rhs;   z *= rhs;   return *this; }
+    constexpr auto operator /= (const f64   rhs) -> Self& { x /= rhs;   y /= rhs;   z /= rhs;   return *this; }
 
-    constexpr auto operator += (const Self &rhs) -> Self& { px += rhs.px; py += rhs.py; pz += rhs.pz; return *this; }
-    constexpr auto operator -= (const Self &rhs) -> Self& { px -= rhs.px; py -= rhs.py; pz -= rhs.pz; return *this; }
-    constexpr auto operator *= (const f64   rhs) -> Self& { px *= rhs;    py *= rhs;    pz *= rhs;    return *this; }
-    constexpr auto operator /= (const f64   rhs) -> Self& { px /= rhs;    py /= rhs;    pz /= rhs;    return *this; }
-
-    constexpr auto operator [] (const i32 idx) -> f64& { return idx == 0 ? px : idx == 1 ? py : pz; }
-    constexpr auto operator [] (const i32 idx) const -> f64 { return idx == 0 ? px : idx == 1 ? py : pz; }
+    constexpr auto operator [] (const i32 idx) -> f64& { return idx == 0 ? x : idx == 1 ? y : z; }
+    constexpr auto operator [] (const i32 idx) const -> f64 { return idx == 0 ? x : idx == 1 ? y : z; }
 
     auto length()  const -> f64 { return std::sqrt(length2()); }
-    constexpr auto length2() const -> f64 { return px * px + py * py + pz * pz; }
+    constexpr auto length2() const -> f64 { return x * x + y * y + z * z; }
 
     auto unit() const -> Vec3 { return *this / length(); }
     auto reflect_on(const Self &normal) const -> Self { return *this - 2 * dot(*this, normal) * normal; }
@@ -43,30 +39,30 @@ public:
 
 public:
     friend constexpr auto operator + (const Self &lhs, const Self &rhs) -> Self {
-        return Self(lhs.px + rhs.px, lhs.py + rhs.py, lhs.pz + rhs.pz);
+        return Self(lhs.x + rhs.x, lhs.y + rhs.y, lhs.z + rhs.z);
     }
     friend constexpr auto operator - (const Self &lhs, const Self &rhs) -> Self {
-        return Self(lhs.px - rhs.px, lhs.py - rhs.py, lhs.pz - rhs.pz);
+        return Self(lhs.x - rhs.x, lhs.y - rhs.y, lhs.z - rhs.z);
     }
     friend constexpr auto operator * (const Self &lhs, const f64   rhs) -> Self {
-        return Self(lhs.px * rhs, lhs.py * rhs, lhs.pz * rhs);
+        return Self(lhs.x * rhs, lhs.y * rhs, lhs.z * rhs);
     }
     friend constexpr auto operator * (const f64   lhs, const Self &rhs) -> Self {
-        return Self(lhs * rhs.px, lhs * rhs.py, lhs * rhs.pz);
+        return Self(lhs * rhs.x, lhs * rhs.y, lhs * rhs.z);
     }
     friend constexpr auto operator / (const Self &lhs, const f64   rhs) -> Self {
-        return Self(lhs.px / rhs, lhs.py / rhs, lhs.pz / rhs);
+        return Self(lhs.x / rhs, lhs.y / rhs, lhs.z / rhs);
     }
 
     friend constexpr auto dot(const Self &lhs, const Self &rhs) -> f64 {
-        return lhs.px * rhs.px + lhs.py * rhs.py + lhs.pz * rhs.pz;
+        return lhs.x * rhs.x + lhs.y * rhs.y + lhs.z * rhs.z;
     }
 
     friend constexpr auto cross(const Self &lhs, const Self &rhs) -> Self {
         return Self(
-            lhs.py * rhs.pz - lhs.pz * rhs.py,
-            lhs.pz * rhs.px - lhs.px * rhs.pz,
-            lhs.px * rhs.py - lhs.py * rhs.px
+            lhs.y * rhs.z - lhs.z * rhs.y,
+            lhs.z * rhs.x - lhs.x * rhs.z,
+            lhs.x * rhs.y - lhs.y * rhs.x
         );
     }
 

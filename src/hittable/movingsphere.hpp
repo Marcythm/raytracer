@@ -5,7 +5,7 @@
 #include "ray.hpp"
 #include "hittable.hpp"
 
-class MovingSphere: public Hittable {
+struct MovingSphere: Hittable {
     p3d center0, center1;
     f64 time0, time1;
     f64 radius;

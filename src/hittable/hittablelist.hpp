@@ -4,7 +4,7 @@
 #include "ray.hpp"
 #include "hittable.hpp"
 
-class HittableList: public Hittable {
+struct HittableList: Hittable {
     Vec<ptr<Hittable>> objects;
 
 public:

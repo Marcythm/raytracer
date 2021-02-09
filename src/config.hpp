@@ -172,21 +172,21 @@ template <typename T>
 
 /* classes */
 
-class p3d;
-class Vec3;
-class RGB;
-class Ray;
-class Camera;
+struct p3d;
+struct Vec3;
+struct RGB;
+struct Ray;
+struct Camera;
 
 struct HitRecord;
 struct Hittable;
-class Sphere;
-class HittableList;
+struct Sphere;
+struct HittableList;
 
 struct Material;
-class Lambertian;
-class Metal;
-class Dielectric;
+struct Lambertian;
+struct Metal;
+struct Dielectric;
 
 enum class diffuse_render_method: bool {
     hemispherical_scattering = false,

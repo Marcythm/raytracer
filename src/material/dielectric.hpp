@@ -14,7 +14,7 @@ auto schlick(const f64 cosine, const f64 refractive_index) -> f64 {
     return r0 + (1 - r0) * std::pow(1 - cosine, 5);
 }
 
-class Dielectric: public Material {
+struct Dielectric: Material {
     f64 refractive_index;
 
 public:
@@ -23,7 +23,7 @@ public:
 
     auto scatter(const Ray &ray, const HitRecord &rec) const -> std::optional<std::pair<Ray, RGB>> override {
         // assert(rec.normal.length2() == 1);
-        const Vec3 unit_direction = ray.direction().unit();
+        const Vec3 unit_direction = ray.direction.unit();
         const f64 cos_theta = std::fmin(dot(-unit_direction, rec.normal), 1.0);
         const f64 sin_theta = std::sqrt(1.0 - cos_theta * cos_theta);
         const f64 etai_over_etat = rec.front_face ? (1.0 / refractive_index) : refractive_index;
