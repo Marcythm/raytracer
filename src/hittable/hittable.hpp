@@ -9,6 +9,8 @@ struct HitRecord {
     p3d p;
     Vec3 normal;
     f64 t;
+    f64 u;
+    f64 v;
     ptr<Material> material;
     bool front_face;
 
