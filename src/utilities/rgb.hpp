@@ -41,9 +41,9 @@ public:
     }
 
     friend auto operator << (std::ostream &o, const Self &rhs) -> std::ostream& {
-        return o << static_cast<i32>(256 * clamp(std::pow(rhs.r / constants::samples_per_pixel, 1 / constants::GAMMA), 0.0, 0.999)) << ' '
-                 << static_cast<i32>(256 * clamp(std::pow(rhs.g / constants::samples_per_pixel, 1 / constants::GAMMA), 0.0, 0.999)) << ' '
-                 << static_cast<i32>(256 * clamp(std::pow(rhs.b / constants::samples_per_pixel, 1 / constants::GAMMA), 0.0, 0.999));
+        return o << static_cast<i32>(256 * clamp(std::pow(rhs.r / SAMPLES_PER_PIXEL, 1 / GAMMA), 0.0, 0.999)) << ' '
+                 << static_cast<i32>(256 * clamp(std::pow(rhs.g / SAMPLES_PER_PIXEL, 1 / GAMMA), 0.0, 0.999)) << ' '
+                 << static_cast<i32>(256 * clamp(std::pow(rhs.b / SAMPLES_PER_PIXEL, 1 / GAMMA), 0.0, 0.999));
     }
 
 public:

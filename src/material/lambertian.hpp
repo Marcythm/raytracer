@@ -3,10 +3,11 @@
 #include "material.hpp"
 
 struct Lambertian: Material {
-    RGB albedo;
+    ptr<Texture> albedo;
 
 public:
-    Lambertian(const RGB &_albedo): albedo(_albedo) {}
+    Lambertian(const RGB &_albedo): albedo(std::make_shared<SolidColor>(_albedo)) {}
+    Lambertian(const ptr<Texture> &_albedo): albedo(_albedo) {}
     ~Lambertian() = default;
 
     auto scatter(const Ray &ray, const HitRecord &rec) const -> std::optional<std::pair<Ray, RGB>> override;

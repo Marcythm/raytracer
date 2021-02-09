@@ -74,22 +74,22 @@ auto main() -> i32 {
 	const f64 focus_distance = 10.0;
 	const f64 aperture = 0.1;
 
-	const Camera camera(lookfrom, lookat, viewup, 20.0, constants::aspect_ratio, aperture, focus_distance, 0.0, 1.0);
+	const Camera camera(lookfrom, lookat, viewup, 20.0, ASPECT_RATIO, aperture, focus_distance, 0.0, 1.0);
 
 	// Render
 	std::cout.tie(0);
 	std::cout << "P3\n";
-	std::cout << constants::image_width << ' ' << constants::image_height << '\n';
+	std::cout << IMAGE_WIDTH << ' ' << IMAGE_HEIGHT << '\n';
 	std::cout << "255\n";
 
-	for (i32 j = constants::image_height - 1; j >= 0; --j) {
+	for (i32 j = IMAGE_HEIGHT - 1; j >= 0; --j) {
 		fprintf(stderr, "Rendering: %d lines remaining\n", j);
-		for (i32 i = 0; i < constants::image_width; ++i) {
+		for (i32 i = 0; i < IMAGE_WIDTH; ++i) {
 			RGB pixel_color(0.0, 0.0, 0.0);
-			for (i32 s = 0; s < constants::samples_per_pixel; ++s) {
-				const f64 u = (i + random_f64()) / (constants::image_width - 1);
-				const f64 v = (j + random_f64()) / (constants::image_height - 1);
-				pixel_color += camera.get_ray(u, v).color(scene, constants::max_depth);
+			for (i32 s = 0; s < SAMPLES_PER_PIXEL; ++s) {
+				const f64 u = (i + random_f64()) / (IMAGE_WIDTH - 1);
+				const f64 v = (j + random_f64()) / (IMAGE_HEIGHT - 1);
+				pixel_color += camera.get_ray(u, v).color(scene, MAX_DEPTH);
 			}
 			std::cout << pixel_color << '\n';
 		}

@@ -2,7 +2,7 @@
 
 auto Ray::color(const Hittable &world, const i32 depth) const -> RGB {
     if (depth <= 0) return RGB(0, 0, 0);
-    if (const auto &hit = world.hit(*this, constants::eps, constants::infinity); hit.has_value()) {
+    if (const auto &hit = world.hit(*this, EPS, INFINITY); hit.has_value()) {
         if (const auto &scatter = hit.value().material->scatter(*this, hit.value()); scatter.has_value()) {
             const auto &[scattered, attenuation] = scatter.value();
             return attenuation * scattered.color(world, depth - 1);

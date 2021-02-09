@@ -2,6 +2,7 @@
 
 #include "config.hpp"
 #include "lib.hpp"
+
 #include "ray.hpp"
 
 struct AABB { // Axis-Aligned Bounding Box

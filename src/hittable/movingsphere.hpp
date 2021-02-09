@@ -21,6 +21,8 @@ public:
         return center0 + ((time - time0) / (time1 - time0)) * (center1 - center0);
     }
 
+    static auto get_sphere_uv(const Vec3 &normal) -> std::pair<f64, f64>;
+
     auto hit(const Ray &ray, const f64 t_min, const f64 t_max) const -> std::optional<HitRecord> override;
     auto bounding_box(const f64 t0, const f64 t1) const -> std::optional<AABB> override;
 };

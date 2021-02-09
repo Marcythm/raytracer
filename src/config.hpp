@@ -204,22 +204,24 @@ enum class diffuse_render_method: bool {
 namespace constants {
 
 	// Image
-	constexpr f64 aspect_ratio = 3.0 / 2.0; // 16.0 / 9.0;
-	constexpr i32 image_width = 1200; // 400;
-	constexpr i32 image_height = static_cast<i32>(image_width / aspect_ratio);
-	constexpr i32 samples_per_pixel = 500; // 100;
-	constexpr i32 max_depth = 50;
+	constexpr f64 ASPECT_RATIO = 3.0 / 2.0; // 16.0 / 9.0;
+	constexpr i32 IMAGE_WIDTH = 1200; // 400;
+	constexpr i32 IMAGE_HEIGHT = static_cast<i32>(IMAGE_WIDTH / ASPECT_RATIO);
+	constexpr i32 SAMPLES_PER_PIXEL = 500; // 100;
+	constexpr i32 MAX_DEPTH = 50;
 	constexpr f64 GAMMA = 2;
 
 	// Camera
-	constexpr f64 viewport_height = 2.0;
-	constexpr f64 viewport_width = viewport_height * aspect_ratio;
-	constexpr f64 focal_length = 1.0;
+	constexpr f64 VIEWPORT_HEIGHT = 2.0;
+	constexpr f64 VIEWPORT_WIDTH = VIEWPORT_HEIGHT * ASPECT_RATIO;
+	constexpr f64 FOCAL_LENGTH = 1.0;
 
 
-	constexpr f64 infinity = std::numeric_limits<f64>::infinity();
-	constexpr f64 eps = 1e-5;
-	constexpr f64 pi = 3.1415926535897932385;
+	constexpr f64 INF = std::numeric_limits<f64>::infinity();
+	constexpr f64 EPS = 1e-5;
+	constexpr f64 PI = 3.1415926535897932385;
 
-	constexpr diffuse_render_method diffuse_render_method_type = diffuse_render_method::true_lambertian_reflection;
+	constexpr diffuse_render_method DIFFUSE_RENDER_METHOD_TYPE = diffuse_render_method::true_lambertian_reflection;
 }
+
+using namespace constants;
