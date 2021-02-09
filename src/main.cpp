@@ -67,18 +67,47 @@ auto random_scene() -> HittableList {
 	return scene;
 }
 
+auto two_spheres() -> HittableList {
+	HittableList hittables;
+
+	const auto checker = std::make_shared<CheckerTexture>(RGB(0.2, 0.3, 0.1), RGB(0.9, 0.9, 0.9));
+	hittables.push(Sphere(p3d(0.0, -10.0, 0.0), 10.0, std::make_shared<Lambertian>(checker)));
+	hittables.push(Sphere(p3d(0.0,  10.0, 0.0), 10.0, std::make_shared<Lambertian>(checker)));
+
+	return hittables;
+}
+
 auto main() -> i32 {
 	// Scene
-	const auto scene = random_scene();
+	HittableList scene;
+
+	p3d lookfrom(13.0, 2.0, 3.0);
+	p3d lookat(0.0, 0.0, 0.0);
+	f64 vertical_field_of_view = 40.0;
+	f64 aperture = 0.0;
+
+	switch (0) {
+		case 1:
+			scene = random_scene();
+			lookfrom = p3d(13.0, 2.0, 3.0);
+			lookat = p3d(0.0, 0.0, 0.0);
+			vertical_field_of_view = 20.0;
+			aperture = 0.1;
+			break;
+		default:
+		case 2:
+			scene = two_spheres();
+			lookfrom = p3d(13.0, 2.0, 3.0);
+			lookat = p3d(0.0, 0.0, 0.0);
+			vertical_field_of_view = 20.0;
+			break;
+	}
 
 	// Camera
-	const p3d lookfrom(13.0, 2.0, 3.0);
-	const p3d lookat(0.0, 0.0, 0.0);
 	const Vec3 viewup(0.0, 1.0, 0.0);
 	const f64 focus_distance = 10.0;
-	const f64 aperture = 0.1;
 
-	const Camera camera(lookfrom, lookat, viewup, 20.0, ASPECT_RATIO, aperture, focus_distance, 0.0, 1.0);
+	const Camera camera(lookfrom, lookat, viewup, vertical_field_of_view, ASPECT_RATIO, aperture, focus_distance, 0.0, 1.0);
 
 	// Render
 	std::cout.tie(0);
