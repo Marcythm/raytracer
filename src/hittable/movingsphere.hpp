@@ -4,6 +4,7 @@
 #include "p3d.hpp"
 #include "ray.hpp"
 #include "hittable.hpp"
+#include "aabb.hpp"
 
 struct MovingSphere: Hittable {
     p3d center0, center1;
@@ -24,5 +25,6 @@ public:
         return center0 + ((time - time0) / (time1 - time0)) * (center1 - center0);
     }
 
-    auto hit(const Ray &ray, const f64 t_min, const f64 t_max) const -> std::optional<HitRecord>;
+    auto hit(const Ray &ray, const f64 t_min, const f64 t_max) const -> std::optional<HitRecord> override;
+    auto bounding_box(const f64 t0, const f64 t1) const -> std::optional<AABB> override;
 };

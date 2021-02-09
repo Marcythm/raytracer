@@ -4,6 +4,7 @@
 #include "p3d.hpp"
 #include "ray.hpp"
 #include "hittable.hpp"
+#include "aabb.hpp"
 
 struct Sphere: Hittable {
     p3d center;
@@ -16,5 +17,6 @@ public:
         : center(_center), radius(_radius), material(_material) {}
     ~Sphere() = default;
 
-    auto hit(const Ray &ray, const f64 t_min, const f64 t_max) const -> std::optional<HitRecord>;
+    auto hit(const Ray &ray, const f64 t_min, const f64 t_max) const -> std::optional<HitRecord> override;
+    auto bounding_box(const f64 t0, const f64 t1) const -> std::optional<AABB> override;
 };

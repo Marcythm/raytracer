@@ -1,7 +1,4 @@
-#include "config.hpp"
 #include "vec3.hpp"
-#include "ray.hpp"
-#include "hittable.hpp"
 #include "sphere.hpp"
 
 auto Sphere::hit(const Ray &ray, const f64 t_min, const f64 t_max) const -> std::optional<HitRecord> {
@@ -34,4 +31,11 @@ auto Sphere::hit(const Ray &ray, const f64 t_min, const f64 t_max) const -> std:
         }
     }
     return std::optional<HitRecord>();
+}
+
+auto Sphere::bounding_box(const f64, const f64) const -> std::optional<AABB> {
+    return std::optional(AABB(
+        p3d(center.x - radius, center.y - radius, center.z - radius),
+        p3d(center.x + radius, center.y + radius, center.z + radius)
+    ));
 }

@@ -6,6 +6,8 @@
 #include "ray.hpp"
 
 struct AABB { // Axis-Aligned Bounding Box
+    using Self = AABB;
+
     p3d min;
     p3d max;
 
@@ -26,6 +28,21 @@ public:
                 return false;
         }
         return true;
+    }
+
+    static auto surrounding_box(const Self &box0, const Self &box1) -> Self {
+        return Self(
+            p3d(
+                std::fmin(box0.min.x, box1.min.x),
+                std::fmin(box0.min.y, box1.min.y),
+                std::fmin(box0.min.z, box1.min.z)
+            ),
+            p3d(
+                std::fmax(box0.max.x, box1.max.x),
+                std::fmax(box0.max.y, box1.max.y),
+                std::fmax(box0.max.z, box1.max.z)
+            )
+        );
     }
 
 };

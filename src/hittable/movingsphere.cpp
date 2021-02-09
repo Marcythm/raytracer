@@ -1,7 +1,4 @@
-#include "config.hpp"
 #include "vec3.hpp"
-#include "ray.hpp"
-#include "hittable.hpp"
 #include "movingsphere.hpp"
 
 auto MovingSphere::hit(const Ray &ray, const f64 t_min, const f64 t_max) const -> std::optional<HitRecord> {
@@ -34,4 +31,17 @@ auto MovingSphere::hit(const Ray &ray, const f64 t_min, const f64 t_max) const -
         }
     }
     return std::optional<HitRecord>();
+}
+
+auto MovingSphere::bounding_box(const f64 t0, const f64 t1) const -> std::optional<AABB> {
+    return std::optional(AABB::surrounding_box(
+        AABB(
+            center(t0) - Vec3(radius, radius, radius),
+            center(t0) + Vec3(radius, radius, radius)
+        ),
+        AABB(
+            center(t1) - Vec3(radius, radius, radius),
+            center(t1) + Vec3(radius, radius, radius)
+        )
+    ));
 }
