@@ -89,5 +89,5 @@ auto Perlin::turbulence(const p3d &p, const i32 depth) const -> f64 {
 }
 
 auto NoiseTexture::value(const f64, const f64, const p3d &p) const -> RGB {
-    return RGB(1.0, 1.0, 1.0) * noise.turbulence(scale * p);
+    return RGB(1.0, 1.0, 1.0) * 0.5 * (1.0 + std::sin(scale * p.z + 10.0 * noise.turbulence(p)));
 }
