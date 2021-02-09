@@ -1,6 +1,7 @@
 on:
   push:
     branches:
+      - render
       - release
 
 name: Release Rendered Image
@@ -24,8 +25,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.evnet.head_commit.message }}
-          release_name: Rendered Image of ${{ github.evnet.head_commit.message }}
+          tag_name: ${{ github.ref }}
+          release_name: Rendered Image of ${{ github.event.head_commit.message }}
           draft: false
           prerelease: true
       - name: Release Rendered Image
