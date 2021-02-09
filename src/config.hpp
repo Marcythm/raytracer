@@ -152,22 +152,14 @@ using f32	=	float;
 using f64	=	double;
 using f80	=	long double;
 
-#ifdef _LIBCPP_MEMORY
+
 template <typename T>
 	using ptr = std::shared_ptr<T>;
-#else
-template <typename T>
-	using ptr = T *;
-#endif
 
-#ifdef _LIBCPP_VECTOR
 template <typename T>
 	using Vec = std::vector<T>;
-#endif
 
-#ifdef _LIBCPP_STRING
-	using str = std::string;
-#endif
+using str = std::string;
 
 
 /* classes */
