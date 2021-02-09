@@ -19,6 +19,7 @@
 #include "solidcolor.hpp"
 #include "checkertexture.hpp"
 #include "noisetexture.hpp"
+#include "imagetexture.hpp"
 
 auto random_scene() -> HittableList {
 	HittableList scene;
