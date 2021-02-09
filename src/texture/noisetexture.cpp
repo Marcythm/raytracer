@@ -37,9 +37,9 @@ Perlin::~Perlin() {
 }
 
 auto Perlin::noise(const p3d &p) const -> f64 {
-    const f64 u = p.x - std::floor(p.x);
-    const f64 v = p.y - std::floor(p.y);
-    const f64 w = p.z - std::floor(p.z);
+    f64 u = p.x - std::floor(p.x); u = u * u * (3.0 - 2.0 * u);
+    f64 v = p.y - std::floor(p.y); v = v * v * (3.0 - 2.0 * v);
+    f64 w = p.z - std::floor(p.z); w = w * w * (3.0 - 2.0 * w);
 
     const i32 i = std::floor(p.x);
     const i32 j = std::floor(p.y);
