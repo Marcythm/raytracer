@@ -89,6 +89,16 @@ auto two_perlin_spheres() -> HittableList {
 	return hittables;
 }
 
+auto earth() -> HittableList {
+	HittableList hittables;
+
+	const auto earth_texture = std::make_shared<ImageTexture>("earthmap.jpg");
+	const auto earth_surface = std::make_shared<Lambertian>(earth_texture);
+	hittables.push(Sphere(p3d(0.0, 0.0, 0.0), 2.0, earth_surface));
+
+	return hittables;
+}
+
 auto main() -> i32 {
 	// Scene
 	HittableList scene;
@@ -112,9 +122,15 @@ auto main() -> i32 {
 			lookat = p3d(0.0, 0.0, 0.0);
 			vertical_field_of_view = 20.0;
 			break;
-		default:
 		case 3:
 			scene = two_perlin_spheres();
+			lookfrom = p3d(13.0, 2.0, 3.0);
+			lookat = p3d(0.0, 0.0, 0.0);
+			vertical_field_of_view = 20.0;
+			break;
+		default:
+		case 4:
+			scene = earth();
 			lookfrom = p3d(13.0, 2.0, 3.0);
 			lookat = p3d(0.0, 0.0, 0.0);
 			vertical_field_of_view = 20.0;
