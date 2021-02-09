@@ -10,6 +10,7 @@ struct Perlin {
     static std::random_device seed;
     static std::mt19937 rng;
     static auto generate_permutation() -> i32*;
+    static auto trilinear_interpolation(const f64 c[2][2][2], const f64 u, const f64 v, const f64 w) -> f64;
 
 public:
     Perlin();
