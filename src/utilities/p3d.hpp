@@ -22,6 +22,9 @@ public:
     constexpr auto operator += (const Vec3 &rhs) -> Self& { px += rhs.x(); py += rhs.y(); pz += rhs.z(); return *this; }
     constexpr auto operator -= (const Vec3 &rhs) -> Self& { px -= rhs.x(); py -= rhs.y(); pz -= rhs.z(); return *this; }
 
+    constexpr auto operator [] (const i32 idx) -> f64& { return idx == 0 ? px : idx == 1 ? py : pz; }
+    constexpr auto operator [] (const i32 idx) const -> f64 { return idx == 0 ? px : idx == 1 ? py : pz; }
+
 public:
     friend constexpr auto operator + (const Self &lhs, const Vec3 &rhs) -> Self {
         return Self(lhs.px + rhs.x(), lhs.py + rhs.y(), lhs.pz + rhs.z());

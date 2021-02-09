@@ -25,6 +25,9 @@ public:
     constexpr auto operator *= (const f64   rhs) -> Self& { px *= rhs;    py *= rhs;    pz *= rhs;    return *this; }
     constexpr auto operator /= (const f64   rhs) -> Self& { px /= rhs;    py /= rhs;    pz /= rhs;    return *this; }
 
+    constexpr auto operator [] (const i32 idx) -> f64& { return idx == 0 ? px : idx == 1 ? py : pz; }
+    constexpr auto operator [] (const i32 idx) const -> f64 { return idx == 0 ? px : idx == 1 ? py : pz; }
+
     auto length()  const -> f64 { return std::sqrt(length2()); }
     constexpr auto length2() const -> f64 { return px * px + py * py + pz * pz; }
 
