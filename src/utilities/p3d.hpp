@@ -31,4 +31,10 @@ public:
     friend constexpr auto operator - (const Self &lhs, const Self &rhs) -> Vec3 {
         return Vec3(lhs.x - rhs.x, lhs.y - rhs.y, lhs.z - rhs.z);
     }
+    friend constexpr auto operator * (const Self &lhs, const f64   rhs) -> Self {
+        return Self(lhs.x * rhs, lhs.y * rhs, lhs.z * rhs);
+    }
+    friend constexpr auto operator * (const f64   lhs, const Self &rhs) -> Self {
+        return Self(lhs * rhs.x, lhs * rhs.y, lhs * rhs.z);
+    }
 };

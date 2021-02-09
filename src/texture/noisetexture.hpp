@@ -22,9 +22,11 @@ public:
 
 struct NoiseTexture: Texture {
     Perlin noise;
+    f64 scale;
 
 public:
     NoiseTexture() = default;
+    NoiseTexture(const f64 _scale): scale(_scale) {}
 
     auto value(const f64 u, const f64 v, const p3d &p) const -> RGB override;
 };

@@ -81,7 +81,7 @@ auto two_spheres() -> HittableList {
 auto two_perlin_spheres() -> HittableList {
 	HittableList hittables;
 
-	const auto pertext = std::make_shared<NoiseTexture>();
+	const auto pertext = std::make_shared<NoiseTexture>(4.0);
 	hittables.push(Sphere(p3d(0.0, -1000.0, 0.0), 1000.0, std::make_shared<Lambertian>(pertext)));
 	hittables.push(Sphere(p3d(0.0, 2.0, 0.0), 2.0, std::make_shared<Lambertian>(pertext)));
 

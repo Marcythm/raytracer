@@ -59,5 +59,5 @@ auto Perlin::noise(const p3d &p) const -> f64 {
 }
 
 auto NoiseTexture::value(const f64, const f64, const p3d &p) const -> RGB {
-    return RGB(1.0, 1.0, 1.0) * noise.noise(p);
+    return RGB(1.0, 1.0, 1.0) * noise.noise(scale * p);
 }
