@@ -18,6 +18,7 @@
 #include "texture.hpp"
 #include "solidcolor.hpp"
 #include "checkertexture.hpp"
+#include "noisetexture.hpp"
 
 auto random_scene() -> HittableList {
 	HittableList scene;
@@ -77,6 +78,16 @@ auto two_spheres() -> HittableList {
 	return hittables;
 }
 
+auto two_perlin_spheres() -> HittableList {
+	HittableList hittables;
+
+	const auto pertext = std::make_shared<NoiseTexture>();
+	hittables.push(Sphere(p3d(0.0, -1000.0, 0.0), 1000.0, std::make_shared<Lambertian>(pertext)));
+	hittables.push(Sphere(p3d(0.0, 2.0, 0.0), 2.0, std::make_shared<Lambertian>(pertext)));
+
+	return hittables;
+}
+
 auto main() -> i32 {
 	// Scene
 	HittableList scene;
@@ -94,9 +105,15 @@ auto main() -> i32 {
 			vertical_field_of_view = 20.0;
 			aperture = 0.1;
 			break;
-		default:
 		case 2:
 			scene = two_spheres();
+			lookfrom = p3d(13.0, 2.0, 3.0);
+			lookat = p3d(0.0, 0.0, 0.0);
+			vertical_field_of_view = 20.0;
+			break;
+		default:
+		case 3:
+			scene = two_perlin_spheres();
 			lookfrom = p3d(13.0, 2.0, 3.0);
 			lookat = p3d(0.0, 0.0, 0.0);
 			vertical_field_of_view = 20.0;

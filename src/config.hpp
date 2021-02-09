@@ -187,6 +187,7 @@ struct Dielectric;
 struct Texture;
 struct SolidColor;
 struct CheckerTexture;
+struct NoiseTexture;
 
 enum class diffuse_render_method: bool {
     hemispherical_scattering = false,
@@ -197,10 +198,10 @@ enum class diffuse_render_method: bool {
 namespace constants {
 
 	// Image
-	constexpr f64 ASPECT_RATIO = 3.0 / 2.0; // 16.0 / 9.0;
-	constexpr i32 IMAGE_WIDTH = 1200; // 400;
+	constexpr f64 ASPECT_RATIO = 16.0 / 9.0;
+	constexpr i32 IMAGE_WIDTH = 400;
 	constexpr i32 IMAGE_HEIGHT = static_cast<i32>(IMAGE_WIDTH / ASPECT_RATIO);
-	constexpr i32 SAMPLES_PER_PIXEL = 500; // 100;
+	constexpr i32 SAMPLES_PER_PIXEL = 100;
 	constexpr i32 MAX_DEPTH = 50;
 	constexpr f64 GAMMA = 2;
 
