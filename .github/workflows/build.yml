@@ -1,8 +1,8 @@
 on:
   push:
     branches:
+      - render
       - release
-    # Sequence of patterns matched against refs/tags
 
 name: Release Rendered Image
 
@@ -26,7 +26,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ github.sha }}
-          release_name: Rendered Image of commit ${{ github.sha }}
+          release_name: Rendered Image of ${{ github.event.head_commit.message }}
           draft: false
           prerelease: true
       - name: Release Rendered Image
