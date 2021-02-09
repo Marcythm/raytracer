@@ -9,7 +9,7 @@ auto MovingSphere::get_sphere_uv(const Vec3 &normal) -> std::pair<f64, f64> {
 auto MovingSphere::hit(const Ray &ray, const f64 t_min, const f64 t_max) const -> std::optional<HitRecord> {
     const Vec3 oc = ray.origin - center(ray.time);
     const f64 a = ray.direction.length2();
-    const f64 half_b = dot(oc, ray.direction);
+    const f64 half_b = Vec3::dot(oc, ray.direction);
     const f64 c = oc.length2() - radius * radius;
     const f64 discriminant = half_b * half_b - a * c;
 

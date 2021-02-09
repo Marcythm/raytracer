@@ -3,7 +3,7 @@
 auto Dielectric::scatter(const Ray &ray, const HitRecord &rec) const -> std::optional<std::pair<Ray, RGB>> {
     // assert(rec.normal.length2() == 1);
     const Vec3 unit_direction = ray.direction.unit();
-    const f64 cos_theta = std::fmin(dot(-unit_direction, rec.normal), 1.0);
+    const f64 cos_theta = std::fmin(Vec3::dot(-unit_direction, rec.normal), 1.0);
     const f64 sin_theta = std::sqrt(1.0 - cos_theta * cos_theta);
     const f64 etai_over_etat = rec.front_face ? (1.0 / refractive_index) : refractive_index;
 

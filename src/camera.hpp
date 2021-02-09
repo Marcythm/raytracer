@@ -20,7 +20,7 @@ public:
         const f64 aperture, const f64 focus_distance,
         const f64 t0 = 0, const f64 t1 = 0
     ): origin(lookfrom),
-        w(-lookdir.unit()), u(cross(viewup, w).unit()), v(cross(w, u)),
+        w(-lookdir.unit()), u(Vec3::cross(viewup, w).unit()), v(Vec3::cross(w, u)),
         lens_radius(aperture / 2), time0(t0), time1(t1) {
         const f64 theta = deg2rad(vertical_field_of_view);
         const f64 h = std::tan(theta / 2);

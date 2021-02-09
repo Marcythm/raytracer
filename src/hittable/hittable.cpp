@@ -1,7 +1,7 @@
 #include "hittable.hpp"
 
 auto HitRecord::set_face_normal(const Ray &ray) -> void {
-    front_face = (dot(ray.direction, normal) < 0);
+    front_face = (Vec3::dot(ray.direction, normal) < 0);
     if (not front_face) normal = -normal;
 }
 
