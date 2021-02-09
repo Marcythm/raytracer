@@ -17,6 +17,8 @@ public:
 
     constexpr auto operator += (const Vec3 &rhs) -> Self& { x += rhs.x; y += rhs.y; z += rhs.z; return *this; }
     constexpr auto operator -= (const Vec3 &rhs) -> Self& { x -= rhs.x; y -= rhs.y; z -= rhs.z; return *this; }
+    constexpr auto operator *= (const f64   rhs) -> Self& { x *= rhs;   y *= rhs;   z *= rhs;   return *this; }
+    constexpr auto operator /= (const f64   rhs) -> Self& { x /= rhs;   y /= rhs;   z /= rhs;   return *this; }
 
     constexpr auto operator [] (const i32 idx) -> f64& { return idx == 0 ? x : idx == 1 ? y : z; }
     constexpr auto operator [] (const i32 idx) const -> f64 { return idx == 0 ? x : idx == 1 ? y : z; }
@@ -36,5 +38,8 @@ public:
     }
     friend constexpr auto operator * (const f64   lhs, const Self &rhs) -> Self {
         return Self(lhs * rhs.x, lhs * rhs.y, lhs * rhs.z);
+    }
+    friend constexpr auto operator / (const Self &lhs, const f64   rhs) -> Self {
+        return Self(lhs.x / rhs, lhs.y / rhs, lhs.z / rhs);
     }
 };
