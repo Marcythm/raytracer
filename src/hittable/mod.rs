@@ -1,5 +1,6 @@
 pub mod sphere;
 pub mod moving_sphere;
+pub mod aarectangle;
 
 pub mod prelude {
     pub use super::HitRecord;

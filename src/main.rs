@@ -16,11 +16,15 @@ use bvhnode::BVHNode;
 use hittable::prelude::*;
 use hittable::sphere::Sphere;
 use hittable::moving_sphere::MovingSphere;
+use hittable::aarectangle::XYAARectangle;
+// use hittable::aarectangle::YZAARectangle;
+// use hittable::aarectangle::ZXAARectangle;
 
 // use material::prelude::*;
 use material::lambertian::Lambertian;
 use material::metal::Metal;
 use material::dielectric::Dielectric;
+use material::diffuse_light::DiffuseLight;
 
 // use texture::prelude::*;
 use texture::checker_texture::CheckerTexture;
@@ -101,13 +105,26 @@ fn earth() -> HittableList {
     hittables
 }
 
+fn simple_light(rng: &mut SmallRng) -> HittableList {
+    let mut hittables = HittableList::default();
+
+    let pertext = Rc::new(NoiseTexture::new(4.0, rng));
+    hittables.push(Sphere::new(P3d::new(0.0, -1000.0, 0.0), 1000.0, Rc::new(Lambertian::with_texture(pertext.clone()))));
+    hittables.push(Sphere::new(P3d::new(0.0,     2.0, 0.0),    2.0, Rc::new(Lambertian::with_texture(pertext.clone()))));
+
+    let difflight = Rc::new(DiffuseLight::with_rgb(4.0, 4.0, 4.0));
+    hittables.push(XYAARectangle::new(3.0, 5.0, 1.0, 3.0, -2.0, difflight.clone()));
+
+    hittables
+}
+
 fn main() {
     let mut rng = SmallRng::from_entropy();
 
     // Image
     let aspect_ratio = ASPECT_RATIO;
     let image_width = IMAGE_WIDTH;
-    let samples_per_pixel = SAMPLES_PER_PIXEL;
+    let mut samples_per_pixel = SAMPLES_PER_PIXEL;
     let vertical_field_of_view;
     let background;
 
@@ -149,11 +166,19 @@ fn main() {
             lookat                  = P3d::new(  0.0, 0.0, 0.0);
             vertical_field_of_view  = 20.0;
         },
-        _ => {
+        5 => {
             scene                   = two_spheres();
-            background              = RGB::new(0.0, 0.0, 0.0);
+            background              = RGB::new(  0.0, 0.0, 0.0);
             lookfrom                = P3d::new( 13.0, 2.0, 3.0);
             lookat                  = P3d::new(  0.0, 0.0, 0.0);
+            vertical_field_of_view  = 20.0;
+        },
+        _ => {
+            scene                   = simple_light(&mut rng);
+            samples_per_pixel       = 400;
+            background              = RGB::new(  0.0, 0.0, 0.0);
+            lookfrom                = P3d::new( 26.0, 3.0, 6.0);
+            lookat                  = P3d::new(  0.0, 2.0, 0.0);
             vertical_field_of_view  = 20.0;
         }
     }
