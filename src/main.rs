@@ -23,13 +23,16 @@ use material::metal::Metal;
 use material::dielectric::Dielectric;
 
 // use texture::prelude::*;
-
+use texture::checker_texture::CheckerTexture;
 
 fn random_scene(rng: &mut SmallRng) -> HittableList {
     let mut scene = HittableList::default();
 
-    let material_ground = Lambertian::with_color(RGB::new(0.5, 0.5, 0.5));
-    scene.push(Sphere::new(P3d::new(0.0, -1000.0, 0.0), 1000.0, Rc::new(material_ground)));
+    let checker = Rc::new(CheckerTexture::with_color(RGB::new(0.2, 0.3, 0.1), RGB::new(0.9, 0.9, 0.9)));
+    scene.push(Sphere::new(P3d::new(0.0, -1000.0, 0.0), 1000.0, Rc::new(Lambertian::with_texture(checker))));
+
+    // let material_ground = Lambertian::with_color(RGB::new(0.5, 0.5, 0.5));
+    // scene.push(Sphere::new(P3d::new(0.0, -1000.0, 0.0), 1000.0, Rc::new(material_ground)));
 
     for a in -11..11 {
         for b in -11..11 {

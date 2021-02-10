@@ -1,4 +1,5 @@
 pub mod solid_color;
+pub mod checker_texture;
 
 pub mod prelude {
     pub use super::Texture;
