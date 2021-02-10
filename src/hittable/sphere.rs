@@ -15,6 +15,12 @@ impl Sphere {
     pub fn new(center: P3d, radius: f64, material: Rc<dyn Material>) -> Self {
         Self { center, radius, material }
     }
+
+    pub fn get_sphere_uv(normal: Vec3) -> (f64, f64) {
+        let phi = normal.z.atan2(normal.x);
+        let theta = normal.y.asin();
+        (1.0 - (phi + PI) / (2.0 * PI), (theta + PI / 2.0) / PI)
+    }
 }
 
 impl Hittable for Sphere {
@@ -32,14 +38,16 @@ impl Hittable for Sphere {
             if t_min < t && t < t_max {
                 let p = ray.at(t);
                 let normal = (p - self.center) / self.radius;
-                return Some(HitRecord::new(p, normal, t, self.material.clone(), ray));
+                let (u, v) = Self::get_sphere_uv(normal);
+                return Some(HitRecord::new(p, normal, t, u, v, self.material.clone(), ray));
             }
 
             let t = (-half_b + root) / a;
             if t_min < t && t < t_max {
                 let p = ray.at(t);
                 let normal = (p - self.center) / self.radius;
-                return Some(HitRecord::new(p, normal, t, self.material.clone(), ray));
+                let (u, v) = Self::get_sphere_uv(normal);
+                return Some(HitRecord::new(p, normal, t, u, v, self.material.clone(), ray));
             }
         }
 

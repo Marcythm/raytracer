@@ -17,13 +17,15 @@ pub struct HitRecord {
    pub p: P3d,
    pub normal: Vec3,
    pub t: f64,
+   pub u: f64,
+   pub v: f64,
    pub material: Rc<dyn Material>,
    pub front_face: bool,
 }
 
 impl HitRecord {
-    pub fn new(p: P3d, normal: Vec3, t: f64, material: Rc<dyn Material>, ray: &Ray) -> Self {
-        let mut rec = Self { p, normal, t, material, front_face: false };
+    pub fn new(p: P3d, normal: Vec3, t: f64, u: f64, v: f64, material: Rc<dyn Material>, ray: &Ray) -> Self {
+        let mut rec = Self { p, normal, t, u, v, material, front_face: false };
         rec.set_face_normal(ray);
         rec
     }

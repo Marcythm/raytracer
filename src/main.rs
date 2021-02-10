@@ -7,7 +7,7 @@ pub mod bvhnode;
 
 pub mod hittable;
 pub mod material;
-
+pub mod texture;
 
 use utilities::prelude::*;
 use camera::Camera;
@@ -21,6 +21,8 @@ use hittable::moving_sphere::MovingSphere;
 use material::lambertian::Lambertian;
 use material::metal::Metal;
 use material::dielectric::Dielectric;
+
+// use texture::prelude::*;
 
 
 fn random_scene(rng: &mut SmallRng) -> HittableList {
