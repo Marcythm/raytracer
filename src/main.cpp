@@ -136,6 +136,7 @@ auto main() -> i32 {
 			vertical_field_of_view = 20.0;
 			break;
 	}
+	BVHNode bvh(scene, 0.0, 1.0);
 
 	// Camera
 	const Vec3 viewup(0.0, 1.0, 0.0);
@@ -156,7 +157,7 @@ auto main() -> i32 {
 			for (i32 s = 0; s < SAMPLES_PER_PIXEL; ++s) {
 				const f64 u = (i + random_f64()) / (IMAGE_WIDTH - 1);
 				const f64 v = (j + random_f64()) / (IMAGE_HEIGHT - 1);
-				pixel_color += camera.get_ray(u, v).color(scene, MAX_DEPTH);
+				pixel_color += camera.get_ray(u, v).color(bvh, MAX_DEPTH);
 			}
 			std::cout << pixel_color << '\n';
 		}
