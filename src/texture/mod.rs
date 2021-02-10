@@ -1,5 +1,6 @@
 pub mod constant_texture;
 pub mod checker_texture;
+pub mod noise_texture;
 
 pub mod prelude {
     pub use super::Texture;

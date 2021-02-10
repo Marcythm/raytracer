@@ -24,6 +24,7 @@ use material::dielectric::Dielectric;
 
 // use texture::prelude::*;
 use texture::checker_texture::CheckerTexture;
+use texture::noise_texture::NoiseTexture;
 
 fn random_scene(rng: &mut SmallRng) -> HittableList {
     let mut hittables = HittableList::default();
@@ -81,6 +82,15 @@ fn two_spheres() -> HittableList {
     hittables.push(Sphere::new(P3d::new(0.0, -10.0, 0.0), 10.0, Rc::new(Lambertian::with_texture(checker.clone()))));
     hittables.push(Sphere::new(P3d::new(0.0,  10.0, 0.0), 10.0, Rc::new(Lambertian::with_texture(checker.clone()))));
 
+    hittables
+}
+
+fn two_perlin_spheres(rng: &mut SmallRng) -> HittableList {
+    let mut hittables = HittableList::default();
+
+    let pertext = Rc::new(NoiseTexture::new(4.0, rng));
+    hittables.push(Sphere::new(P3d::new(0.0, -1000.0, 0.0), 1000.0, Rc::new(Lambertian::with_texture(pertext.clone()))));
+    hittables.push(Sphere::new(P3d::new(0.0,     2.0, 0.0),    2.0, Rc::new(Lambertian::with_texture(pertext.clone()))));
 
     hittables
 }
@@ -110,8 +120,14 @@ fn main() {
             vertical_field_of_view  = 20.0;
             aperture                = 0.1;
         },
-        _ => {
+        2 => {
             scene                   = two_spheres();
+            lookfrom                = P3d::new( 13.0, 2.0, 3.0);
+            lookat                  = P3d::new(  0.0, 0.0, 0.0);
+            vertical_field_of_view  = 20.0;
+        },
+        _ => {
+            scene                   = two_perlin_spheres(&mut rng);
             lookfrom                = P3d::new( 13.0, 2.0, 3.0);
             lookat                  = P3d::new(  0.0, 0.0, 0.0);
             vertical_field_of_view  = 20.0;
