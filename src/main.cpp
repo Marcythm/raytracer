@@ -212,6 +212,74 @@ auto cornell_smoke() -> HittableList {
     return hittables;
 }
 
+auto final_scene() -> HittableList {
+    HittableList boxes1;
+    const auto ground = std::make_shared<Lambertian>(RGB(0.48, 0.83, 0.53));
+
+    const i32 boxes_per_side = 20;
+    for (i32 i = 0; i < boxes_per_side; ++i)
+        for (i32 j = 0; j < boxes_per_side; ++j) {
+            const f64 w = 100.0;
+            const f64 x0 = -1000.0 + i * w;
+            const f64 y0 = 0.0;
+            const f64 z0 = -1000.0 + j * w;
+
+            const f64 x1 = x0 + w;
+            const f64 y1 = random_f64(1.0, 101.1);
+            const f64 z1 = z0 + w;
+
+            boxes1.push(Cuboid(p3d(x0, y0, z0), p3d(x1, y1, z1), ground));
+        }
+
+    HittableList hittables;
+
+    const auto light = std::make_shared<DiffuseLight>(RGB(7.0, 7.0, 7.0));
+    hittables.push(ZXAARectangle(147.0, 412.0, 123.0, 423.0, 554.0, light));
+
+    const p3d center1(400.0, 400.0, 200.0);
+    const p3d center2 = center1 + Vec3(30.0, 0.0, 0.0);
+
+    const auto moving_sphere_material = std::make_shared<Lambertian>(RGB(0.7, 0.3, 0.1));
+    hittables.push(MovingSphere(center1, center2, 0.0, 1.0, 50.0, moving_sphere_material));
+
+    hittables.push(Sphere(p3d(260.0, 150.0,  45.0), 50.0, std::make_shared<Dielectric>(1.5)));
+    hittables.push(Sphere(p3d(  0.0, 150.0, 145.0), 50.0, std::make_shared<Metal>(RGB(0.8, 0.8, 0.9), 10.0)));
+
+    const auto boundary1 = std::make_shared<Sphere>(p3d(360.0, 150.0, 145.0), 70.0, std::make_shared<Dielectric>(1.5));
+    hittables.push(boundary1);
+    hittables.push(ConstantMedium(boundary1, RGB(0.2, 0.4, 0.9), 0.2));
+
+    const auto boundary2 = std::make_shared<Sphere>(p3d(0.0, 0.0, 0.0), 5000.0, std::make_shared<Dielectric>(1.5));
+    hittables.push(boundary2);
+    hittables.push(ConstantMedium(boundary2, RGB(1.0, 1.0, 1.0), 0.0001));
+
+    const auto earth_texture = std::make_shared<ImageTexture>("earthmap.jpg");
+    const auto earth_surface = std::make_shared<Lambertian>(earth_texture);
+    hittables.push(Sphere(p3d(400.0, 200.0, 400.0), 100.0, earth_surface));
+
+    const auto pertext = std::make_shared<NoiseTexture>(0.1);
+    hittables.push(Sphere(p3d(220.0, 280.0, 300.0), 80.0, std::make_shared<Lambertian>(pertext)));
+
+    HittableList boxes2;
+    const auto white = std::make_shared<Lambertian>  (RGB(0.73, 0.73, 0.73));
+    const i32 box_num = 1000;
+    for (i32 i = 0; i < box_num; ++i)
+        boxes2.push(Sphere(p3d::random(0.0, 165.0), 10.0, white));
+
+    hittables.push(BVHNode(boxes1, 0.0, 1.0));
+    hittables.push(
+        std::make_shared<Instance>(
+            std::make_shared<Instance>(
+                std::make_shared<BVHNode>(boxes2, 0.0, 1.0),
+                std::make_shared<RotationY>(15.0)
+            ),
+            std::make_shared<Translation>(Vec3(-100.0, 270.0, 395.0))
+        )
+    );
+
+    return hittables;
+}
+
 auto main() -> i32 {
     // Image
     f64 aspect_ratio      = ASPECT_RATIO;
@@ -273,7 +341,6 @@ auto main() -> i32 {
             lookat                  = p3d(278.0, 278.0,    0.0);
             vertical_field_of_view  = 40.0;
             break;
-        default:
         case 7:
             scene                   = cornell_smoke();
             aspect_ratio            = 1.0;
@@ -283,11 +350,21 @@ auto main() -> i32 {
             lookat                  = p3d(278.0, 278.0,    0.0);
             vertical_field_of_view  = 40.0;
             break;
+        default:
+        case 8:
+            scene                   = final_scene();
+            aspect_ratio            = 1.0;
+            image_width             = 800;
+            samples_per_pixel       = 10000;
+            lookfrom                = p3d(478.0, 278.0, -600.0);
+            lookat                  = p3d(278.0, 278.0, 0.0);
+            vertical_field_of_view  = 40.0;
+            break;
     }
 
     const i32 image_height = image_width * aspect_ratio;
 
-    BVHNode bvh(scene, 0.0, 1.0);
+    // BVHNode bvh(scene, 0.0, 1.0);
 
     // Camera
     const Vec3 viewup(0.0, 1.0, 0.0);
@@ -308,7 +385,7 @@ auto main() -> i32 {
             for (i32 s = 0; s < samples_per_pixel; ++s) {
                 const f64 u = (i + random_f64()) / (image_width - 1);
                 const f64 v = (j + random_f64()) / (image_height - 1);
-                pixel_color += camera.get_ray(u, v).color(bvh, background, MAX_DEPTH);
+                pixel_color += camera.get_ray(u, v).color(scene, background, MAX_DEPTH);
             }
             std::cout << pixel_color / samples_per_pixel << '\n';
         }
