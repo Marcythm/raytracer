@@ -26,6 +26,7 @@
 
 #include "transform.hpp"
 #include "translation.hpp"
+#include "rotation.hpp"
 
 auto random_scene() -> HittableList {
     HittableList scene;

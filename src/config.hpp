@@ -197,6 +197,9 @@ struct IMageTexture;
 
 struct Transform;
 struct Translation;
+struct RotationX;
+struct RotationY;
+struct RotationZ;
 
 enum class diffuse_render_method: bool {
     hemispherical_scattering = false,
