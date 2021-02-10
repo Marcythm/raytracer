@@ -24,6 +24,8 @@
 #include "noise_texture.hpp"
 #include "image_texture.hpp"
 
+#include "transform.hpp"
+
 auto random_scene() -> HittableList {
     HittableList scene;
 

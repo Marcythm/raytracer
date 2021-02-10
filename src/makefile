@@ -4,8 +4,8 @@ else
 CXXFLAGS=-Wall -Wextra -std=c++2a -O2
 endif
 
-all: *.hpp *.cpp utilities/*.hpp hittable/*.hpp material/*.hpp texture/*.hpp hittable/*.cpp material/*.cpp texture/*.cpp
-	clang++ ${CXXFLAGS}                                                     \
-		-I. -Iutilities -Ihittable       -Imaterial       -Itexture         \
-		./*.cpp           hittable/*.cpp   material/*.cpp   texture/*.cpp   \
-		-o main
+all: utilities/*.hpp *.hpp hittable/*.hpp material/*.hpp texture/*.hpp transform/*.hpp \
+	                 *.cpp hittable/*.cpp material/*.cpp texture/*.cpp transform/*.cpp
+	clang++ ${CXXFLAGS} -o main                                                                    \
+		-Iutilities -I.       -Ihittable       -Imaterial       -Itexture       -Itransform        \
+		              ./*.cpp   hittable/*.cpp   material/*.cpp   texture/*.cpp   transform/*.cpp  \

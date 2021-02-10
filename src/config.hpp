@@ -195,6 +195,8 @@ struct CheckerTexture;
 struct NoiseTexture;
 struct IMageTexture;
 
+struct Transform;
+
 enum class diffuse_render_method: bool {
     hemispherical_scattering = false,
     true_lambertian_reflection = true,
