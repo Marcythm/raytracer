@@ -181,6 +181,7 @@ struct MovingSphere;
 struct XYAARectangle;
 struct YZAARectangle;
 struct ZXAARectangle;
+struct Cuboid;
 
 struct Material;
 struct Lambertian;

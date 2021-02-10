@@ -10,6 +10,7 @@
 #include "sphere.hpp"
 #include "moving_sphere.hpp"
 #include "aarectangle.hpp"
+#include "cuboid.hpp"
 
 #include "material.hpp"
 #include "lambertian.hpp"
@@ -129,6 +130,9 @@ auto cornell_box() -> HittableList {
     hittables.push(ZXAARectangle(  0.0, 555.0,   0.0, 555.0, 555.0, white));
     hittables.push(XYAARectangle(  0.0, 555.0,   0.0, 555.0, 555.0, white));
 
+    hittables.push(Cuboid(p3d(130.0, 0.0,  65.0), p3d(295.0, 165.0, 230.0), white));
+    hittables.push(Cuboid(p3d(265.0, 0.0, 295.0), p3d(430.0, 330.0, 460.0), white));
+
     return hittables;
 }
 
@@ -197,6 +201,7 @@ auto main() -> i32 {
             vertical_field_of_view  = 40.0;
             break;
     }
+
     const i32 image_height = image_width * aspect_ratio;
 
     BVHNode bvh(scene, 0.0, 1.0);
