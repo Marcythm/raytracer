@@ -1,3 +1,5 @@
+pub mod constant_medium;
+
 pub mod prelude {
     pub use super::Medium;
 }

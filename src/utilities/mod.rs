@@ -9,6 +9,7 @@ pub mod prelude {
 
     pub use rand::{Rng, rngs::SmallRng, SeedableRng};
     pub use std::rc::Rc;
+    pub use std::cell::RefCell;
 
     // Image
     #[cfg(feature = "high-quality")]

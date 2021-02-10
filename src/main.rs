@@ -44,6 +44,7 @@ use transform::rotation::RotationY;
 // use transform::rotation::RotationZ;
 
 // use medium::prelude::*;
+// use medium::constant_medium::ConstantMedium;
 
 fn random_scene(rng: &mut SmallRng) -> HittableList {
     let mut hittables = HittableList::default();
