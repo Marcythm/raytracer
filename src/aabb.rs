@@ -1,3 +1,5 @@
+use std::ops::{Index, IndexMut};
+
 use crate::utilities::prelude::*;
 use crate::ray::Ray;
 
@@ -43,5 +45,18 @@ impl AABB {
                 box0.max.z.max(box1.max.z),
             ),
         }
+    }
+}
+
+impl Index<i32> for AABB {
+    type Output = P3d;
+    fn index(&self, index: i32) -> &Self::Output {
+        if index == 0 { &self.min } else { &self.max }
+    }
+}
+
+impl IndexMut<i32> for AABB {
+    fn index_mut(&mut self, index: i32) -> &mut Self::Output {
+        if index == 0 { &mut self.min } else { &mut self.max }
     }
 }
