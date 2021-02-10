@@ -26,13 +26,13 @@ use material::dielectric::Dielectric;
 use texture::checker_texture::CheckerTexture;
 
 fn random_scene(rng: &mut SmallRng) -> HittableList {
-    let mut scene = HittableList::default();
+    let mut hittables = HittableList::default();
 
     let checker = Rc::new(CheckerTexture::with_color(RGB::new(0.2, 0.3, 0.1), RGB::new(0.9, 0.9, 0.9)));
-    scene.push(Sphere::new(P3d::new(0.0, -1000.0, 0.0), 1000.0, Rc::new(Lambertian::with_texture(checker))));
+    hittables.push(Sphere::new(P3d::new(0.0, -1000.0, 0.0), 1000.0, Rc::new(Lambertian::with_texture(checker.clone()))));
 
     // let material_ground = Lambertian::with_color(RGB::new(0.5, 0.5, 0.5));
-    // scene.push(Sphere::new(P3d::new(0.0, -1000.0, 0.0), 1000.0, Rc::new(material_ground)));
+    // hittables.push(Sphere::new(P3d::new(0.0, -1000.0, 0.0), 1000.0, Rc::new(material_ground)));
 
     for a in -11..11 {
         for b in -11..11 {
@@ -46,55 +46,84 @@ fn random_scene(rng: &mut SmallRng) -> HittableList {
                     let albedo = RGB::random(0.0, 1.0, rng) * RGB::random(0.0, 1.0, rng);
                     let sphere_material = Lambertian::with_color(albedo);
                     let center1 = center + Vec3::new(0.0, rng.gen_range(0.0, 0.5), 0.0);
-                    scene.push(MovingSphere::new(center, center1, 0.0, 1.0, 0.2, Rc::new(sphere_material)));
+                    hittables.push(MovingSphere::new(center, center1, 0.0, 1.0, 0.2, Rc::new(sphere_material)));
                 } else if which_material < 0.95 {
                     // metal
                     let albedo = RGB::random(0.5, 1.0, rng);
                     let fuzz = rng.gen_range(0.0, 0.5);
                     let sphere_material = Metal::new(albedo, fuzz);
-                    scene.push(Sphere::new(center, 0.2, Rc::new(sphere_material)));
+                    hittables.push(Sphere::new(center, 0.2, Rc::new(sphere_material)));
                 } else {
                     // glass
                     let sphere_material = Dielectric::new(1.5);
-                    scene.push(Sphere::new(center, 0.2, Rc::new(sphere_material)));
+                    hittables.push(Sphere::new(center, 0.2, Rc::new(sphere_material)));
                 }
             }
         }
     }
 
     let material1 = Dielectric::new(1.5);
-    scene.push(Sphere::new(P3d::new( 0.0, 1.0, 0.0), 1.0, Rc::new(material1)));
+    hittables.push(Sphere::new(P3d::new( 0.0, 1.0, 0.0), 1.0, Rc::new(material1)));
 
     let material2 = Lambertian::with_color(RGB::new(0.4, 0.2, 0.1));
-    scene.push(Sphere::new(P3d::new(-4.0, 1.0, 0.0), 1.0, Rc::new(material2)));
+    hittables.push(Sphere::new(P3d::new(-4.0, 1.0, 0.0), 1.0, Rc::new(material2)));
 
     let material3 = Metal::new(RGB::new(0.7, 0.6, 0.5), 0.0);
-    scene.push(Sphere::new(P3d::new( 4.0, 1.0, 0.0), 1.0, Rc::new(material3)));
+    hittables.push(Sphere::new(P3d::new( 4.0, 1.0, 0.0), 1.0, Rc::new(material3)));
 
-    scene
+    hittables
+}
+
+fn two_spheres() -> HittableList {
+    let mut hittables = HittableList::default();
+
+    let checker = Rc::new(CheckerTexture::with_color(RGB::new(0.2, 0.3, 0.1), RGB::new(0.9, 0.9, 0.9)));
+    hittables.push(Sphere::new(P3d::new(0.0, -10.0, 0.0), 10.0, Rc::new(Lambertian::with_texture(checker.clone()))));
+    hittables.push(Sphere::new(P3d::new(0.0,  10.0, 0.0), 10.0, Rc::new(Lambertian::with_texture(checker.clone()))));
+
+
+    hittables
 }
 
 fn main() {
     let mut rng = SmallRng::from_entropy();
 
     // Image
-    let mut aspect_ratio = ASPECT_RATIO;
-    let mut image_width = IMAGE_WIDTH;
-    let mut samples_per_pixel = SAMPLES_PER_PIXEL;
-    let mut vertical_field_of_view = 20.0;
+    let aspect_ratio = ASPECT_RATIO;
+    let image_width = IMAGE_WIDTH;
+    let samples_per_pixel = SAMPLES_PER_PIXEL;
+    let vertical_field_of_view;
+
+    // Camera
+    let lookfrom;
+    let lookat;
+    let mut aperture = 0.0;
+
+    // Scene
+    let scene;
+
+    match 0 {
+        1 => {
+            scene                   = random_scene(&mut rng);
+            lookfrom                = P3d::new( 13.0, 2.0, 3.0);
+            lookat                  = P3d::new(  0.0, 0.0, 0.0);
+            vertical_field_of_view  = 20.0;
+            aperture                = 0.1;
+        },
+        _ => {
+            scene                   = two_spheres();
+            lookfrom                = P3d::new( 13.0, 2.0, 3.0);
+            lookat                  = P3d::new(  0.0, 0.0, 0.0);
+            vertical_field_of_view  = 20.0;
+        }
+    }
 
     let image_height = (image_width as f64 / aspect_ratio) as i32;
 
-    // Scene
-    let scene = random_scene(&mut rng);
     let bvh = BVHNode::new(scene, 0.0, 1.0, &mut rng);
 
-    // Camera
-    let lookfrom = P3d::new( 13.0, 2.0, 3.0);
-    let lookat   = P3d::new(  0.0, 0.0, 0.0);
     let viewup  = Vec3::new( 0.0, 1.0, 0.0);
     let focus_distance = 10.0;
-    let aperture = 0.1;
     let camera = Camera::new(
         lookfrom, lookat, viewup,
         vertical_field_of_view, aspect_ratio,
