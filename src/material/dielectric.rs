@@ -10,7 +10,7 @@ pub fn schlick(cosine: f64, refractive_index: f64) -> f64 {
 }
 #[derive(Debug, Clone, Copy, Default)]
 pub struct Dielectric {
-    refractive_index: f64,
+    pub refractive_index: f64,
 }
 
 impl Dielectric {
@@ -22,7 +22,7 @@ impl Dielectric {
 
 impl Material for Dielectric {
     fn scatter(&self, ray: &Ray, rec: &HitRecord, rng: &mut SmallRng) -> Option<(Ray, RGB)> {
-        let unit_direction = ray.direction().unit();
+        let unit_direction = ray.direction.unit();
         let cos_theta = Vec3::dot(-unit_direction, rec.normal).min(1.0);
         let sin_theta = (1.0 - cos_theta * cos_theta).sqrt();
         let etai_over_etat = if rec.front_face { 1.0 / self.refractive_index } else { self.refractive_index };

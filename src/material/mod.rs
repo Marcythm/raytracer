@@ -4,10 +4,6 @@ pub mod dielectric;
 
 pub mod prelude {
     pub use super::Material;
-
-    pub use super::lambertian::Lambertian;
-    pub use super::metal::Metal;
-    pub use super::dielectric::Dielectric;
 }
 
 use crate::utilities::prelude::*;

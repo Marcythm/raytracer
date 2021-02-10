@@ -5,9 +5,15 @@ pub mod hittable;
 pub mod material;
 
 use utilities::prelude::*;
-use hittable::prelude::*;
-use material::prelude::*;
 use camera::Camera;
+
+use hittable::prelude::*;
+use hittable::sphere::Sphere;
+
+// use material::prelude::*;
+use material::lambertian::Lambertian;
+use material::metal::Metal;
+use material::dielectric::Dielectric;
 
 fn random_scene(rng: &mut SmallRng) -> HittableList {
     let mut world = HittableList::default();

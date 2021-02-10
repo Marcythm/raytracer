@@ -5,8 +5,8 @@ use crate::material::prelude::*;
 
 #[derive(Debug, Clone, Copy, Default)]
 pub struct Metal {
-    albedo: RGB,
-    fuzz: f64,
+    pub albedo : RGB,
+    pub fuzz   : f64,
 }
 
 impl Metal {
@@ -17,7 +17,7 @@ impl Metal {
 
 impl Material for Metal {
     fn scatter(&self, ray: &Ray, rec: &HitRecord, rng: &mut SmallRng) -> Option<(Ray, RGB)> {
-        let reflected = ray.direction().unit().reflect_on(rec.normal) + self.fuzz * Vec3::random_in_unit_sphere(rng);
+        let reflected = ray.direction.unit().reflect_on(rec.normal) + self.fuzz * Vec3::random_in_unit_sphere(rng);
         if Vec3::dot(reflected, rec.normal) > 0.0 {
             Some((Ray::new(rec.p, reflected), self.albedo))
         } else {

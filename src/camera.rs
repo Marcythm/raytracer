@@ -3,14 +3,14 @@ use crate::ray::Ray;
 
 #[derive(Debug, Clone, Copy, Default)]
 pub struct Camera {
-    origin: P3d,
-    horizontal: Vec3,
-    vertical: Vec3,
-    lower_left_corner: P3d,
-    u: Vec3,
-    v: Vec3,
-    w: Vec3,
-    lens_radius: f64,
+    pub origin            : P3d,
+    pub horizontal        : Vec3,
+    pub vertical          : Vec3,
+    pub lower_left_corner : P3d,
+    pub u                 : Vec3,
+    pub v                 : Vec3,
+    pub w                 : Vec3,
+    pub lens_radius       : f64,
 }
 
 impl Camera {
@@ -45,7 +45,7 @@ impl Camera {
 
     pub fn get_ray(&self, w: f64, h: f64, rng: &mut SmallRng) -> Ray {
         let rd = self.lens_radius * Vec3::random_in_unit_disk(rng);
-        let offset = rd.x() * self.u + rd.y() * self.v;
+        let offset = rd.x * self.u + rd.y * self.v;
         Ray::from_to(self.origin + offset, self.lower_left_corner + w * self.horizontal + h * self.vertical)
     }
 }

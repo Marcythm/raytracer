@@ -3,8 +3,8 @@ use crate::hittable::prelude::*;
 
 #[derive(Debug, Clone, Copy, Default)]
 pub struct Ray {
-    origin: P3d,
-    direction: Vec3,
+    pub origin    : P3d,
+    pub direction : Vec3,
 }
 
 impl Ray {
@@ -14,13 +14,6 @@ impl Ray {
     pub fn from_to(from: P3d, to: P3d) -> Self {
         // generate a ray from origin to destination
         Self { origin: from, direction: to - from }
-    }
-
-    pub fn origin(&self) -> P3d {
-        self.origin
-    }
-    pub fn direction(&self) -> Vec3 {
-        self.direction
     }
 
     pub fn at(&self, t: f64) -> P3d {
@@ -38,7 +31,7 @@ impl Ray {
                 RGB::new(0.0, 0.0, 0.0)
             }
         } else {
-            let t = 0.5 * (self.direction.unit().y() + 1.0);
+            let t = 0.5 * (self.direction.unit().y + 1.0);
             (1.0 - t) * RGB::new(1.0, 1.0, 1.0) + t * RGB::new(0.5, 0.7, 1.0)
         }
     }
