@@ -1,4 +1,5 @@
 pub mod sphere;
+pub mod moving_sphere;
 
 pub mod prelude {
     pub use super::HitRecord;
