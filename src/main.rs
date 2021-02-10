@@ -44,7 +44,7 @@ use transform::rotation::RotationY;
 // use transform::rotation::RotationZ;
 
 // use medium::prelude::*;
-// use medium::constant_medium::ConstantMedium;
+use medium::constant_medium::ConstantMedium;
 
 fn random_scene(rng: &mut SmallRng) -> HittableList {
     let mut hittables = HittableList::default();
@@ -179,6 +179,58 @@ fn cornell_box() -> HittableList {
     hittables
 }
 
+fn cornell_smoke() -> HittableList {
+    let mut hittables = HittableList::default();
+
+    let red   = Rc::new(Lambertian::with_rgb(0.65, 0.05, 0.05));
+    let white = Rc::new(Lambertian::with_rgb(0.73, 0.73, 0.73));
+    let green = Rc::new(Lambertian::with_rgb(0.12, 0.45, 0.15));
+    let light = Rc::new(DiffuseLight::with_rgb(7.0, 7.0, 7.0));
+
+    hittables.push(YZAARectangle::new(  0.0, 555.0,   0.0, 555.0, 555.0, green.clone()));
+    hittables.push(YZAARectangle::new(  0.0, 555.0,   0.0, 555.0,   0.0, red.clone()));
+    hittables.push(ZXAARectangle::new(127.0, 332.0, 113.0, 443.0, 554.0, light.clone()));
+    hittables.push(ZXAARectangle::new(  0.0, 555.0,   0.0, 555.0,   0.0, white.clone()));
+    hittables.push(ZXAARectangle::new(  0.0, 555.0,   0.0, 555.0, 555.0, white.clone()));
+    hittables.push(XYAARectangle::new(  0.0, 555.0,   0.0, 555.0, 555.0, white.clone()));
+
+    // hittables.push(Cuboid::new(P3d::new(130.0, 0.0,  65.0), P3d::new(295.0, 165.0, 230.0), white.clone()));
+    // hittables.push(Cuboid::new(P3d::new(265.0, 0.0, 295.0), P3d::new(430.0, 330.0, 460.0), white.clone()));
+
+    hittables.push(ConstantMedium::with_color(
+        Rc::new(Instance::new(
+            Rc::new(Instance::new(
+                Rc::new(Cuboid::new(
+                    P3d::new(0.0, 0.0, 0.0),
+                    P3d::new(165.0, 330.0, 165.0),
+                    white.clone(),
+                )),
+                Rc::new(RotationY::new(15.0)),
+            )),
+            Rc::new(Translation::new(Vec3::new(265.0, 0.0, 295.0))),
+        )),
+        RGB::new(0.0, 0.0, 0.0),
+        0.01,
+    ));
+    hittables.push(ConstantMedium::with_color(
+        Rc::new(Instance::new(
+            Rc::new(Instance::new(
+                Rc::new(Cuboid::new(
+                    P3d::new(0.0, 0.0, 0.0),
+                    P3d::new(165.0, 165.0, 165.0),
+                    white.clone(),
+                )),
+                Rc::new(RotationY::new(-18.0)),
+            )),
+            Rc::new(Translation::new(Vec3::new(130.0, 0.0, 65.0))),
+         )),
+         RGB::new(1.0, 1.0, 1.0),
+         0.01,
+    ));
+
+    hittables
+}
+
 fn main() {
     let mut rng = SmallRng::from_entropy();
 
@@ -235,7 +287,7 @@ fn main() {
             lookat                  = P3d::new(  0.0, 2.0, 0.0);
             vertical_field_of_view  = 20.0;
         },
-        _ => {
+        6 => {
             scene                   = cornell_box();
             aspect_ratio            = 1.0;
             image_width             = 600;
@@ -244,7 +296,17 @@ fn main() {
             lookfrom                = P3d::new( 278.0, 278.0, -800.0);
             lookat                  = P3d::new( 278.0, 278.0,    0.0);
             vertical_field_of_view  = 40.0;
-        }
+        },
+        _ => {
+            scene                   = cornell_smoke();
+            aspect_ratio            = 1.0;
+            image_width             = 600;
+            samples_per_pixel       = 200;
+            background              = RGB::new(   0.0,   0.0,    0.0);
+            lookfrom                = P3d::new( 278.0, 278.0, -800.0);
+            lookat                  = P3d::new( 278.0, 278.0,    0.0);
+            vertical_field_of_view  = 40.0;
+        },
     }
 
     let image_height = (image_width as f64 / aspect_ratio) as i32;
