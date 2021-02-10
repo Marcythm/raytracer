@@ -10,6 +10,7 @@ pub mod hittable;
 pub mod material;
 pub mod texture;
 pub mod transform;
+pub mod medium;
 
 use utilities::prelude::*;
 use camera::Camera;
@@ -40,6 +41,8 @@ use transform::translation::Translation;
 // use transform::rotation::RotationX;
 use transform::rotation::RotationY;
 // use transform::rotation::RotationZ;
+
+// use medium::prelude::*;
 
 fn random_scene(rng: &mut SmallRng) -> HittableList {
     let mut hittables = HittableList::default();
