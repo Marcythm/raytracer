@@ -12,7 +12,6 @@ use crate::ray::Ray;
 use crate::aabb::AABB;
 use crate::material::prelude::*;
 
-
 #[derive(Clone)]
 pub struct HitRecord {
    pub p: P3d,
@@ -37,12 +36,10 @@ impl HitRecord {
     }
 }
 
-
 pub trait Hittable {
     fn hit(&self, ray: &Ray, t_min: f64, t_max: f64) -> Option<HitRecord>;
     fn bounding_box(&self, t0: f64, t1: f64) -> Option<AABB>;
 }
-
 
 #[derive(Clone, Default)]
 pub struct HittableList {
@@ -68,7 +65,7 @@ impl Hittable for HittableList {
         let mut closest = t_max;
 
         for hittable in &self.hittables {
-            if let Some(subrec) = hittable.hit(&ray, t_min, closest) {
+            if let Some(subrec) = hittable.hit(ray, t_min, closest) {
                 closest = subrec.t;
                 rec = Some(subrec);
             }
