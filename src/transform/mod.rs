@@ -32,8 +32,8 @@ pub trait Transform {
     }
 
     fn transform_box(&self, bounding_box: &AABB) -> AABB {
-        let mut min = P3d::new(-INFINITY, -INFINITY, -INFINITY);
-        let mut max = P3d::new( INFINITY,  INFINITY,  INFINITY);
+        let mut min = P3d::new( INFINITY,  INFINITY,  INFINITY);
+        let mut max = P3d::new(-INFINITY, -INFINITY, -INFINITY);
 
         for i in 0..2 {
             for j in 0..2 {
@@ -57,8 +57,8 @@ pub trait Transform {
         AABB::new(min, max)
     }
     fn inverse_transform_box(&self, bounding_box: &AABB) -> AABB {
-        let mut min = P3d::new(-INFINITY, -INFINITY, -INFINITY);
-        let mut max = P3d::new( INFINITY,  INFINITY,  INFINITY);
+        let mut min = P3d::new( INFINITY,  INFINITY,  INFINITY);
+        let mut max = P3d::new(-INFINITY, -INFINITY, -INFINITY);
 
         for i in 0..2 {
             for j in 0..2 {

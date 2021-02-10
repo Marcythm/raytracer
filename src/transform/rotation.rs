@@ -10,14 +10,14 @@ pub struct RotationX { // Rotation around X-axis
 impl RotationX {
     pub fn new(angle: f64) -> Self {
         Self {
-            sin_theta: angle.sin(),
-            cos_theta: angle.cos(),
+            sin_theta: angle.to_radians().sin(),
+            cos_theta: angle.to_radians().cos(),
         }
     }
 
     pub fn set_angle(&mut self, angle: f64) {
-        self.sin_theta = angle.sin();
-        self.cos_theta = angle.cos();
+        self.sin_theta = angle.to_radians().sin();
+        self.cos_theta = angle.to_radians().cos();
     }
 }
 
@@ -64,14 +64,14 @@ pub struct RotationY { // Rotation around Y-axis
 impl RotationY {
     pub fn new(angle: f64) -> Self {
         Self {
-            sin_theta: angle.sin(),
-            cos_theta: angle.cos(),
+            sin_theta: angle.to_radians().sin(),
+            cos_theta: angle.to_radians().cos(),
         }
     }
 
     pub fn set_angle(&mut self, angle: f64) {
-        self.sin_theta = angle.sin();
-        self.cos_theta = angle.cos();
+        self.sin_theta = angle.to_radians().sin();
+        self.cos_theta = angle.to_radians().cos();
     }
 }
 
@@ -118,14 +118,14 @@ pub struct RotationZ { // Rotation around Z-axis
 impl RotationZ {
     pub fn new(angle: f64) -> Self {
         Self {
-            sin_theta: angle.sin(),
-            cos_theta: angle.cos(),
+            sin_theta: angle.to_radians().sin(),
+            cos_theta: angle.to_radians().cos(),
         }
     }
 
     pub fn set_angle(&mut self, angle: f64) {
-        self.sin_theta = angle.sin();
-        self.cos_theta = angle.cos();
+        self.sin_theta = angle.to_radians().sin();
+        self.cos_theta = angle.to_radians().cos();
     }
 }
 

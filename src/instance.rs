@@ -19,7 +19,7 @@ impl Instance {
 impl Hittable for Instance {
     fn hit(&self, ray: &Ray, t_min: f64, t_max: f64) -> Option<HitRecord> {
         let inverse_transformed_ray = self.transform.inverse_transform_ray(ray);
-        if let Some(mut rec) = self.hittable.hit(ray, t_min, t_max) {
+        if let Some(mut rec) = self.hittable.hit(&inverse_transformed_ray, t_min, t_max) {
             rec.p      = self.transform.transform_point(rec.p);
             rec.normal = self.transform.transform_vector(rec.normal);
             rec.set_face_normal(&inverse_transformed_ray);
