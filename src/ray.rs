@@ -5,15 +5,16 @@ use crate::hittable::prelude::*;
 pub struct Ray {
     pub origin    : P3d,
     pub direction : Vec3,
+    pub time      : f64,
 }
 
 impl Ray {
-    pub fn new(origin: P3d, direction: Vec3) -> Self {
-        Self { origin, direction }
+    pub fn new(origin: P3d, direction: Vec3, time: f64) -> Self {
+        Self { origin, direction, time }
     }
-    pub fn from_to(from: P3d, to: P3d) -> Self {
+    pub fn from_to(from: P3d, to: P3d, time: f64) -> Self {
         // generate a ray from origin to destination
-        Self { origin: from, direction: to - from }
+        Self { origin: from, direction: to - from, time }
     }
 
     pub fn at(&self, t: f64) -> P3d {
