@@ -178,6 +178,7 @@ struct Hittable;
 struct HittableList;
 struct Sphere;
 struct MovingSphere;
+struct XYAARectangle;
 
 struct Material;
 struct Lambertian;

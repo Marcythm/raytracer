@@ -9,6 +9,7 @@
 #include "hittable.hpp"
 #include "sphere.hpp"
 #include "moving_sphere.hpp"
+#include "aarectangle.hpp"
 
 #include "material.hpp"
 #include "lambertian.hpp"
