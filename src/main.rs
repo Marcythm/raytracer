@@ -4,6 +4,7 @@ pub mod ray;
 pub mod camera;
 pub mod aabb;
 pub mod bvhnode;
+pub mod instance;
 
 pub mod hittable;
 pub mod material;
@@ -14,6 +15,7 @@ use utilities::prelude::*;
 use camera::Camera;
 // use aabb::AABB;
 use bvhnode::BVHNode;
+// use instance::Instance;
 
 use hittable::prelude::*;
 use hittable::sphere::Sphere;
