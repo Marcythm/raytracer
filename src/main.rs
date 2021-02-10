@@ -28,7 +28,7 @@ use material::dielectric::Dielectric;
 fn random_scene(rng: &mut SmallRng) -> HittableList {
     let mut scene = HittableList::default();
 
-    let material_ground = Lambertian::new(RGB::new(0.5, 0.5, 0.5));
+    let material_ground = Lambertian::with_color(RGB::new(0.5, 0.5, 0.5));
     scene.push(Sphere::new(P3d::new(0.0, -1000.0, 0.0), 1000.0, Rc::new(material_ground)));
 
     for a in -11..11 {
@@ -41,7 +41,7 @@ fn random_scene(rng: &mut SmallRng) -> HittableList {
                 if which_material < 0.8 {
                     // diffuse
                     let albedo = RGB::random(0.0, 1.0, rng) * RGB::random(0.0, 1.0, rng);
-                    let sphere_material = Lambertian::new(albedo);
+                    let sphere_material = Lambertian::with_color(albedo);
                     let center1 = center + Vec3::new(0.0, rng.gen_range(0.0, 0.5), 0.0);
                     scene.push(MovingSphere::new(center, center1, 0.0, 1.0, 0.2, Rc::new(sphere_material)));
                 } else if which_material < 0.95 {
@@ -62,7 +62,7 @@ fn random_scene(rng: &mut SmallRng) -> HittableList {
     let material1 = Dielectric::new(1.5);
     scene.push(Sphere::new(P3d::new( 0.0, 1.0, 0.0), 1.0, Rc::new(material1)));
 
-    let material2 = Lambertian::new(RGB::new(0.4, 0.2, 0.1));
+    let material2 = Lambertian::with_color(RGB::new(0.4, 0.2, 0.1));
     scene.push(Sphere::new(P3d::new(-4.0, 1.0, 0.0), 1.0, Rc::new(material2)));
 
     let material3 = Metal::new(RGB::new(0.7, 0.6, 0.5), 0.0);
