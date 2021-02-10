@@ -15,7 +15,7 @@ use utilities::prelude::*;
 use camera::Camera;
 // use aabb::AABB;
 use bvhnode::BVHNode;
-// use instance::Instance;
+use instance::Instance;
 
 use hittable::prelude::*;
 use hittable::sphere::Sphere;
@@ -36,9 +36,9 @@ use texture::checker_texture::CheckerTexture;
 use texture::noise_texture::NoiseTexture;
 
 // use transform::prelude::*;
-// use transform::translation::Translation;
+use transform::translation::Translation;
 // use transform::rotation::RotationX;
-// use transform::rotation::RotationY;
+use transform::rotation::RotationY;
 // use transform::rotation::RotationZ;
 
 fn random_scene(rng: &mut SmallRng) -> HittableList {
@@ -145,8 +145,31 @@ fn cornell_box() -> HittableList {
     hittables.push(ZXAARectangle::new(  0.0, 555.0,   0.0, 555.0, 555.0, white.clone()));
     hittables.push(XYAARectangle::new(  0.0, 555.0,   0.0, 555.0, 555.0, white.clone()));
 
-    hittables.push(Cuboid::new(P3d::new(130.0, 0.0,  65.0), P3d::new(295.0, 165.0, 230.0), white.clone()));
-    hittables.push(Cuboid::new(P3d::new(265.0, 0.0, 295.0), P3d::new(430.0, 330.0, 460.0), white.clone()));
+    // hittables.push(Cuboid::new(P3d::new(130.0, 0.0,  65.0), P3d::new(295.0, 165.0, 230.0), white.clone()));
+    // hittables.push(Cuboid::new(P3d::new(265.0, 0.0, 295.0), P3d::new(430.0, 330.0, 460.0), white.clone()));
+
+    hittables.push(Instance::new(
+        Rc::new(Instance::new(
+            Rc::new(Cuboid::new(
+                P3d::new(0.0, 0.0, 0.0),
+                P3d::new(165.0, 330.0, 165.0),
+                white.clone(),
+            )),
+            Rc::new(RotationY::new(15.0)),
+        )),
+        Rc::new(Translation::new(Vec3::new(265.0, 0.0, 295.0))),
+    ));
+    hittables.push(Instance::new(
+        Rc::new(Instance::new(
+            Rc::new(Cuboid::new(
+                P3d::new(0.0, 0.0, 0.0),
+                P3d::new(165.0, 165.0, 165.0),
+                white.clone(),
+            )),
+            Rc::new(RotationY::new(-18.0)),
+        )),
+        Rc::new(Translation::new(Vec3::new(130.0, 0.0, 65.0))),
+    ));
 
     hittables
 }
