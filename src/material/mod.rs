@@ -1,6 +1,7 @@
 pub mod lambertian;
 pub mod metal;
 pub mod dielectric;
+pub mod diffuse_light;
 
 pub mod prelude {
     pub use super::Material;
@@ -11,5 +12,10 @@ use crate::ray::Ray;
 use crate::hittable::prelude::*;
 
 pub trait Material {
-    fn scatter(&self, ray: &Ray, rec: &HitRecord, rng: &mut SmallRng) -> Option<(Ray, RGB)>;
+    fn emitted(&self, _: f64, _: f64, _: P3d) -> RGB {
+        RGB::new(0.0, 0.0, 0.0)
+    }
+    fn scatter(&self, _: &Ray, _: &HitRecord, _: &mut SmallRng) -> Option<(Ray, RGB)> {
+        None
+    }
 }
