@@ -43,13 +43,13 @@ fn random_scene(rng: &mut SmallRng) -> HittableList {
     }
 
     let material1 = Dielectric::new(1.5);
-    world.push(Sphere::new(P3d::new(0.0, 1.0, 0.0), 1.0, Rc::new(material1)));
+    world.push(Sphere::new(P3d::new( 0.0, 1.0, 0.0), 1.0, Rc::new(material1)));
 
     let material2 = Lambertian::new(RGB::new(0.4, 0.2, 0.1));
     world.push(Sphere::new(P3d::new(-4.0, 1.0, 0.0), 1.0, Rc::new(material2)));
 
     let material3 = Metal::new(RGB::new(0.7, 0.6, 0.5), 0.0);
-    world.push(Sphere::new(P3d::new(4.0, 1.0, 0.0), 1.0, Rc::new(material3)));
+    world.push(Sphere::new(P3d::new( 4.0, 1.0, 0.0), 1.0, Rc::new(material3)));
 
     world
 }
@@ -57,36 +57,43 @@ fn random_scene(rng: &mut SmallRng) -> HittableList {
 fn main() {
     let mut rng = SmallRng::from_entropy();
 
+    // Image
+    let mut aspect_ratio = ASPECT_RATIO;
+    let mut image_width = IMAGE_WIDTH;
+    let mut samples_per_pixel = SAMPLES_PER_PIXEL;
+
+    let image_height = (aspect_ratio * image_width as f64) as i32;
+
     // World
     let world = random_scene(&mut rng);
 
     // Camera
-    let lookfrom = P3d::new(13.0, 2.0, 3.0);
-    let lookat = P3d::new(0.0, 0.0,0.0);
-    let viewup = Vec3::new(0.0, 1.0, 0.0);
+    let lookfrom = P3d::new( 13.0, 2.0, 3.0);
+    let lookat   = P3d::new(  0.0, 0.0, 0.0);
+    let viewup  = Vec3::new( 0.0, 1.0, 0.0);
     let focus_distance = 10.0;
     let aperture = 0.1;
     let camera = Camera::new(
         lookfrom, lookat, viewup,
-        20.0, ASPECT_RATIO,
+        20.0, aspect_ratio,
         aperture, focus_distance
     );
 
     // Render
     println!("P3");
-    println!("{} {}", IMAGE_WIDTH, IMAGE_HEIGHT);
+    println!("{} {}", image_width, image_height);
     println!("255");
 
-    for j in (0..IMAGE_HEIGHT).rev() {
+    for j in (0..image_height).rev() {
         eprintln!("Rendering: {} lines remaining", j);
-        for i in 0..IMAGE_WIDTH {
+        for i in 0..image_width {
             let mut pixel_color = RGB::new(0.0, 0.0, 0.0);
-            for _ in 0..SAMPLES_PER_PIXEL {
-                let u = (i as f64 + rng.gen_range(0.0, 1.0)) / (IMAGE_WIDTH - 1) as f64;
-                let v = (j as f64 + rng.gen_range(0.0, 1.0)) / (IMAGE_HEIGHT - 1) as f64;
+            for _ in 0..samples_per_pixel {
+                let u = (i as f64 + rng.gen_range(0.0, 1.0)) / (image_width - 1) as f64;
+                let v = (j as f64 + rng.gen_range(0.0, 1.0)) / (image_height - 1) as f64;
                 pixel_color += camera.get_ray(u, v, &mut rng).color(&world, MAX_DEPTH, &mut rng);
             }
-            println!("{}", pixel_color);
+            println!("{}", pixel_color / samples_per_pixel as f64);
         }
     }
     eprintln!("\nDone.");
