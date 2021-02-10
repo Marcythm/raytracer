@@ -6,11 +6,17 @@ use rand::seq::SliceRandom;
 pub struct NoiseTexture {
     pub noise: Perlin,
     pub scale: f64,
+    pub rng  : RefCell<SmallRng>,
 }
 
 impl NoiseTexture {
-    pub fn new(scale: f64, rng: &mut SmallRng) -> Self {
-        Self { noise: Perlin::new(rng), scale }
+    pub fn new(scale: f64) -> Self {
+        let mut rng = SmallRng::from_entropy();
+        Self {
+            noise: Perlin::new(&mut rng),
+            scale,
+            rng: RefCell::new(rng),
+        }
     }
 }
 
