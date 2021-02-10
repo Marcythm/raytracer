@@ -38,12 +38,12 @@ public:
 
     auto clear() -> void { hittables.clear(); }
     template <typename T>
-    auto push(const T &obj) -> void {
+    auto push(const T &hittable) -> void {
         if constexpr (std::is_convertible_v<T, ptr<Hittable>>)
-            hittables.push_back(obj);
+            hittables.push_back(hittable);
         else {
             static_assert(std::is_base_of_v<Hittable, T>, "try to add an object which is not hittable into a hittable list");
-            hittables.emplace_back(std::make_shared<T>(obj));
+            hittables.emplace_back(std::make_shared<T>(hittable));
         }
     }
 

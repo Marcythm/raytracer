@@ -53,8 +53,8 @@ auto random_scene() -> HittableList {
                     // diffuse
                     const auto albedo = RGB::random() * RGB::random();
                     const auto sphere_material = std::make_shared<Lambertian>(albedo);
-                    const auto center2 = center + Vec3(0.0, random_f64(0.0, 0.5), 0.0);
-                    scene.push(MovingSphere(center, center2, 0.0, 1.0, 0.2, sphere_material));
+                    const auto center1 = center + Vec3(0.0, random_f64(0.0, 0.5), 0.0);
+                    scene.push(MovingSphere(center, center1, 0.0, 1.0, 0.2, sphere_material));
                 } else if (which_material < 0.95) {
                     // metal
                     const auto albedo = RGB::random(0.5, 1.0);

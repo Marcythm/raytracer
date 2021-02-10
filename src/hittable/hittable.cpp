@@ -18,8 +18,8 @@ auto HittableList::hit(const Ray &ray, const f64 t_min, const f64 t_max) const -
 
 auto HittableList::bounding_box(const f64 t0, const f64 t1) const -> std::optional<AABB> {
     if (hittables.empty()) return std::optional<AABB>();
-    std::optional<AABB> box;
 
+    std::optional<AABB> box;
     for (const auto &hittable: hittables)
         if (const auto subbox = hittable->bounding_box(t0, t1); subbox.has_value()) {
             if (box.has_value())
