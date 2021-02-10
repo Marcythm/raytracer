@@ -1,6 +1,7 @@
 #pragma once
 
 #include "material.hpp"
+#include "solid_color.hpp"
 
 struct Lambertian: Material {
     ptr<Texture> albedo;

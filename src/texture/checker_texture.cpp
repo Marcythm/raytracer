@@ -1,4 +1,4 @@
-#include "checkertexture.hpp"
+#include "checker_texture.hpp"
 
 auto CheckerTexture::value(const f64 u, const f64 v, const p3d &p) const -> RGB {
     if (std::sin(10.0 * p.x) * std::sin(10.0 * p.y) * std::sin(10.0 * p.z) < 0.0)

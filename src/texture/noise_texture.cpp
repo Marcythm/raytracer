@@ -1,4 +1,4 @@
-#include "noisetexture.hpp"
+#include "noise_texture.hpp"
 
 std::random_device Perlin::seed;
 std::mt19937 Perlin::rng(seed());

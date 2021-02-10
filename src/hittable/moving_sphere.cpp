@@ -1,4 +1,4 @@
-#include "movingsphere.hpp"
+#include "moving_sphere.hpp"
 
 auto MovingSphere::get_sphere_uv(const Vec3 &normal) -> std::pair<f64, f64> {
     const f64 phi = std::atan2(normal.z, normal.x);

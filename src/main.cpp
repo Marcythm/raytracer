@@ -8,7 +8,7 @@
 
 #include "hittable.hpp"
 #include "sphere.hpp"
-#include "movingsphere.hpp"
+#include "moving_sphere.hpp"
 
 #include "material.hpp"
 #include "lambertian.hpp"
@@ -16,10 +16,10 @@
 #include "dielectric.hpp"
 
 #include "texture.hpp"
-#include "solidcolor.hpp"
-#include "checkertexture.hpp"
-#include "noisetexture.hpp"
-#include "imagetexture.hpp"
+#include "solid_color.hpp"
+#include "checker_texture.hpp"
+#include "noise_texture.hpp"
+#include "image_texture.hpp"
 
 auto random_scene() -> HittableList {
 	HittableList scene;

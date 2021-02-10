@@ -1,7 +1,7 @@
 #pragma once
 
 #include "texture.hpp"
-#include "solidcolor.hpp"
+#include "solid_color.hpp"
 
 struct CheckerTexture: Texture {
     ptr<Texture> even;

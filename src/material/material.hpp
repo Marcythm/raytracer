@@ -8,7 +8,6 @@
 #include "hittable.hpp"
 
 #include "texture.hpp"
-#include "solidcolor.hpp"
 
 struct Material {
     virtual ~Material() = default;
