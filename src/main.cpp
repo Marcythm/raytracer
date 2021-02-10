@@ -30,6 +30,8 @@
 #include "translation.hpp"
 #include "rotation.hpp"
 
+#include "medium.hpp"
+
 auto random_scene() -> HittableList {
     HittableList scene;
 

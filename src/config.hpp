@@ -203,6 +203,8 @@ struct RotationX;
 struct RotationY;
 struct RotationZ;
 
+struct Medium;
+
 enum class diffuse_render_method: bool {
     hemispherical_scattering = false,
     true_lambertian_reflection = true,
