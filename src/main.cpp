@@ -101,6 +101,19 @@ auto earth() -> HittableList {
 	return hittables;
 }
 
+auto simple_light() -> HittableList {
+	HittableList hittables;
+
+	const auto pertext = std::make_shared<NoiseTexture>(4.0);
+	hittables.push(Sphere(p3d(0.0, -1000.0, 0.0), 1000.0, std::make_shared<Lambertian>(pertext)));
+	hittables.push(Sphere(p3d(0.0, 2.0, 0.0), 2.0, std::make_shared<Lambertian>(pertext)));
+
+	const auto difflight = std::make_shared<DiffuseLight>(RGB(4.0, 4.0, 4.0));
+	hittables.push(XYAARectangle(3.0, 5.0, 1.0, 3.0, -2.0, difflight));
+
+	return hittables;
+}
+
 auto main() -> i32 {
 	// Scene
 	HittableList scene;
@@ -143,7 +156,11 @@ auto main() -> i32 {
 			break;
 		default:
 		case 5:
+			scene = simple_light();
 			background = RGB(0.0, 0.0, 0.0);
+			lookfrom = p3d(26.0, 3.0, 6.0);
+			lookat = p3d(0.0, 2.0, 0.0);
+			vertical_field_of_view = 20.0;
 			break;
 	}
 
