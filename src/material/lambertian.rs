@@ -5,7 +5,7 @@ use crate::material::prelude::*;
 
 #[derive(Debug, Clone, Copy, Default)]
 pub struct Lambertian {
-    albedo: RGB,
+    pub albedo: RGB,
 }
 
 impl Lambertian {
@@ -15,7 +15,7 @@ impl Lambertian {
 }
 
 impl Material for Lambertian {
-    fn scatter(&self, _: &Ray, rec: &HitRecord, rng: &mut SmallRng) -> Option<(Ray, RGB)> {
-        Some((Ray::new(rec.p, rec.normal + Vec3::random_unit_vector(rng), 0.0), self.albedo))
+    fn scatter(&self, ray: &Ray, rec: &HitRecord, rng: &mut SmallRng) -> Option<(Ray, RGB)> {
+        Some((Ray::new(rec.p, rec.normal + Vec3::random_unit_vector(rng), ray.time), self.albedo))
     }
 }
