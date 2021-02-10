@@ -1,5 +1,6 @@
 use crate::utilities::prelude::*;
 use crate::ray::Ray;
+use crate::aabb::AABB;
 use crate::hittable::prelude::*;
 use crate::material::prelude::*;
 
@@ -50,5 +51,18 @@ impl Hittable for MovingSphere {
         }
 
         None
+    }
+
+    fn bounding_box(&self, t0: f64, t1: f64) -> Option<AABB> {
+        Some(AABB::surrounding_box(
+            &AABB::new(
+                self.center(t0) - Vec3::new(self.radius, self.radius, self.radius),
+                self.center(t0) + Vec3::new(self.radius, self.radius, self.radius),
+            ),
+            &AABB::new(
+                self.center(t1) - Vec3::new(self.radius, self.radius, self.radius),
+                self.center(t1) + Vec3::new(self.radius, self.radius, self.radius),
+            )
+        ))
     }
 }

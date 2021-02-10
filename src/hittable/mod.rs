@@ -9,7 +9,9 @@ pub mod prelude {
 
 use crate::utilities::prelude::*;
 use crate::ray::Ray;
+use crate::aabb::AABB;
 use crate::material::prelude::*;
+
 
 #[derive(Clone)]
 pub struct HitRecord {
@@ -35,9 +37,12 @@ impl HitRecord {
     }
 }
 
+
 pub trait Hittable {
     fn hit(&self, ray: &Ray, t_min: f64, t_max: f64) -> Option<HitRecord>;
+    fn bounding_box(&self, t0: f64, t1: f64) -> Option<AABB>;
 }
+
 
 #[derive(Clone, Default)]
 pub struct HittableList {
@@ -59,16 +64,35 @@ impl HittableList {
 
 impl Hittable for HittableList {
     fn hit(&self, ray: &Ray, t_min: f64, t_max: f64) -> Option<HitRecord> {
-        let mut sol = None;
+        let mut rec = None;
         let mut closest = t_max;
 
         for hittable in &self.hittables {
-            if let Some(subsol) = hittable.hit(&ray, t_min, closest) {
-                closest = subsol.t;
-                sol = Some(subsol);
+            if let Some(subrec) = hittable.hit(&ray, t_min, closest) {
+                closest = subrec.t;
+                rec = Some(subrec);
             }
         }
 
-        sol
+        rec
+    }
+
+    fn bounding_box(&self, t0: f64, t1: f64) -> Option<AABB> {
+        if self.hittables.is_empty() {
+            None
+        } else {
+            self.hittables
+                .iter()
+                .fold(
+                    self.hittables[0].bounding_box(t0, t1),
+                    |bounding_box, hittable| match bounding_box {
+                        Some(ref original_box) => match hittable.bounding_box(t0, t1) {
+                            Some(ref new_box) => Some(AABB::surrounding_box(original_box, new_box)),
+                            None => None,
+                        },
+                        None => None,
+                    }
+                )
+        }
     }
 }

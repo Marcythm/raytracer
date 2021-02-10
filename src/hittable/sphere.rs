@@ -1,5 +1,6 @@
 use crate::utilities::prelude::*;
 use crate::ray::Ray;
+use crate::aabb::AABB;
 use crate::hittable::prelude::*;
 use crate::material::prelude::*;
 
@@ -43,5 +44,12 @@ impl Hittable for Sphere {
         }
 
         None
+    }
+
+    fn bounding_box(&self, t0: f64, t1: f64) -> Option<AABB> {
+        Some(AABB::new(
+            self.center - Vec3::new(self.radius, self.radius, self.radius),
+            self.center + Vec3::new(self.radius, self.radius, self.radius),
+        ))
     }
 }
