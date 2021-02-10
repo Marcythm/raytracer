@@ -183,6 +183,7 @@ struct Material;
 struct Lambertian;
 struct Metal;
 struct Dielectric;
+struct DiffuseLight;
 
 struct Texture;
 struct SolidColor;
