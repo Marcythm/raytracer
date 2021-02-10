@@ -8,6 +8,7 @@ pub mod bvhnode;
 pub mod hittable;
 pub mod material;
 pub mod texture;
+pub mod transform;
 
 use utilities::prelude::*;
 use camera::Camera;
@@ -31,6 +32,8 @@ use material::diffuse_light::DiffuseLight;
 // use texture::prelude::*;
 use texture::checker_texture::CheckerTexture;
 use texture::noise_texture::NoiseTexture;
+
+// use transform::prelude::*;
 
 fn random_scene(rng: &mut SmallRng) -> HittableList {
     let mut hittables = HittableList::default();
