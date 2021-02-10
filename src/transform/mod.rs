@@ -16,14 +16,14 @@ pub trait Transform {
     fn transform_vector(&self, v: Vec3) -> Vec3;
     fn inverse_transform_vector(&self, v: Vec3) -> Vec3;
 
-    fn transform_ray(&self, ray: Ray) -> Ray {
+    fn transform_ray(&self, ray: &Ray) -> Ray {
         Ray::new(
             self.transform_point(ray.origin),
             self.transform_vector(ray.direction),
             ray.time,
         )
     }
-    fn inverse_transform_ray(&self, ray: Ray) -> Ray {
+    fn inverse_transform_ray(&self, ray: &Ray) -> Ray {
         Ray::new(
             self.inverse_transform_point(ray.origin),
             self.inverse_transform_vector(ray.direction),
@@ -31,7 +31,7 @@ pub trait Transform {
         )
     }
 
-    fn transform_box(&self, bounding_box: AABB) -> AABB {
+    fn transform_box(&self, bounding_box: &AABB) -> AABB {
         let mut min = P3d::new(-INFINITY, -INFINITY, -INFINITY);
         let mut max = P3d::new( INFINITY,  INFINITY,  INFINITY);
 
@@ -56,7 +56,7 @@ pub trait Transform {
 
         AABB::new(min, max)
     }
-    fn inverse_transform_box(&self, bounding_box: AABB) -> AABB {
+    fn inverse_transform_box(&self, bounding_box: &AABB) -> AABB {
         let mut min = P3d::new(-INFINITY, -INFINITY, -INFINITY);
         let mut max = P3d::new( INFINITY,  INFINITY,  INFINITY);
 

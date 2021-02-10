@@ -34,11 +34,11 @@ impl Transform for Translation {
         v
     }
 
-    fn transform_box(&self, bounding_box: AABB) -> AABB {
+    fn transform_box(&self, bounding_box: &AABB) -> AABB {
         AABB::new(bounding_box.min + self.offset, bounding_box.max + self.offset)
     }
 
-    fn inverse_transform_box(&self, bounding_box: AABB) -> AABB {
+    fn inverse_transform_box(&self, bounding_box: &AABB) -> AABB {
         AABB::new(bounding_box.min - self.offset, bounding_box.max - self.offset)
     }
 }
