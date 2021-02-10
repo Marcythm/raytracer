@@ -16,7 +16,7 @@ BVHNode::BVHNode(Vec<ptr<Hittable>> &hittables, i32 beg, i32 end, const f64 t0, 
             if (not cmp(left, right))
                 std::swap(left, right);
         } else {
-            std::sort(hittables.begin() + beg, hittables.end() + end, cmp);
+            std::sort(hittables.begin() + beg, hittables.begin() + end, cmp);
             const i32 mid = beg + len / 2;
             left = std::make_shared<BVHNode>(hittables, beg, mid, t0, t1);
             right = std::make_shared<BVHNode>(hittables, mid, end, t0, t1);
