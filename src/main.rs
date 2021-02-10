@@ -9,6 +9,7 @@ use camera::Camera;
 
 use hittable::prelude::*;
 use hittable::sphere::Sphere;
+use hittable::moving_sphere::MovingSphere;
 
 // use material::prelude::*;
 use material::lambertian::Lambertian;
@@ -32,7 +33,8 @@ fn random_scene(rng: &mut SmallRng) -> HittableList {
                     // diffuse
                     let albedo = RGB::random(0.0, 1.0, rng) * RGB::random(0.0, 1.0, rng);
                     let sphere_material = Lambertian::new(albedo);
-                    world.push(Sphere::new(center, 0.2, Rc::new(sphere_material)));
+                    let center1 = center + Vec3::new(0.0, rng.gen_range(0.0, 0.5), 0.0);
+                    world.push(MovingSphere::new(center, center1, 0.0, 1.0, 0.2, Rc::new(sphere_material)));
                 } else if which_material < 0.95 {
                     // metal
                     let albedo = RGB::random(0.5, 1.0, rng);
@@ -67,8 +69,9 @@ fn main() {
     let mut aspect_ratio = ASPECT_RATIO;
     let mut image_width = IMAGE_WIDTH;
     let mut samples_per_pixel = SAMPLES_PER_PIXEL;
+    let mut vertical_field_of_view = 20.0;
 
-    let image_height = (aspect_ratio * image_width as f64) as i32;
+    let image_height = (image_width as f64 / aspect_ratio) as i32;
 
     // World
     let world = random_scene(&mut rng);
@@ -81,7 +84,7 @@ fn main() {
     let aperture = 0.1;
     let camera = Camera::new(
         lookfrom, lookat, viewup,
-        20.0, aspect_ratio,
+        vertical_field_of_view, aspect_ratio,
         aperture, focus_distance,
         0.0, 1.0
     );
