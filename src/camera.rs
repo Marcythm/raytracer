@@ -1,7 +1,7 @@
 use crate::utilities::prelude::*;
 use crate::ray::Ray;
 
-#[derive(Debug, Clone, Copy, Default)]
+#[derive(Clone)]
 pub struct Camera {
     pub origin            : P3d,
     pub horizontal        : Vec3,

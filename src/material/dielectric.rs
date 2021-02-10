@@ -8,7 +8,7 @@ pub fn schlick(cosine: f64, refractive_index: f64) -> f64 {
     let r0 = ((1.0 - refractive_index) / (1.0 + refractive_index)).powi(2);
     r0 + (1.0 - r0) * (1.0 - cosine).powi(5)
 }
-#[derive(Debug, Clone, Copy, Default)]
+#[derive(Clone)]
 pub struct Dielectric {
     pub refractive_index: f64,
 }

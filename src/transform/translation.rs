@@ -2,7 +2,7 @@ use crate::utilities::prelude::*;
 use crate::aabb::AABB;
 use crate::transform::prelude::*;
 
-#[derive(Debug, Clone, Copy, Default)]
+#[derive(Clone)]
 pub struct Translation {
     pub offset: Vec3,
 }

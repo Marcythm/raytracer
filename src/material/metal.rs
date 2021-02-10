@@ -3,7 +3,7 @@ use crate::ray::Ray;
 use crate::hittable::prelude::*;
 use crate::material::prelude::*;
 
-#[derive(Debug, Clone, Copy, Default)]
+#[derive(Clone)]
 pub struct Metal {
     pub albedo : RGB,
     pub fuzz   : f64,

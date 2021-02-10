@@ -1,7 +1,7 @@
 use crate::utilities::prelude::*;
 use crate::texture::prelude::*;
 
-#[derive(Debug, Clone, Copy, Default)]
+#[derive(Clone)]
 pub struct ConstantTexture {
     pub color: RGB,
 }

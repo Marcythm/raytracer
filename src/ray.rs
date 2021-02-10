@@ -1,7 +1,7 @@
 use crate::utilities::prelude::*;
 use crate::hittable::prelude::*;
 
-#[derive(Debug, Clone, Copy, Default)]
+#[derive(Clone)]
 pub struct Ray {
     pub origin    : P3d,
     pub direction : Vec3,
