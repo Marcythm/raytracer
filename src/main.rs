@@ -1,8 +1,12 @@
 pub mod utilities;
+
 pub mod ray;
 pub mod camera;
+pub mod aabb;
+
 pub mod hittable;
 pub mod material;
+
 
 use utilities::prelude::*;
 use camera::Camera;
@@ -15,6 +19,7 @@ use hittable::moving_sphere::MovingSphere;
 use material::lambertian::Lambertian;
 use material::metal::Metal;
 use material::dielectric::Dielectric;
+
 
 fn random_scene(rng: &mut SmallRng) -> HittableList {
     let mut world = HittableList::default();

@@ -1,4 +1,4 @@
-use std::ops::{Add, AddAssign, Sub, SubAssign};
+use std::ops::{Add, AddAssign, Sub, SubAssign, Index, IndexMut};
 
 use crate::utilities::prelude::*;
 
@@ -72,5 +72,26 @@ impl SubAssign<Vec3> for P3d {
         self.x -= rhs.x;
         self.y -= rhs.y;
         self.z -= rhs.z;
+    }
+}
+
+impl Index<i32> for P3d {
+    type Output = f64;
+    fn index(&self, index: i32) -> &Self::Output {
+        match index {
+            0 => &self.x,
+            1 => &self.y,
+            _ => &self.z,
+        }
+    }
+}
+
+impl IndexMut<i32> for P3d {
+    fn index_mut(&mut self, index: i32) -> &mut Self::Output {
+        match index {
+            0 => &mut self.x,
+            1 => &mut self.y,
+            _ => &mut self.z,
+        }
     }
 }
