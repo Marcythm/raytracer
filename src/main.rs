@@ -34,6 +34,7 @@ use texture::checker_texture::CheckerTexture;
 use texture::noise_texture::NoiseTexture;
 
 // use transform::prelude::*;
+// use transform::translation::Translation;
 
 fn random_scene(rng: &mut SmallRng) -> HittableList {
     let mut hittables = HittableList::default();
