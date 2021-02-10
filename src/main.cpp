@@ -18,6 +18,7 @@
 #include "metal.hpp"
 #include "dielectric.hpp"
 #include "diffuse_light.hpp"
+#include "isotropic.hpp"
 
 #include "texture.hpp"
 #include "solid_color.hpp"

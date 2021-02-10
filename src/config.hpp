@@ -189,6 +189,7 @@ struct Lambertian;
 struct Metal;
 struct Dielectric;
 struct DiffuseLight;
+struct Isotropic;
 
 struct Texture;
 struct SolidColor;

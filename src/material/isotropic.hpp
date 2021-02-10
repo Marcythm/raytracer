@@ -3,12 +3,12 @@
 #include "material.hpp"
 #include "solid_color.hpp"
 
-struct Lambertian: Material {
+struct Isotropic: Material {
     ptr<Texture> albedo;
 
 public:
-    Lambertian(const ptr<Texture> &_albedo): albedo(_albedo) {}
-    Lambertian(const RGB &_color): albedo(std::make_shared<SolidColor>(_color)) {}
+    Isotropic(const ptr<Texture> &_albedo): albedo(_albedo) {}
+    Isotropic(const RGB &_color): albedo(std::make_shared<SolidColor>(_color)) {}
 
     auto scatter(const Ray &ray, const HitRecord &rec) const -> std::optional<std::pair<Ray, RGB>> override;
 };
