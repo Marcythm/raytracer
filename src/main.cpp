@@ -168,6 +168,50 @@ auto cornell_box() -> HittableList {
     return hittables;
 }
 
+auto cornell_smoke() -> HittableList {
+    HittableList hittables;
+
+    const auto red   = std::make_shared<Lambertian>  (RGB(0.65, 0.05, 0.05));
+    const auto white = std::make_shared<Lambertian>  (RGB(0.73, 0.73, 0.73));
+    const auto green = std::make_shared<Lambertian>  (RGB(0.12, 0.45, 0.15));
+    const auto light = std::make_shared<DiffuseLight>(RGB(7.00, 7.00, 7.00));
+
+    hittables.push(YZAARectangle(  0.0, 555.0,   0.0, 555.0, 555.0, green));
+    hittables.push(YZAARectangle(  0.0, 555.0,   0.0, 555.0,   0.0,   red));
+    hittables.push(ZXAARectangle(127.0, 432.0, 113.0, 443.0, 554.0, light));
+    hittables.push(ZXAARectangle(  0.0, 555.0,   0.0, 555.0,   0.0, white));
+    hittables.push(ZXAARectangle(  0.0, 555.0,   0.0, 555.0, 555.0, white));
+    hittables.push(XYAARectangle(  0.0, 555.0,   0.0, 555.0, 555.0, white));
+
+    const auto box1 = std::make_shared<Instance>(
+        std::make_shared<Instance>(
+            std::make_shared<Cuboid>(
+                p3d(0.0, 0.0, 0.0),
+                p3d(165.0, 330.0, 165.0),
+                white
+            ),
+            std::make_shared<RotationY>(15.0)
+        ),
+        std::make_shared<Translation>(Vec3(265.0, 0.0, 295.0))
+    );
+    const auto box2 = std::make_shared<Instance>(
+        std::make_shared<Instance>(
+            std::make_shared<Cuboid>(
+                p3d(0.0, 0.0, 0.0),
+                p3d(165.0, 165.0, 165.0),
+                white
+            ),
+            std::make_shared<RotationY>(-18.0)
+        ),
+        std::make_shared<Translation>(Vec3(130.0, 0.0, 65.0))
+    );
+
+    hittables.push(ConstantMedium(box1, RGB(0.0, 0.0, 0.0), 0.01));
+    hittables.push(ConstantMedium(box2, RGB(1.0, 1.0, 1.0), 0.01));
+
+    return hittables;
+}
+
 auto main() -> i32 {
     // Image
     f64 aspect_ratio      = ASPECT_RATIO;
@@ -216,18 +260,25 @@ auto main() -> i32 {
         case 5:
             scene                   = simple_light();
             samples_per_pixel       = 400;
-            background              = RGB( 0.0, 0.0, 0.0);
             lookfrom                = p3d(26.0, 3.0, 6.0);
             lookat                  = p3d( 0.0, 2.0, 0.0);
             vertical_field_of_view  = 20.0;
             break;
-        default:
         case 6:
             scene                   = cornell_box();
             aspect_ratio            = 1.0;
             image_width             = 600;
             samples_per_pixel       = 200;
-            background              = RGB(  0.0,   0.0,    0.0);
+            lookfrom                = p3d(278.0, 278.0, -800.0);
+            lookat                  = p3d(278.0, 278.0,    0.0);
+            vertical_field_of_view  = 40.0;
+            break;
+        default:
+        case 7:
+            scene                   = cornell_smoke();
+            aspect_ratio            = 1.0;
+            image_width             = 600;
+            samples_per_pixel       = 200;
             lookfrom                = p3d(278.0, 278.0, -800.0);
             lookat                  = p3d(278.0, 278.0,    0.0);
             vertical_field_of_view  = 40.0;
