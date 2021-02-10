@@ -48,7 +48,7 @@ impl Hittable for ConstantMedium {
 
                     let ray_length = ray.direction.length();
                     let distance_in_medium = (rec_out.t - rec_in.t) * ray_length;
-                    let hit_distance = self.negative_inverse_density * ((rng.gen_range(0.0, 1.0) as f64).log10());
+                    let hit_distance = self.negative_inverse_density * ((rng.gen_range(0.0, 1.0) as f64).ln());
 
                     if hit_distance > distance_in_medium {
                         None
