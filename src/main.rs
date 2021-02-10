@@ -106,10 +106,10 @@ fn two_spheres() -> HittableList {
     hittables
 }
 
-fn two_perlin_spheres(rng: &mut SmallRng) -> HittableList {
+fn two_perlin_spheres() -> HittableList {
     let mut hittables = HittableList::default();
 
-    let pertext = Rc::new(NoiseTexture::new(4.0, rng));
+    let pertext = Rc::new(NoiseTexture::new(4.0));
     hittables.push(Sphere::new(P3d::new(0.0, -1000.0, 0.0), 1000.0, Rc::new(Lambertian::with_texture(pertext.clone()))));
     hittables.push(Sphere::new(P3d::new(0.0,     2.0, 0.0),    2.0, Rc::new(Lambertian::with_texture(pertext.clone()))));
 
@@ -122,10 +122,10 @@ fn earth() -> HittableList {
     hittables
 }
 
-fn simple_light(rng: &mut SmallRng) -> HittableList {
+fn simple_light() -> HittableList {
     let mut hittables = HittableList::default();
 
-    let pertext = Rc::new(NoiseTexture::new(4.0, rng));
+    let pertext = Rc::new(NoiseTexture::new(4.0));
     hittables.push(Sphere::new(P3d::new(0.0, -1000.0, 0.0), 1000.0, Rc::new(Lambertian::with_texture(pertext.clone()))));
     hittables.push(Sphere::new(P3d::new(0.0,     2.0, 0.0),    2.0, Rc::new(Lambertian::with_texture(pertext.clone()))));
 
@@ -231,6 +231,73 @@ fn cornell_smoke() -> HittableList {
     hittables
 }
 
+fn final_scene(rng: &mut SmallRng) -> HittableList {
+    let mut boxes1 = HittableList::default();
+
+    let ground = Rc::new(Lambertian::with_rgb(0.48, 0.83, 0.53));
+    const BOXES_PER_SIDE: i32 = 20;
+    for i in 0..BOXES_PER_SIDE {
+        for j in 0..BOXES_PER_SIDE {
+            let w = 100.0;
+            let x0 = -1000.0 + i as f64 * w;
+            let y0 = 0.0;
+            let z0 = -1000.0 + j as f64 * w;
+
+            let x1 = x0 + w;
+            let y1 = rng.gen_range(1.0, 101.1);
+            let z1 = z0 + w;
+
+            boxes1.push(Cuboid::new(P3d::new(x0, y0, z0), P3d::new(x1, y1, z1), ground.clone()));
+        }
+    }
+
+    let mut hittables = HittableList::default();
+
+    let light = Rc::new(DiffuseLight::with_rgb(7.0, 7.0, 7.0));
+    hittables.push(ZXAARectangle::new(147.0, 412.0, 123.0, 423.0, 554.0, light.clone()));
+
+    let center0 = P3d::new(400.0, 400.0, 200.0);
+    let center1 = center0 + Vec3::new(30.0, 0.0, 0.0);
+
+    let moving_sphere_material = Rc::new(Lambertian::with_rgb(0.7, 0.3, 0.1));
+    hittables.push(MovingSphere::new(center0, center1, 0.0, 1.0, 50.0, moving_sphere_material.clone()));
+
+    let dielectric = Rc::new(Dielectric::new(1.5));
+    hittables.push(Sphere::new(P3d::new(260.0, 150.0,  45.0), 50.0, dielectric.clone()));
+    hittables.push(Sphere::new(P3d::new(  0.0, 150.0, 145.0), 50.0, Rc::new(Metal::new(RGB::new(0.8, 0.8, 0.9), 10.0))));
+
+    let boundary1 = Rc::new(Sphere::new(P3d::new(360.0, 150.0, 145.0), 70.0, dielectric.clone()));
+    hittables.push_ptr(boundary1.clone());
+    hittables.push(ConstantMedium::with_color(boundary1, RGB::new(0.2, 0.4, 0.9), 0.2));
+
+    let boundary2 = Rc::new(Sphere::new(P3d::new(0.0, 0.0, 0.0), 5000.0, dielectric.clone()));
+    hittables.push_ptr(boundary2.clone());
+    hittables.push(ConstantMedium::with_color(boundary2, RGB::new(1.0, 1.0, 1.0), 0.0001));
+
+    // earth
+
+    let pertext = Rc::new(NoiseTexture::new(0.1));
+    hittables.push(Sphere::new(P3d::new(220.0, 280.0, 300.0), 80.0, Rc::new(Lambertian::with_texture(pertext.clone()))));
+
+    let mut boxes2 = HittableList::default();
+    let white = Rc::new(Lambertian::with_rgb(0.73, 0.73, 0.73));
+    const BOX_NUM: i32 = 1000;
+    for _ in 0..BOX_NUM {
+        boxes2.push(Sphere::new(P3d::random(0.0, 165.0, rng), 10.0, white.clone()));
+    }
+
+    hittables.push(BVHNode::new(boxes1, 0.0, 1.0, rng));
+    hittables.push(Instance::new(
+        Rc::new(Instance::new(
+            Rc::new(BVHNode::new(boxes2, 0.0, 1.0, rng)),
+            Rc::new(RotationY::new(15.0)),
+        )),
+        Rc::new(Translation::new(Vec3::new(-100.0, 270.0, 395.0))),
+    ));
+
+    hittables
+}
+
 fn main() {
     let mut rng = SmallRng::from_entropy();
 
@@ -266,7 +333,7 @@ fn main() {
             vertical_field_of_view  = 20.0;
         },
         3 => {
-            scene                   = two_perlin_spheres(&mut rng);
+            scene                   = two_perlin_spheres();
             background              = RGB::new(  0.7, 0.8, 1.0);
             lookfrom                = P3d::new( 13.0, 2.0, 3.0);
             lookat                  = P3d::new(  0.0, 0.0, 0.0);
@@ -280,7 +347,7 @@ fn main() {
             vertical_field_of_view  = 20.0;
         },
         5 => {
-            scene                   = simple_light(&mut rng);
+            scene                   = simple_light();
             samples_per_pixel       = 400;
             background              = RGB::new(  0.0, 0.0, 0.0);
             lookfrom                = P3d::new( 26.0, 3.0, 6.0);
@@ -297,13 +364,23 @@ fn main() {
             lookat                  = P3d::new( 278.0, 278.0,    0.0);
             vertical_field_of_view  = 40.0;
         },
-        _ => {
+        7 => {
             scene                   = cornell_smoke();
             aspect_ratio            = 1.0;
             image_width             = 600;
             samples_per_pixel       = 200;
             background              = RGB::new(   0.0,   0.0,    0.0);
             lookfrom                = P3d::new( 278.0, 278.0, -800.0);
+            lookat                  = P3d::new( 278.0, 278.0,    0.0);
+            vertical_field_of_view  = 40.0;
+        },
+        _ => {
+            scene                   = final_scene(&mut rng);
+            aspect_ratio            = 1.0;
+            image_width             = 800;
+            samples_per_pixel       = 10000;
+            background              = RGB::new(   0.0,   0.0,    0.0);
+            lookfrom                = P3d::new( 478.0, 278.0, -600.0);
             lookat                  = P3d::new( 278.0, 278.0,    0.0);
             vertical_field_of_view  = 40.0;
         },
