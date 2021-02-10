@@ -1,6 +1,6 @@
 use crate::utilities::prelude::*;
 use crate::texture::prelude::*;
-use crate::texture::solid_color::SolidColor;
+use crate::texture::constant_texture::ConstantTexture;
 
 #[derive(Clone)]
 pub struct CheckerTexture {
@@ -18,8 +18,8 @@ impl CheckerTexture {
 
     pub fn with_color(color0: RGB, color1: RGB) -> Self {
         Self {
-            even : Rc::new(SolidColor::with_color(color0)),
-            odd  : Rc::new(SolidColor::with_color(color1)),
+            even : Rc::new(ConstantTexture::with_color(color0)),
+            odd  : Rc::new(ConstantTexture::with_color(color1)),
         }
     }
 }

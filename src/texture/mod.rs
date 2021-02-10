@@ -1,4 +1,4 @@
-pub mod solid_color;
+pub mod constant_texture;
 pub mod checker_texture;
 
 pub mod prelude {

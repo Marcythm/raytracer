@@ -3,7 +3,7 @@ use crate::ray::Ray;
 use crate::hittable::prelude::*;
 use crate::material::prelude::*;
 use crate::texture::prelude::*;
-use crate::texture::solid_color::SolidColor;
+use crate::texture::constant_texture::ConstantTexture;
 
 #[derive(Clone)]
 pub struct Lambertian {
@@ -16,11 +16,11 @@ impl Lambertian {
     }
 
     pub fn with_color(albedo: RGB) -> Self {
-        Self { albedo: Rc::new(SolidColor::with_color(albedo)) }
+        Self { albedo: Rc::new(ConstantTexture::with_color(albedo)) }
     }
 
     pub fn with_rgb(r: f64, g: f64, b: f64) -> Self {
-        Self { albedo: Rc::new(SolidColor::with_rgb(r, g, b)) }
+        Self { albedo: Rc::new(ConstantTexture::with_rgb(r, g, b)) }
     }
 }
 
