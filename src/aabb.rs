@@ -17,14 +17,17 @@ impl AABB {
         let mut tmin = t_min;
         let mut tmax = t_max;
         for axis in 0..3 {
-            let t0 = (self.min[axis] - ray.origin[axis]) / ray.direction[axis];
-            let t1 = (self.max[axis] - ray.origin[axis]) / ray.direction[axis];
-            tmin = tmin.max(t0.min(t1));
-            tmax = tmax.min(t0.max(t1));
+            let inv_d = 1.0 / ray.direction[axis];
+            let mut t0 = (self.min[axis] - ray.origin[axis]) * inv_d;
+            let mut t1 = (self.max[axis] - ray.origin[axis]) * inv_d;
+            if inv_d < 0.0 {
+                std::mem::swap(&mut t0, &mut t1);
+            }
+            if t0 > tmin { tmin = t0; }
+            if t1 < tmax { tmax = t1; }
             if tmax <= tmin {
                 return false;
             }
-        }
-        true
+        } true
     }
 }
