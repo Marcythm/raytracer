@@ -14,6 +14,11 @@ impl RotationX {
             cos_theta: angle.cos(),
         }
     }
+
+    pub fn set_angle(&mut self, angle: f64) {
+        self.sin_theta = angle.sin();
+        self.cos_theta = angle.cos();
+    }
 }
 
 impl Transform for RotationX {
@@ -63,6 +68,11 @@ impl RotationY {
             cos_theta: angle.cos(),
         }
     }
+
+    pub fn set_angle(&mut self, angle: f64) {
+        self.sin_theta = angle.sin();
+        self.cos_theta = angle.cos();
+    }
 }
 
 impl Transform for RotationY {
@@ -111,6 +121,11 @@ impl RotationZ {
             sin_theta: angle.sin(),
             cos_theta: angle.cos(),
         }
+    }
+
+    pub fn set_angle(&mut self, angle: f64) {
+        self.sin_theta = angle.sin();
+        self.cos_theta = angle.cos();
     }
 }
 

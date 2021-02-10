@@ -11,6 +11,10 @@ impl Translation {
     pub fn new(offset: Vec3) -> Self {
         Self { offset }
     }
+
+    pub fn set_offset(&mut self, offset: Vec3) {
+        self.offset = offset;
+    }
 }
 
 impl Transform for Translation {
