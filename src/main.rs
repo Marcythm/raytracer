@@ -11,6 +11,7 @@ pub mod texture;
 
 use utilities::prelude::*;
 use camera::Camera;
+// use aabb::AABB;
 use bvhnode::BVHNode;
 
 use hittable::prelude::*;
@@ -19,6 +20,7 @@ use hittable::moving_sphere::MovingSphere;
 use hittable::aarectangle::XYAARectangle;
 use hittable::aarectangle::YZAARectangle;
 use hittable::aarectangle::ZXAARectangle;
+use hittable::cuboid::Cuboid;
 
 // use material::prelude::*;
 use material::lambertian::Lambertian;
@@ -133,6 +135,9 @@ fn cornell_box() -> HittableList {
     hittables.push(ZXAARectangle::new(  0.0, 555.0,   0.0, 555.0,   0.0, white.clone()));
     hittables.push(ZXAARectangle::new(  0.0, 555.0,   0.0, 555.0, 555.0, white.clone()));
     hittables.push(XYAARectangle::new(  0.0, 555.0,   0.0, 555.0, 555.0, white.clone()));
+
+    hittables.push(Cuboid::new(P3d::new(130.0, 0.0,  65.0), P3d::new(295.0, 165.0, 230.0), white.clone()));
+    hittables.push(Cuboid::new(P3d::new(265.0, 0.0, 295.0), P3d::new(430.0, 330.0, 460.0), white.clone()));
 
     hittables
 }
