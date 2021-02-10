@@ -15,8 +15,10 @@ struct HitRecord {
     bool front_face;
 
     HitRecord() = default;
-    HitRecord(const p3d &_p, const Vec3 &_normal, const f64 _t, const ptr<Material> &_material)
-        : p(_p), normal(_normal), t(_t), material(_material), front_face(false) {}
+    HitRecord(const p3d &_p, const Vec3 &_normal, const f64 _t, const f64 _u, const f64 _v, const ptr<Material> &_material, const Ray &_ray)
+        : p(_p), normal(_normal), t(_t), u(_u), v(_v), material(_material), front_face(false) {
+            set_face_normal(_ray);
+        }
 
     auto set_face_normal(const Ray &ray) -> void;
 };

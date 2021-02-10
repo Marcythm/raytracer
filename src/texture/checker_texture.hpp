@@ -8,7 +8,7 @@ struct CheckerTexture: Texture {
     ptr<Texture> odd;
 
 public:
-    CheckerTexture() = default;
+    // CheckerTexture() = default;
     CheckerTexture(const RGB &col0, const RGB &col1)
         : even(std::make_shared<SolidColor>(col0)), odd(std::make_shared<SolidColor>(col1)) {}
     CheckerTexture(const ptr<Texture> &t0, const ptr<Texture> &t1)

@@ -27,7 +27,7 @@ struct NoiseTexture: Texture {
     f64 scale;
 
 public:
-    NoiseTexture() = default;
+    NoiseTexture(): scale(1.0) {}
     NoiseTexture(const f64 _scale): scale(_scale) {}
 
     auto value(const f64 u, const f64 v, const p3d &p) const -> RGB override;

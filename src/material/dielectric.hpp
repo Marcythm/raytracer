@@ -8,7 +8,6 @@ struct Dielectric: Material {
 
 public:
     Dielectric(const f64 _refractive_index): refractive_index(_refractive_index) {}
-    ~Dielectric() = default;
 
     // probability of reflect
     static auto schlick(const f64 cosine, const f64 refractive_index) -> f64 {

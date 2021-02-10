@@ -15,7 +15,6 @@ public:
         const f64 _t0, const f64 _t1,
         const f64 _radius, const ptr<Material> &_material
     ): center0(_center0), center1(_center1), time0(_t0), time1(_t1), radius(_radius), material(_material) {}
-    ~MovingSphere() = default;
 
     auto center(const f64 time) const -> p3d {
         return center0 + ((time - time0) / (time1 - time0)) * (center1 - center0);

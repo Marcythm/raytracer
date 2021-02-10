@@ -11,7 +11,6 @@ public:
     Sphere() = default;
     Sphere(const p3d &_center, const f64 _radius, const ptr<Material> &_material)
         : center(_center), radius(_radius), material(_material) {}
-    ~Sphere() = default;
 
     static auto get_sphere_uv(const Vec3 &normal) -> std::pair<f64, f64>;
 

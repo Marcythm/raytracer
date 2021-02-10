@@ -9,7 +9,7 @@ struct ImageTexture: Texture {
     i32 bytes_per_scanline;
 
 public:
-    ImageTexture() = default;
+    // ImageTexture() = default;
     ImageTexture(const char *filename);
     ~ImageTexture() {
         delete[] data;
