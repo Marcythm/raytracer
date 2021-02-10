@@ -5,6 +5,7 @@
 #include "camera.hpp"
 #include "aabb.hpp"
 #include "bvhnode.hpp"
+#include "instance.hpp"
 
 #include "hittable.hpp"
 #include "sphere.hpp"
@@ -134,8 +135,31 @@ auto cornell_box() -> HittableList {
     hittables.push(ZXAARectangle(  0.0, 555.0,   0.0, 555.0, 555.0, white));
     hittables.push(XYAARectangle(  0.0, 555.0,   0.0, 555.0, 555.0, white));
 
-    hittables.push(Cuboid(p3d(130.0, 0.0,  65.0), p3d(295.0, 165.0, 230.0), white));
-    hittables.push(Cuboid(p3d(265.0, 0.0, 295.0), p3d(430.0, 330.0, 460.0), white));
+    const auto box1 = std::make_shared<Instance>(
+        std::make_shared<Instance>(
+            std::make_shared<Cuboid>(
+                p3d(0.0, 0.0, 0.0),
+                p3d(165.0, 330.0, 165.0),
+                white
+            ),
+            std::make_shared<RotationY>(15.0)
+        ),
+        std::make_shared<Translation>(Vec3(265.0, 0.0, 295.0))
+    );
+    const auto box2 = std::make_shared<Instance>(
+        std::make_shared<Instance>(
+            std::make_shared<Cuboid>(
+                p3d(0.0, 0.0, 0.0),
+                p3d(165.0, 165.0, 165.0),
+                white
+            ),
+            std::make_shared<RotationY>(-18.0)
+        ),
+        std::make_shared<Translation>(Vec3(130.0, 0.0, 65.0))
+    );
+
+    hittables.push(box1);
+    hittables.push(box2);
 
     return hittables;
 }

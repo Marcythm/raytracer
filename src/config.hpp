@@ -172,6 +172,7 @@ struct Ray;
 struct Camera;
 struct AABB;
 struct BVHNode;
+struct Instance;
 
 struct HitRecord;
 struct Hittable;
