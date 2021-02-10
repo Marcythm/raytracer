@@ -11,13 +11,16 @@ pub struct Camera {
     pub v                 : Vec3,
     pub w                 : Vec3,
     pub lens_radius       : f64,
+    pub time0             : f64,
+    pub time1             : f64,
 }
 
 impl Camera {
     pub fn new(
         lookfrom: P3d, lookat: P3d, viewup: Vec3,
         vertical_field_of_view: f64, aspect_ratio: f64,
-        aperture: f64, focus_distance: f64
+        aperture: f64, focus_distance: f64,
+        time0: f64, time1: f64
     ) -> Self {
         let theta = deg2rad(vertical_field_of_view);
         let h = (theta / 2.0).tan();
@@ -39,13 +42,15 @@ impl Camera {
             u,
             v,
             w,
-            lens_radius: aperture / 2.0
+            lens_radius: aperture / 2.0,
+            time0,
+            time1,
         }
     }
 
     pub fn get_ray(&self, w: f64, h: f64, rng: &mut SmallRng) -> Ray {
         let rd = self.lens_radius * Vec3::random_in_unit_disk(rng);
         let offset = rd.x * self.u + rd.y * self.v;
-        Ray::from_to(self.origin + offset, self.lower_left_corner + w * self.horizontal + h * self.vertical)
+        Ray::from_to(self.origin + offset, self.lower_left_corner + w * self.horizontal + h * self.vertical, rng.gen_range(self.time0, self.time1))
     }
 }

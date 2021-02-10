@@ -16,6 +16,6 @@ impl Lambertian {
 
 impl Material for Lambertian {
     fn scatter(&self, _: &Ray, rec: &HitRecord, rng: &mut SmallRng) -> Option<(Ray, RGB)> {
-        Some((Ray::new(rec.p, rec.normal + Vec3::random_unit_vector(rng)), self.albedo))
+        Some((Ray::new(rec.p, rec.normal + Vec3::random_unit_vector(rng), 0.0), self.albedo))
     }
 }

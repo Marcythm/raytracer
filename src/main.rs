@@ -82,7 +82,8 @@ fn main() {
     let camera = Camera::new(
         lookfrom, lookat, viewup,
         20.0, aspect_ratio,
-        aperture, focus_distance
+        aperture, focus_distance,
+        0.0, 1.0
     );
 
     // Render

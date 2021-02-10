@@ -65,7 +65,7 @@ impl Vec3 {
         Self {
             x: r * a.cos(),
             y: r * a.sin(),
-            z
+            z,
         }
     }
 
@@ -83,7 +83,7 @@ impl Vec3 {
             let p = Self {
                 x: rng.gen_range(-1.0, 1.0),
                 y: rng.gen_range(-1.0, 1.0),
-                z: 0.0
+                z: 0.0,
             };
             if p.length2() < 1.0 {
                 return p;
@@ -98,7 +98,7 @@ impl Neg for Vec3 {
         Self {
             x: -self.x,
             y: -self.y,
-            z: -self.z
+            z: -self.z,
         }
     }
 }
