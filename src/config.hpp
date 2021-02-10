@@ -199,12 +199,21 @@ enum class diffuse_render_method: bool {
 namespace constants {
 
 	// Image
+#ifdef HIGH_QUALITY
+	constexpr f64 ASPECT_RATIO = 3.0 / 2.0;
+	constexpr i32 IMAGE_WIDTH = 1200;
+	constexpr i32 IMAGE_HEIGHT = static_cast<i32>(IMAGE_WIDTH / ASPECT_RATIO);
+	constexpr i32 SAMPLES_PER_PIXEL = 500;
+	constexpr i32 MAX_DEPTH = 50;
+	constexpr f64 GAMMA = 2;
+#else
 	constexpr f64 ASPECT_RATIO = 16.0 / 9.0;
 	constexpr i32 IMAGE_WIDTH = 400;
 	constexpr i32 IMAGE_HEIGHT = static_cast<i32>(IMAGE_WIDTH / ASPECT_RATIO);
 	constexpr i32 SAMPLES_PER_PIXEL = 100;
 	constexpr i32 MAX_DEPTH = 50;
 	constexpr f64 GAMMA = 2;
+#endif
 
 	// Camera
 	constexpr f64 VIEWPORT_HEIGHT = 2.0;
