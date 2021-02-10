@@ -9,7 +9,7 @@ struct p3d {
     f64 x, y, z;
 
 public:
-    constexpr p3d(): x(0), y(0), z(0) {}
+    constexpr p3d(): x(0.0), y(0.0), z(0.0) {}
     constexpr p3d(const Self &other): x(other.x), y(other.y), z(other.z) {}
     constexpr p3d(f64 _x, f64 _y, f64 _z): x(_x), y(_y), z(_z) {}
 

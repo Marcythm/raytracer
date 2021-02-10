@@ -9,7 +9,7 @@ struct RGB {
     f64 r, g, b;
 
 public:
-    constexpr RGB(): r(0), g(0), b(0) {}
+    constexpr RGB(): r(0.0), g(0.0), b(0.0) {}
     constexpr RGB(const Self &other): r(other.r), g(other.g), b(other.b) {}
     constexpr RGB(f64 _r, f64 _g, f64 _b): r(_r), g(_g), b(_b) {}
 
@@ -41,9 +41,9 @@ public:
     }
 
     friend auto operator << (std::ostream &o, const Self &rhs) -> std::ostream& {
-        return o << static_cast<i32>(256 * clamp(std::pow(rhs.r / SAMPLES_PER_PIXEL, 1 / GAMMA), 0.0, 0.999)) << ' '
-                 << static_cast<i32>(256 * clamp(std::pow(rhs.g / SAMPLES_PER_PIXEL, 1 / GAMMA), 0.0, 0.999)) << ' '
-                 << static_cast<i32>(256 * clamp(std::pow(rhs.b / SAMPLES_PER_PIXEL, 1 / GAMMA), 0.0, 0.999));
+        return o << static_cast<i32>(256.0 * clamp(std::pow(rhs.r / SAMPLES_PER_PIXEL, 1.0 / GAMMA), 0.0, 0.999)) << ' '
+                 << static_cast<i32>(256.0 * clamp(std::pow(rhs.g / SAMPLES_PER_PIXEL, 1.0 / GAMMA), 0.0, 0.999)) << ' '
+                 << static_cast<i32>(256.0 * clamp(std::pow(rhs.b / SAMPLES_PER_PIXEL, 1.0 / GAMMA), 0.0, 0.999));
     }
 
 public:

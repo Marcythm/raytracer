@@ -9,7 +9,7 @@ struct Vec3 {
     f64 x, y, z;
 
 public:
-    constexpr Vec3(): x(0), y(0), z(0) {}
+    constexpr Vec3(): x(0.0), y(0.0), z(0.0) {}
     constexpr Vec3(const Self &other): x(other.x), y(other.y), z(other.z) {}
     constexpr Vec3(f64 _x, f64 _y, f64 _z): x(_x), y(_y), z(_z) {}
 
@@ -28,7 +28,7 @@ public:
     constexpr auto length2() const -> f64 { return x * x + y * y + z * z; }
 
     auto unit() const -> Vec3 { return *this / length(); }
-    auto reflect_on(const Self &normal) const -> Self { return *this - 2 * dot(*this, normal) * normal; }
+    auto reflect_on(const Self &normal) const -> Self { return *this - 2.0 * dot(*this, normal) * normal; }
     auto refract_on(const Self &normal, const f64 etai_over_etat) const -> Self {
         // assert(length2() == 1); assert(normal.length2() == 1);
         const f64 cos_theta = dot(-*this, normal);
@@ -74,14 +74,14 @@ public:
         return Self(random_f64(min, max), random_f64(min, max), random_f64(min, max));
     }
     static auto random_unit_vector() -> Self {
-        const f64 a = random_f64(0, 2 * PI);
-        const f64 z = random_f64(-1, 1);
-        const f64 r = std::sqrt(1 - z * z);
+        const f64 a = random_f64(0.0, 2.0 * PI);
+        const f64 z = random_f64(-1.0, 1.0);
+        const f64 r = std::sqrt(1.0 - z * z);
         return Self(r * std::cos(a), r * std::sin(a), z);
     }
     static auto random_in_unit_sphere() -> Self {
         for ( ; ; )
-            if (Self p = random(-1, 1); p.length2() < 1)
+            if (Self p = random(-1.0, 1.0); p.length2() < 1.0)
                 return p;
     }
     static auto random_in_hemisphere(const Vec3 &normal) -> Self {
@@ -90,7 +90,7 @@ public:
     }
     static auto random_in_unit_disk() -> Self {
         for ( ; ; )
-            if (Self p(random_f64(-1, 1), random_f64(-1, 1), 0); p.length2() < 1)
+            if (Self p(random_f64(-1.0, 1.0), random_f64(-1.0, 1.0), 0.0); p.length2() < 1.0)
                 return p;
     }
 };

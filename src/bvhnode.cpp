@@ -1,7 +1,9 @@
 #include "bvhnode.hpp"
 
 BVHNode::BVHNode(Vec<ptr<Hittable>> &hittables, i32 beg, i32 end, const f64 t0, const f64 t1) {
-    if (const i32 len = end - beg; len == 1) {
+    if (const i32 len = end - beg; len <= 0) {
+        return;
+    } else if (len == 1) {
         left = right = hittables[beg];
         box = left->bounding_box(t0, t1).value();
     } else {

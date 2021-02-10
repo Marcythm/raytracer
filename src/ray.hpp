@@ -22,5 +22,5 @@ public:
 
     auto at(const f64 t) const -> p3d { return origin + t * direction; }
 
-    auto color(const Hittable &world, const i32 depth) const -> RGB;
+    auto color(const Hittable &world, const RGB &background, const i32 depth) const -> RGB;
 };

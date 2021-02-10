@@ -206,14 +206,14 @@ namespace constants {
 	constexpr i32 IMAGE_HEIGHT = static_cast<i32>(IMAGE_WIDTH / ASPECT_RATIO);
 	constexpr i32 SAMPLES_PER_PIXEL = 500;
 	constexpr i32 MAX_DEPTH = 50;
-	constexpr f64 GAMMA = 2;
+	constexpr f64 GAMMA = 2.0;
 #else
 	constexpr f64 ASPECT_RATIO = 16.0 / 9.0;
 	constexpr i32 IMAGE_WIDTH = 400;
 	constexpr i32 IMAGE_HEIGHT = static_cast<i32>(IMAGE_WIDTH / ASPECT_RATIO);
 	constexpr i32 SAMPLES_PER_PIXEL = 100;
 	constexpr i32 MAX_DEPTH = 50;
-	constexpr f64 GAMMA = 2;
+	constexpr f64 GAMMA = 2.0;
 #endif
 
 	// Camera

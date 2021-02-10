@@ -108,10 +108,12 @@ auto main() -> i32 {
 	p3d lookat(0.0, 0.0, 0.0);
 	f64 vertical_field_of_view = 40.0;
 	f64 aperture = 0.0;
+	RGB background(0.0, 0.0, 0.0);
 
 	switch (0) {
 		case 1:
 			scene = random_scene();
+			background = RGB(0.7, 0.8, 1.0);
 			lookfrom = p3d(13.0, 2.0, 3.0);
 			lookat = p3d(0.0, 0.0, 0.0);
 			vertical_field_of_view = 20.0;
@@ -119,24 +121,31 @@ auto main() -> i32 {
 			break;
 		case 2:
 			scene = two_spheres();
+			background = RGB(0.7, 0.8, 1.0);
 			lookfrom = p3d(13.0, 2.0, 3.0);
 			lookat = p3d(0.0, 0.0, 0.0);
 			vertical_field_of_view = 20.0;
 			break;
 		case 3:
 			scene = two_perlin_spheres();
+			background = RGB(0.7, 0.8, 1.0);
+			lookfrom = p3d(13.0, 2.0, 3.0);
+			lookat = p3d(0.0, 0.0, 0.0);
+			vertical_field_of_view = 20.0;
+			break;
+		case 4:
+			scene = earth();
+			background = RGB(0.7, 0.8, 1.0);
 			lookfrom = p3d(13.0, 2.0, 3.0);
 			lookat = p3d(0.0, 0.0, 0.0);
 			vertical_field_of_view = 20.0;
 			break;
 		default:
-		case 4:
-			scene = earth();
-			lookfrom = p3d(13.0, 2.0, 3.0);
-			lookat = p3d(0.0, 0.0, 0.0);
-			vertical_field_of_view = 20.0;
+		case 5:
+			background = RGB(0.0, 0.0, 0.0);
 			break;
 	}
+
 	BVHNode bvh(scene, 0.0, 1.0);
 
 	// Camera
@@ -158,7 +167,7 @@ auto main() -> i32 {
 			for (i32 s = 0; s < SAMPLES_PER_PIXEL; ++s) {
 				const f64 u = (i + random_f64()) / (IMAGE_WIDTH - 1);
 				const f64 v = (j + random_f64()) / (IMAGE_HEIGHT - 1);
-				pixel_color += camera.get_ray(u, v).color(bvh, MAX_DEPTH);
+				pixel_color += camera.get_ray(u, v).color(bvh, background, MAX_DEPTH);
 			}
 			std::cout << pixel_color << '\n';
 		}
