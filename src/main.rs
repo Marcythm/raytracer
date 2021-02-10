@@ -95,6 +95,12 @@ fn two_perlin_spheres(rng: &mut SmallRng) -> HittableList {
     hittables
 }
 
+fn earth() -> HittableList {
+    let hittables = HittableList::default();
+
+    hittables
+}
+
 fn main() {
     let mut rng = SmallRng::from_entropy();
 
@@ -103,6 +109,7 @@ fn main() {
     let image_width = IMAGE_WIDTH;
     let samples_per_pixel = SAMPLES_PER_PIXEL;
     let vertical_field_of_view;
+    let background;
 
     // Camera
     let lookfrom;
@@ -115,6 +122,7 @@ fn main() {
     match 0 {
         1 => {
             scene                   = random_scene(&mut rng);
+            background              = RGB::new(  0.7, 0.8, 1.0);
             lookfrom                = P3d::new( 13.0, 2.0, 3.0);
             lookat                  = P3d::new(  0.0, 0.0, 0.0);
             vertical_field_of_view  = 20.0;
@@ -122,12 +130,28 @@ fn main() {
         },
         2 => {
             scene                   = two_spheres();
+            background              = RGB::new(  0.7, 0.8, 1.0);
+            lookfrom                = P3d::new( 13.0, 2.0, 3.0);
+            lookat                  = P3d::new(  0.0, 0.0, 0.0);
+            vertical_field_of_view  = 20.0;
+        },
+        3 => {
+            scene                   = two_perlin_spheres(&mut rng);
+            background              = RGB::new(  0.7, 0.8, 1.0);
+            lookfrom                = P3d::new( 13.0, 2.0, 3.0);
+            lookat                  = P3d::new(  0.0, 0.0, 0.0);
+            vertical_field_of_view  = 20.0;
+        },
+        4 => {
+            scene                   = earth();
+            background              = RGB::new(  0.7, 0.8, 1.0);
             lookfrom                = P3d::new( 13.0, 2.0, 3.0);
             lookat                  = P3d::new(  0.0, 0.0, 0.0);
             vertical_field_of_view  = 20.0;
         },
         _ => {
-            scene                   = two_perlin_spheres(&mut rng);
+            scene                   = two_spheres();
+            background              = RGB::new(0.0, 0.0, 0.0);
             lookfrom                = P3d::new( 13.0, 2.0, 3.0);
             lookat                  = P3d::new(  0.0, 0.0, 0.0);
             vertical_field_of_view  = 20.0;
@@ -159,7 +183,7 @@ fn main() {
             for _ in 0..samples_per_pixel {
                 let u = (i as f64 + rng.gen_range(0.0, 1.0)) / (image_width - 1) as f64;
                 let v = (j as f64 + rng.gen_range(0.0, 1.0)) / (image_height - 1) as f64;
-                pixel_color += camera.get_ray(u, v, &mut rng).color(&bvh, MAX_DEPTH, &mut rng);
+                pixel_color += camera.get_ray(u, v, &mut rng).color(&bvh, background, MAX_DEPTH, &mut rng);
             }
             println!("{}", pixel_color / samples_per_pixel as f64);
         }

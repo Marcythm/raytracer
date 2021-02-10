@@ -16,6 +16,10 @@ impl DiffuseLight {
     pub fn with_color(color: RGB) -> Self {
         Self { emit: Rc::new(ConstantTexture::with_color(color)) }
     }
+
+    pub fn with_rgb(r: f64, g: f64, b: f64) -> Self {
+        Self { emit: Rc::new(ConstantTexture::with_rgb(r, g, b)) }
+    }
 }
 
 impl Material for DiffuseLight {

@@ -21,19 +21,19 @@ impl Ray {
         self.origin + t * self.direction
     }
 
-    pub fn color<T: Hittable>(&self, world: &T, depth: i32, rng: &mut SmallRng) -> RGB {
+    pub fn color<T: Hittable>(&self, world: &T, background: RGB, depth: i32, rng: &mut SmallRng) -> RGB {
         if depth <= 0 {
             return RGB::new(0.0, 0.0, 0.0);
         }
         if let Some(rec) = world.hit(&self, EPS, INFINITY) {
+            rec.material.emitted(rec.u, rec.v, rec.p) +
             if let Some((scattered, attenuation)) = rec.material.scatter(self, &rec, rng) {
-                attenuation * scattered.color(world, depth - 1, rng)
+                attenuation * scattered.color(world, background, depth - 1, rng)
             } else {
                 RGB::new(0.0, 0.0, 0.0)
             }
         } else {
-            let t = 0.5 * (self.direction.unit().y + 1.0);
-            (1.0 - t) * RGB::new(1.0, 1.0, 1.0) + t * RGB::new(0.5, 0.7, 1.0)
+            background
         }
     }
 }
