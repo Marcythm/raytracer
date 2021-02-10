@@ -204,6 +204,7 @@ struct RotationY;
 struct RotationZ;
 
 struct Medium;
+struct ConstantMedium;
 
 enum class diffuse_render_method: bool {
     hemispherical_scattering = false,
