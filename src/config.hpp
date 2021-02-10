@@ -192,7 +192,7 @@ struct DiffuseLight;
 struct Isotropic;
 
 struct Texture;
-struct SolidColor;
+struct ConstantTexture;
 struct CheckerTexture;
 struct NoiseTexture;
 struct IMageTexture;

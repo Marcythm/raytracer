@@ -1,7 +1,7 @@
 #pragma once
 
 #include "texture.hpp"
-#include "solid_color.hpp"
+#include "constant_texture.hpp"
 
 struct CheckerTexture: Texture {
     ptr<Texture> even;
@@ -10,7 +10,7 @@ struct CheckerTexture: Texture {
 public:
     // CheckerTexture() = default;
     CheckerTexture(const RGB &col0, const RGB &col1)
-        : even(std::make_shared<SolidColor>(col0)), odd(std::make_shared<SolidColor>(col1)) {}
+        : even(std::make_shared<ConstantTexture>(col0)), odd(std::make_shared<ConstantTexture>(col1)) {}
     CheckerTexture(const ptr<Texture> &t0, const ptr<Texture> &t1)
         : even(t0), odd(t1) {}
 

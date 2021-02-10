@@ -2,7 +2,7 @@
 
 #include "transform.hpp"
 
-struct RotationX: Transform {
+struct RotationX: Transform { // Rotation around X-axis
     f64 sin_theta;
     f64 cos_theta;
 
@@ -17,7 +17,7 @@ public:
     auto inverse_transform_vector(const Vec3 &v) const -> Vec3 override;
 };
 
-struct RotationY: Transform {
+struct RotationY: Transform { // Rotation around Y-axis
     f64 sin_theta;
     f64 cos_theta;
 
@@ -32,7 +32,7 @@ public:
     auto inverse_transform_vector(const Vec3 &v) const -> Vec3 override;
 };
 
-struct RotationZ: Transform {
+struct RotationZ: Transform { // Rotation around Z-axis
     f64 sin_theta;
     f64 cos_theta;
 

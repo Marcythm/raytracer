@@ -1,6 +1,5 @@
 #include "rotation.hpp"
 
-/* RotationX */
 RotationX::RotationX(const f64 _angle) {
     const f64 radian = deg2rad(_angle);
     sin_theta = std::sin(radian);
@@ -39,7 +38,6 @@ auto RotationX::inverse_transform_vector(const Vec3 &v) const -> Vec3 {
     );
 }
 
-/* RotationY */
 RotationY::RotationY(const f64 _angle) {
     const f64 radian = deg2rad(_angle);
     sin_theta = std::sin(radian);
@@ -78,7 +76,6 @@ auto RotationY::inverse_transform_vector(const Vec3 &v) const -> Vec3 {
     );
 }
 
-/* RotationZ */
 RotationZ::RotationZ(const f64 _angle) {
     const f64 radian = deg2rad(_angle);
     sin_theta = std::sin(radian);

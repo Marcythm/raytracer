@@ -21,7 +21,7 @@
 #include "isotropic.hpp"
 
 #include "texture.hpp"
-#include "solid_color.hpp"
+#include "constant_texture.hpp"
 #include "checker_texture.hpp"
 #include "noise_texture.hpp"
 #include "image_texture.hpp"
