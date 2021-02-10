@@ -25,6 +25,7 @@
 #include "image_texture.hpp"
 
 #include "transform.hpp"
+#include "translation.hpp"
 
 auto random_scene() -> HittableList {
     HittableList scene;
