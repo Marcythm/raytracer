@@ -31,6 +31,7 @@ use material::lambertian::Lambertian;
 use material::metal::Metal;
 use material::dielectric::Dielectric;
 use material::diffuse_light::DiffuseLight;
+// use material::istropic::Istropic;
 
 // use texture::prelude::*;
 use texture::checker_texture::CheckerTexture;
