@@ -42,4 +42,12 @@ public:
     friend constexpr auto operator / (const Self &lhs, const f64   rhs) -> Self {
         return Self(lhs.x / rhs, lhs.y / rhs, lhs.z / rhs);
     }
+
+public:
+    static auto random() -> Self {
+        return Self(random_f64(), random_f64(), random_f64());
+    }
+    static auto random(const f64 min, const f64 max) -> Self {
+        return Self(random_f64(min, max), random_f64(min, max), random_f64(min, max));
+    }
 };
