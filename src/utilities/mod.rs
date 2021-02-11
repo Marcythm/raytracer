@@ -43,8 +43,4 @@ pub mod prelude {
     pub fn deg2rad(deg: f64) -> f64 {
         deg * PI / 180.0
     }
-
-    pub fn clamp(x: f64, min: f64, max: f64) -> f64 {
-        x.max(min).min(max)
-    }
 }

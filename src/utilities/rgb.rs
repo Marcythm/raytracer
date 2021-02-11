@@ -133,9 +133,9 @@ impl DivAssign<f64> for RGB {
 impl Display for RGB {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         write!(f, "{} {} {}",
-            (256.0 * clamp((self.r as f64).powf(1.0 / GAMMA), 0.0, 0.999)) as i32,
-            (256.0 * clamp((self.g as f64).powf(1.0 / GAMMA), 0.0, 0.999)) as i32,
-            (256.0 * clamp((self.b as f64).powf(1.0 / GAMMA), 0.0, 0.999)) as i32,
+            (256.0 * (self.r as f64).powf(1.0 / GAMMA).clamp(0.0, 0.999)) as i32,
+            (256.0 * (self.g as f64).powf(1.0 / GAMMA).clamp(0.0, 0.999)) as i32,
+            (256.0 * (self.b as f64).powf(1.0 / GAMMA).clamp(0.0, 0.999)) as i32,
         )
     }
 }

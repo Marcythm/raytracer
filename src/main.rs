@@ -49,9 +49,16 @@ use medium::constant_medium::ConstantMedium;
 fn random_scene(rng: &mut SmallRng) -> HittableList {
     let mut hittables = HittableList::default();
 
-    let checker = Rc::new(CheckerTexture::with_color(RGB::new(0.2, 0.3, 0.1), RGB::new(0.9, 0.9, 0.9)));
+    let checker = Rc::new(CheckerTexture::with_color(
+        RGB::new(0.2, 0.3, 0.1),
+        RGB::new(0.9, 0.9, 0.9)
+    ));
     let checker_gound = Rc::new(Lambertian::with_texture(checker.clone()));
-    hittables.push(Sphere::new(P3d::new(0.0, -1000.0, 0.0), 1000.0, checker_gound.clone()));
+    hittables.push(Sphere::new(
+        P3d::new(0.0, -1000.0, 0.0),
+        1000.0,
+        checker_gound.clone()
+    ));
 
     // let material_ground = Lambertian::with_color(RGB::new(0.5, 0.5, 0.5));
     // hittables.push(Sphere::new(P3d::new(0.0, -1000.0, 0.0), 1000.0, Rc::new(material_ground)));
@@ -85,13 +92,25 @@ fn random_scene(rng: &mut SmallRng) -> HittableList {
     }
 
     let material1 = Rc::new(Dielectric::new(1.5));
-    hittables.push(Sphere::new(P3d::new( 0.0, 1.0, 0.0), 1.0, material1.clone()));
+    hittables.push(Sphere::new(
+        P3d::new( 0.0, 1.0, 0.0),
+        1.0,
+        material1.clone(),
+    ));
 
     let material2 = Rc::new(Lambertian::with_color(RGB::new(0.4, 0.2, 0.1)));
-    hittables.push(Sphere::new(P3d::new(-4.0, 1.0, 0.0), 1.0, material2.clone()));
+    hittables.push(Sphere::new(
+        P3d::new(-4.0, 1.0, 0.0),
+        1.0,
+        material2.clone(),
+    ));
 
     let material3 = Rc::new(Metal::new(RGB::new(0.7, 0.6, 0.5), 0.0));
-    hittables.push(Sphere::new(P3d::new( 4.0, 1.0, 0.0), 1.0, material3.clone()));
+    hittables.push(Sphere::new(
+        P3d::new( 4.0, 1.0, 0.0),
+        1.0,
+        material3.clone(),
+    ));
 
     hittables
 }
@@ -99,9 +118,20 @@ fn random_scene(rng: &mut SmallRng) -> HittableList {
 fn two_spheres() -> HittableList {
     let mut hittables = HittableList::default();
 
-    let checker = Rc::new(CheckerTexture::with_color(RGB::new(0.2, 0.3, 0.1), RGB::new(0.9, 0.9, 0.9)));
-    hittables.push(Sphere::new(P3d::new(0.0, -10.0, 0.0), 10.0, Rc::new(Lambertian::with_texture(checker.clone()))));
-    hittables.push(Sphere::new(P3d::new(0.0,  10.0, 0.0), 10.0, Rc::new(Lambertian::with_texture(checker.clone()))));
+    let checker = Rc::new(CheckerTexture::with_color(
+        RGB::new(0.2, 0.3, 0.1),
+        RGB::new(0.9, 0.9, 0.9),
+    ));
+    hittables.push(Sphere::new(
+        P3d::new(0.0, -10.0, 0.0),
+        10.0,
+        Rc::new(Lambertian::with_texture(checker.clone())),
+    ));
+    hittables.push(Sphere::new(
+        P3d::new(0.0,  10.0, 0.0),
+        10.0,
+        Rc::new(Lambertian::with_texture(checker.clone())),
+    ));
 
     hittables
 }
@@ -110,8 +140,16 @@ fn two_perlin_spheres() -> HittableList {
     let mut hittables = HittableList::default();
 
     let pertext = Rc::new(NoiseTexture::new(4.0));
-    hittables.push(Sphere::new(P3d::new(0.0, -1000.0, 0.0), 1000.0, Rc::new(Lambertian::with_texture(pertext.clone()))));
-    hittables.push(Sphere::new(P3d::new(0.0,     2.0, 0.0),    2.0, Rc::new(Lambertian::with_texture(pertext.clone()))));
+    hittables.push(Sphere::new(
+        P3d::new(0.0, -1000.0, 0.0),
+        1000.0,
+        Rc::new(Lambertian::with_texture(pertext.clone())),
+    ));
+    hittables.push(Sphere::new(
+        P3d::new(0.0,     2.0, 0.0),
+        2.0,
+        Rc::new(Lambertian::with_texture(pertext.clone())),
+    ));
 
     hittables
 }
@@ -126,11 +164,24 @@ fn simple_light() -> HittableList {
     let mut hittables = HittableList::default();
 
     let pertext = Rc::new(NoiseTexture::new(4.0));
-    hittables.push(Sphere::new(P3d::new(0.0, -1000.0, 0.0), 1000.0, Rc::new(Lambertian::with_texture(pertext.clone()))));
-    hittables.push(Sphere::new(P3d::new(0.0,     2.0, 0.0),    2.0, Rc::new(Lambertian::with_texture(pertext.clone()))));
+    hittables.push(Sphere::new(
+        P3d::new(0.0, -1000.0, 0.0),
+        1000.0,
+        Rc::new(Lambertian::with_texture(pertext.clone())),
+    ));
+    hittables.push(Sphere::new(
+        P3d::new(0.0,     2.0, 0.0),
+        2.0,
+        Rc::new(Lambertian::with_texture(pertext.clone())),
+    ));
 
     let difflight = Rc::new(DiffuseLight::with_rgb(4.0, 4.0, 4.0));
-    hittables.push(XYAARectangle::new(3.0, 5.0, 1.0, 3.0, -2.0, difflight.clone()));
+    hittables.push(XYAARectangle::new(
+        3.0, 5.0,
+        1.0, 3.0,
+        -2.0,
+        difflight.clone(),
+    ));
 
     hittables
 }
@@ -144,7 +195,7 @@ fn cornell_box() -> HittableList {
     let light = Rc::new(DiffuseLight::with_rgb(15.0, 15.0, 15.0));
 
     hittables.push(YZAARectangle::new(  0.0, 555.0,   0.0, 555.0, 555.0, green.clone()));
-    hittables.push(YZAARectangle::new(  0.0, 555.0,   0.0, 555.0,   0.0, red.clone()));
+    hittables.push(YZAARectangle::new(  0.0, 555.0,   0.0, 555.0,   0.0,   red.clone()));
     hittables.push(ZXAARectangle::new(227.0, 332.0, 213.0, 343.0, 554.0, light.clone()));
     hittables.push(ZXAARectangle::new(  0.0, 555.0,   0.0, 555.0,   0.0, white.clone()));
     hittables.push(ZXAARectangle::new(  0.0, 555.0,   0.0, 555.0, 555.0, white.clone()));
@@ -188,7 +239,7 @@ fn cornell_smoke() -> HittableList {
     let light = Rc::new(DiffuseLight::with_rgb(7.0, 7.0, 7.0));
 
     hittables.push(YZAARectangle::new(  0.0, 555.0,   0.0, 555.0, 555.0, green.clone()));
-    hittables.push(YZAARectangle::new(  0.0, 555.0,   0.0, 555.0,   0.0, red.clone()));
+    hittables.push(YZAARectangle::new(  0.0, 555.0,   0.0, 555.0,   0.0,   red.clone()));
     hittables.push(ZXAARectangle::new(127.0, 332.0, 113.0, 443.0, 554.0, light.clone()));
     hittables.push(ZXAARectangle::new(  0.0, 555.0,   0.0, 555.0,   0.0, white.clone()));
     hittables.push(ZXAARectangle::new(  0.0, 555.0,   0.0, 555.0, 555.0, white.clone()));
@@ -247,43 +298,92 @@ fn final_scene(rng: &mut SmallRng) -> HittableList {
             let y1 = rng.gen_range(1.0, 101.1);
             let z1 = z0 + w;
 
-            boxes1.push(Cuboid::new(P3d::new(x0, y0, z0), P3d::new(x1, y1, z1), ground.clone()));
+            boxes1.push(Cuboid::new(
+                P3d::new(x0, y0, z0),
+                P3d::new(x1, y1, z1),
+                ground.clone(),
+            ));
         }
     }
 
     let mut hittables = HittableList::default();
 
     let light = Rc::new(DiffuseLight::with_rgb(7.0, 7.0, 7.0));
-    hittables.push(ZXAARectangle::new(147.0, 412.0, 123.0, 423.0, 554.0, light.clone()));
+    hittables.push(ZXAARectangle::new(
+        147.0, 412.0,
+        123.0, 423.0,
+        554.0,
+        light.clone(),
+    ));
 
     let center0 = P3d::new(400.0, 400.0, 200.0);
     let center1 = center0 + Vec3::new(30.0, 0.0, 0.0);
 
     let moving_sphere_material = Rc::new(Lambertian::with_rgb(0.7, 0.3, 0.1));
-    hittables.push(MovingSphere::new(center0, center1, 0.0, 1.0, 50.0, moving_sphere_material.clone()));
+    hittables.push(MovingSphere::new(
+        center0, center1,
+        0.0, 1.0,
+        50.0,
+        moving_sphere_material.clone()
+    ));
 
     let dielectric = Rc::new(Dielectric::new(1.5));
-    hittables.push(Sphere::new(P3d::new(260.0, 150.0,  45.0), 50.0, dielectric.clone()));
-    hittables.push(Sphere::new(P3d::new(  0.0, 150.0, 145.0), 50.0, Rc::new(Metal::new(RGB::new(0.8, 0.8, 0.9), 10.0))));
+    hittables.push(Sphere::new(
+        P3d::new(260.0, 150.0,  45.0),
+        50.0,
+        dielectric.clone(),
+    ));
+    hittables.push(Sphere::new(
+        P3d::new(  0.0, 150.0, 145.0),
+        50.0,
+        Rc::new(Metal::new(
+            RGB::new(0.8, 0.8, 0.9),
+            10.0,
+        )),
+    ));
 
-    let boundary1 = Rc::new(Sphere::new(P3d::new(360.0, 150.0, 145.0), 70.0, dielectric.clone()));
+    let boundary1 = Rc::new(Sphere::new(
+        P3d::new(360.0, 150.0, 145.0),
+        70.0,
+        dielectric.clone(),
+    ));
     hittables.push_ptr(boundary1.clone());
-    hittables.push(ConstantMedium::with_color(boundary1, RGB::new(0.2, 0.4, 0.9), 0.2));
+    hittables.push(ConstantMedium::with_color(
+        boundary1.clone(),
+        RGB::new(0.2, 0.4, 0.9),
+        0.2,
+    ));
 
-    let boundary2 = Rc::new(Sphere::new(P3d::new(0.0, 0.0, 0.0), 5000.0, dielectric.clone()));
+    let boundary2 = Rc::new(Sphere::new(
+        P3d::new(0.0, 0.0, 0.0),
+        5000.0,
+        dielectric.clone(),
+    ));
     hittables.push_ptr(boundary2.clone());
-    hittables.push(ConstantMedium::with_color(boundary2, RGB::new(1.0, 1.0, 1.0), 0.0001));
+    hittables.push(ConstantMedium::with_color(
+        boundary2.clone(),
+        RGB::new(1.0, 1.0, 1.0),
+        0.0001,
+    ));
 
     // earth
 
     let pertext = Rc::new(NoiseTexture::new(0.1));
-    hittables.push(Sphere::new(P3d::new(220.0, 280.0, 300.0), 80.0, Rc::new(Lambertian::with_texture(pertext.clone()))));
+    hittables.push(Sphere::new(
+        P3d::new(220.0, 280.0, 300.0),
+        80.0,
+        Rc::new(Lambertian::with_texture(pertext.clone())),
+    ));
 
     let mut boxes2 = HittableList::default();
     let white = Rc::new(Lambertian::with_rgb(0.73, 0.73, 0.73));
     const BOX_NUM: i32 = 1000;
     for _ in 0..BOX_NUM {
-        boxes2.push(Sphere::new(P3d::random(0.0, 165.0, rng), 10.0, white.clone()));
+        boxes2.push(Sphere::new(
+            P3d::random(0.0, 165.0, rng),
+            10.0,
+            white.clone(),
+        ));
     }
 
     hittables.push(BVHNode::new(boxes1, 0.0, 1.0, rng));
@@ -302,9 +402,9 @@ fn main() {
     let mut rng = SmallRng::from_entropy();
 
     // Image
-    let mut aspect_ratio = ASPECT_RATIO;
-    let mut image_width = IMAGE_WIDTH;
-    let mut samples_per_pixel = SAMPLES_PER_PIXEL;
+    let mut aspect_ratio            = ASPECT_RATIO;
+    let mut image_width             = IMAGE_WIDTH;
+    let mut samples_per_pixel       = SAMPLES_PER_PIXEL;
     let vertical_field_of_view;
     let background;
 
