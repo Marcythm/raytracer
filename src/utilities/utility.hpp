@@ -15,7 +15,3 @@ inline auto random_f64(const f64 min, const f64 max) -> f64 {
 inline auto random_i32(const i32 min, const i32 max) -> i32 {
     return static_cast<i32>(random_f64(min, max + 1));
 }
-
-inline auto clamp(const f64 x, const f64 min, const f64 max) -> f64 {
-    return x < min ? min : x > max ? max : x;
-}
