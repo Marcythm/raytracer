@@ -2,7 +2,6 @@
 
 #include "config.hpp"
 #include "lib.hpp"
-
 #include "ray.hpp"
 #include "aabb.hpp"
 

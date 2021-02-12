@@ -2,17 +2,12 @@
 
 #include "config.hpp"
 #include "lib.hpp"
-
 #include "ray.hpp"
-
 #include "hittable.hpp"
-
-#include "texture.hpp"
 
 struct Material {
     virtual ~Material() = default;
-    virtual auto scatter(const Ray &ray, const HitRecord &rec) const -> std::optional<std::pair<Ray, RGB>> = 0;
-    virtual auto emitted(const f64, const f64, const p3d &) const -> RGB {
-        return RGB(0.0, 0.0, 0.0);
-    }
+    virtual auto scatter(const Ray &ray, const HitRecord &rec) const -> std::optional<std::tuple<Ray, RGB, f64>>;
+    virtual auto scattering_pdf(const Ray &ray, const HitRecord &rec, const Ray &scattered) const -> f64;
+    virtual auto emitted(const f64, const f64, const p3d &) const -> RGB;
 };

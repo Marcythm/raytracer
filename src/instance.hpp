@@ -1,12 +1,10 @@
 #pragma once
 
 #include "config.hpp"
-
+#include "lib.hpp"
 #include "ray.hpp"
 #include "aabb.hpp"
-
 #include "hittable.hpp"
-
 #include "transform.hpp"
 
 struct Instance: Hittable, Transform {

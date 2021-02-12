@@ -9,5 +9,5 @@ struct Metal: Material {
 public:
     Metal(const RGB &_albedo, const f64 f = 0.0): albedo(_albedo), fuzz(f < 1.0 ? f : 1.0) {}
 
-    auto scatter(const Ray &ray, const HitRecord &rec) const -> std::optional<std::pair<Ray, RGB>> override;
+    auto scatter(const Ray &ray, const HitRecord &rec) const -> std::optional<std::tuple<Ray, RGB, f64>> override;
 };

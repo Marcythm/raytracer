@@ -2,12 +2,9 @@
 
 #include "config.hpp"
 #include "lib.hpp"
-
 #include "ray.hpp"
-
-#include "hittable.hpp"
-
 #include "aabb.hpp"
+#include "hittable.hpp"
 
 struct Transform {
     virtual ~Transform() = default;

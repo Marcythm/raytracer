@@ -1,5 +1,7 @@
 #pragma once
 
+#include "ray.hpp"
+#include "aabb.hpp"
 #include "medium.hpp"
 #include "isotropic.hpp"
 

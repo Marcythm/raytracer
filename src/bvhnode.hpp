@@ -1,9 +1,8 @@
 #pragma once
 
 #include "config.hpp"
-
+#include "lib.hpp"
 #include "aabb.hpp"
-
 #include "hittable.hpp"
 
 struct BVHNode: Hittable { // Bounding Volume Hierarchy

@@ -2,9 +2,7 @@
 
 #include "config.hpp"
 #include "lib.hpp"
-
 #include "hittable.hpp"
-
 #include "material.hpp"
 
 struct Ray {

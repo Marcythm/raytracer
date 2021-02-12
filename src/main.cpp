@@ -396,7 +396,7 @@ auto main() -> i32 {
     f64 aperture = 0.0;
     RGB background(0.0, 0.0, 0.0);
 
-    switch (0) {
+    switch (6) {
         case 1:
             scene                   = random_scene();
             background              = RGB( 0.7, 0.8, 1.0);
