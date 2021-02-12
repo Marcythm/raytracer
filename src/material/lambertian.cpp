@@ -14,7 +14,7 @@ auto Lambertian::scatter(const Ray &ray, const HitRecord &rec) const -> std::opt
         return std::optional(std::make_tuple(
             Ray(rec.p, direction, ray.time),
             albedo->value(rec.u, rec.v, rec.p),
-            Vec3::dot(rec.normal, direction) / PI
+            0.5 / PI
         ));
     }
 }
