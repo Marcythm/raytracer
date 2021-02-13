@@ -202,6 +202,7 @@ struct Translation;
 struct RotationX;
 struct RotationY;
 struct RotationZ;
+struct Flip;
 
 struct Medium;
 struct ConstantMedium;
