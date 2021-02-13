@@ -34,6 +34,7 @@
 #include "constant_medium.hpp"
 
 #include "pdf.hpp"
+#include "cosine_pdf.hpp"
 
 auto random_scene() -> HittableList {
     HittableList scene;
