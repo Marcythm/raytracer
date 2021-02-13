@@ -5,6 +5,14 @@ auto HitRecord::set_face_normal(const Ray &ray) -> void {
     if (not front_face) normal = -normal;
 }
 
+auto Hittable::pdf_value(const p3d &origin, const Vec3 &direction) const -> f64 {
+    return 0.0;
+}
+
+auto Hittable::random(const p3d &origin) const -> Vec3 {
+    return Vec3(1.0, 0.0, 0.0);
+}
+
 auto HittableList::hit(const Ray &ray, const f64 t_min, const f64 t_max) const -> std::optional<HitRecord> {
     std::optional<HitRecord> rec;
     f64 closest = t_max;

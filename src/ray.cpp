@@ -1,5 +1,6 @@
 #include "ray.hpp"
-#include "cosine_pdf.hpp"
+#include "aarectangle.hpp"
+#include "hittable_pdf.hpp"
 
 auto Ray::color(const Hittable &world, const RGB &background, const i32 depth) const -> RGB {
     if (depth <= 0) return RGB(0.0, 0.0, 0.0);
@@ -8,7 +9,14 @@ auto Ray::color(const Hittable &world, const RGB &background, const i32 depth) c
         const RGB emitted = rec.material->emitted(rec.u, rec.v, rec.p);
         if (const auto &scatter = rec.material->scatter(*this, rec); scatter.has_value()) {
             auto [scattered, attenuation, _] = scatter.value();
-            const CosinePDF pdf(rec.normal);
+
+            const ptr<Hittable> light_shape = std::make_shared<ZXAARectangle>(
+                227.0, 332.0,
+                213.0, 343.0,
+                554.0,
+                ptr<Material>()
+            );
+            const HittablePDF pdf(rec.p, light_shape);
 
             scattered = Ray(rec.p, pdf.generate(), time);
 

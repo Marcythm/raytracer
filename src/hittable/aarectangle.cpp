@@ -22,6 +22,22 @@ auto XYAARectangle::bounding_box(const f64, const f64) const -> std::optional<AA
     return AABB(p3d(x0, y0, z - EPS), p3d(x1, y1, z + EPS));
 }
 
+auto XYAARectangle::pdf_value(const p3d &origin, const Vec3 &direction) const -> f64 {
+    if (const auto &rec_op = hit(Ray(origin, direction, 0.0), EPS, INF); rec_op.has_value()) {
+        const auto &rec = rec_op.value();
+
+        const f64 area = (x1 - x0) * (y1 - y0);
+        const f64 distance_squared = rec.t * rec.t * direction.length2();
+        const f64 cosine = std::fabs(Vec3::dot(direction, rec.normal) / direction.length());
+
+        return distance_squared / (cosine * area);
+    } return 0.0;
+}
+
+auto XYAARectangle::random(const p3d &origin) const -> Vec3 {
+    return p3d(random_f64(x0, x1), random_f64(y0, y1), z) - origin;
+}
+
 
 auto YZAARectangle::hit(const Ray &ray, const f64 t_min, const f64 t_max) const -> std::optional<HitRecord> {
     const f64 t = (x - ray.origin.x) / ray.direction.x;
@@ -45,6 +61,22 @@ auto YZAARectangle::bounding_box(const f64, const f64) const -> std::optional<AA
     return AABB(p3d(x - EPS, y0, z0), p3d(x + EPS, y1, z1));
 }
 
+auto YZAARectangle::pdf_value(const p3d &origin, const Vec3 &direction) const -> f64 {
+    if (const auto &rec_op = hit(Ray(origin, direction, 0.0), EPS, INF); rec_op.has_value()) {
+        const auto &rec = rec_op.value();
+
+        const f64 area = (y1 - y0) * (z1 - z0);
+        const f64 distance_squared = rec.t * rec.t * direction.length2();
+        const f64 cosine = std::fabs(Vec3::dot(direction, rec.normal) / direction.length());
+
+        return distance_squared / (cosine * area);
+    } return 0.0;
+}
+
+auto YZAARectangle::random(const p3d &origin) const -> Vec3 {
+    return p3d(x, random_f64(y0, y1), random_f64(z0, z1)) - origin;
+}
+
 
 auto ZXAARectangle::hit(const Ray &ray, const f64 t_min, const f64 t_max) const -> std::optional<HitRecord> {
     const f64 t = (y - ray.origin.y) / ray.direction.y;
@@ -66,4 +98,20 @@ auto ZXAARectangle::hit(const Ray &ray, const f64 t_min, const f64 t_max) const 
 
 auto ZXAARectangle::bounding_box(const f64, const f64) const -> std::optional<AABB> {
     return AABB(p3d(x0, y - EPS, z0), p3d(x1, y + EPS, z1));
+}
+
+auto ZXAARectangle::pdf_value(const p3d &origin, const Vec3 &direction) const -> f64 {
+    if (const auto &rec_op = hit(Ray(origin, direction, 0.0), EPS, INF); rec_op.has_value()) {
+        const auto &rec = rec_op.value();
+
+        const f64 area = (z1 - z0) * (x1 - x0);
+        const f64 distance_squared = rec.t * rec.t * direction.length2();
+        const f64 cosine = std::fabs(Vec3::dot(direction, rec.normal) / direction.length());
+
+        return distance_squared / (cosine * area);
+    } return 0.0;
+}
+
+auto ZXAARectangle::random(const p3d &origin) const -> Vec3 {
+    return p3d(random_f64(x0, x1), y, random_f64(z0, z1)) - origin;
 }

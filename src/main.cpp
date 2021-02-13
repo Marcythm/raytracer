@@ -29,12 +29,14 @@
 #include "transform.hpp"
 #include "translation.hpp"
 #include "rotation.hpp"
+#include "flip.hpp"
 
 #include "medium.hpp"
 #include "constant_medium.hpp"
 
 #include "pdf.hpp"
 #include "cosine_pdf.hpp"
+#include "hittable_pdf.hpp"
 
 auto random_scene() -> HittableList {
     HittableList scene;
@@ -185,7 +187,10 @@ auto cornell_box() -> HittableList {
 
     hittables.push(YZAARectangle(  0.0, 555.0,   0.0, 555.0, 555.0, green));
     hittables.push(YZAARectangle(  0.0, 555.0,   0.0, 555.0,   0.0,   red));
-    hittables.push(ZXAARectangle(227.0, 332.0, 213.0, 343.0, 554.0, light));
+    hittables.push(std::make_shared<Instance>(
+        std::make_shared<ZXAARectangle>(227.0, 332.0, 213.0, 343.0, 554.0, light),
+        std::make_shared<Flip>()
+    ));
     hittables.push(ZXAARectangle(  0.0, 555.0,   0.0, 555.0,   0.0, white));
     hittables.push(ZXAARectangle(  0.0, 555.0,   0.0, 555.0, 555.0, white));
     hittables.push(XYAARectangle(  0.0, 555.0,   0.0, 555.0, 555.0, white));

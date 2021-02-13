@@ -24,8 +24,12 @@ struct HitRecord {
 
 struct Hittable {
     virtual ~Hittable() = default;
+
     virtual auto hit(const Ray &ray, const f64 t_min, const f64 t_max) const -> std::optional<HitRecord> = 0;
     virtual auto bounding_box(const f64 t0, const f64 t1) const -> std::optional<AABB> = 0;
+
+    virtual auto pdf_value(const p3d &origin, const Vec3 &direction) const -> f64;
+    virtual auto random(const p3d &origin) const -> Vec3;
 };
 
 struct HittableList: Hittable {
