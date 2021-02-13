@@ -3,6 +3,7 @@
 #include "config.hpp"
 #include "vec3.hpp"
 
+// point in three-dimensional space
 struct p3d {
     using Self = p3d;
 

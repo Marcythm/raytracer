@@ -3,6 +3,7 @@
 #include "config.hpp"
 #include "utility.hpp"
 
+// RGB color
 struct RGB {
     using Self = RGB;
 

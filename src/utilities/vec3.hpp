@@ -3,6 +3,7 @@
 #include "config.hpp"
 #include "utility.hpp"
 
+// vector in three-dimensional space
 struct Vec3 {
     using Self = Vec3;
 
@@ -70,27 +71,46 @@ public:
     static auto random() -> Self {
         return Self(random_f64(), random_f64(), random_f64());
     }
+
     static auto random(const f64 min, const f64 max) -> Self {
         return Self(random_f64(min, max), random_f64(min, max), random_f64(min, max));
     }
+
     static auto random_unit_vector() -> Self {
         const f64 a = random_f64(0.0, 2.0 * PI);
         const f64 z = random_f64(-1.0, 1.0);
         const f64 r = std::sqrt(1.0 - z * z);
         return Self(r * std::cos(a), r * std::sin(a), z);
     }
+
     static auto random_in_unit_sphere() -> Self {
         for ( ; ; )
             if (Self p = random(-1.0, 1.0); p.length2() < 1.0)
                 return p;
     }
+
     static auto random_in_hemisphere(const Vec3 &normal) -> Self {
         Self in_unit_sphere = random_in_unit_sphere();
         return (dot(in_unit_sphere, normal) > 0.0) ? in_unit_sphere : -in_unit_sphere;
     }
+
     static auto random_in_unit_disk() -> Self {
         for ( ; ; )
             if (Self p(random_f64(-1.0, 1.0), random_f64(-1.0, 1.0), 0.0); p.length2() < 1.0)
                 return p;
+    }
+
+    static auto random_cosine_direction() -> Self {
+        const f64 r1 = random_f64();
+        const f64 r2 = random_f64();
+
+        const f64 phi = 2.0 * PI * r1;
+        const f64 tmp = std::sqrt(r2);
+
+        return Self(
+            std::cos(phi) * tmp,
+            std::sin(phi) * tmp,
+            std::sqrt(1.0 - r2)
+        );
     }
 };
