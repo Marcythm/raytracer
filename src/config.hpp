@@ -207,6 +207,8 @@ struct Flip;
 struct Medium;
 struct ConstantMedium;
 
+struct PDF;
+
 /* constants */
 namespace constants {
 

@@ -33,6 +33,8 @@
 #include "medium.hpp"
 #include "constant_medium.hpp"
 
+#include "pdf.hpp"
+
 auto random_scene() -> HittableList {
     HittableList scene;
 

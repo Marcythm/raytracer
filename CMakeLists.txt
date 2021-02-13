@@ -17,6 +17,7 @@ include_directories(
     ${PROJECT_SOURCE_DIR}/src/texture/
     ${PROJECT_SOURCE_DIR}/src/transform/
     ${PROJECT_SOURCE_DIR}/src/medium/
+    ${PROJECT_SOURCE_DIR}/src/pdf/
 )
 file(GLOB src_dir
     ${PROJECT_SOURCE_DIR}/src/*.cpp
@@ -26,6 +27,7 @@ file(GLOB src_dir
     ${PROJECT_SOURCE_DIR}/src/texture/*.cpp
     ${PROJECT_SOURCE_DIR}/src/transform/*.cpp
     ${PROJECT_SOURCE_DIR}/src/medium/*.cpp
+    ${PROJECT_SOURCE_DIR}/src/pdf/*.cpp
 )
 
 add_executable(raytracer-cpp ${src_dir} src/main.cpp)
