@@ -206,11 +206,6 @@ struct RotationZ;
 struct Medium;
 struct ConstantMedium;
 
-enum class diffuse_render_method: bool {
-    hemispherical_scattering = false,
-    true_lambertian_reflection = true,
-};
-
 /* constants */
 namespace constants {
 
@@ -240,8 +235,6 @@ namespace constants {
 	constexpr f64 INF = std::numeric_limits<f64>::infinity();
 	constexpr f64 EPS = 1e-5;
 	constexpr f64 PI = 3.1415926535897932385;
-
-	constexpr diffuse_render_method DIFFUSE_RENDER_METHOD_TYPE = diffuse_render_method::true_lambertian_reflection;
 }
 
 using namespace constants;

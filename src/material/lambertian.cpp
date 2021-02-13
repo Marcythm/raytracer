@@ -1,22 +1,13 @@
 #include "lambertian.hpp"
 
 auto Lambertian::scatter(const Ray &ray, const HitRecord &rec) const -> std::optional<std::tuple<Ray, RGB, f64>> {
-    if constexpr (DIFFUSE_RENDER_METHOD_TYPE == diffuse_render_method::true_lambertian_reflection) {
-        const Vec3 direction = (rec.normal + Vec3::random_unit_vector()).unit();
-        return std::optional(std::make_tuple(
-            Ray(rec.p, direction, ray.time),
-            albedo->value(rec.u, rec.v, rec.p),
-            Vec3::dot(rec.normal, direction) / PI
-        ));
-    }
-    else {
-        const Vec3 direction = Vec3::random_in_hemisphere(rec.normal).unit();
-        return std::optional(std::make_tuple(
-            Ray(rec.p, direction, ray.time),
-            albedo->value(rec.u, rec.v, rec.p),
-            0.5 / PI
-        ));
-    }
+    ONB basis(rec.normal);
+    const Vec3 direction = basis.transform(Vec3::random_cosine_direction()).unit();
+    return std::optional(std::make_tuple(
+        Ray(rec.p, direction, ray.time),
+        albedo->value(rec.u, rec.v, rec.p),
+        Vec3::dot(basis.w, direction) / PI
+    ));
 }
 
 auto Lambertian::scattering_pdf(const Ray &ray, const HitRecord &rec, const Ray &scattered) const -> f64 {

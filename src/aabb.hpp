@@ -4,7 +4,8 @@
 #include "lib.hpp"
 #include "ray.hpp"
 
-struct AABB { // Axis-Aligned Bounding Box
+// Axis-Aligned Bounding Box
+struct AABB {
     using Self = AABB;
 
     p3d min;
@@ -14,8 +15,8 @@ public:
     AABB() = default;
     AABB(const p3d &a, const p3d &b): min(a), max(b) {}
 
-    auto operator [] (const i32 idx) const -> p3d { return idx == 0 ? min : max; }
     auto operator [] (const i32 idx) -> p3d& { return idx == 0 ? min : max; }
+    auto operator [] (const i32 idx) const -> p3d { return idx == 0 ? min : max; }
 
     auto hit(const Ray &ray, const f64 t_min, const f64 t_max) const -> bool;
 

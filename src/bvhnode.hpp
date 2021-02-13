@@ -5,7 +5,8 @@
 #include "aabb.hpp"
 #include "hittable.hpp"
 
-struct BVHNode: Hittable { // Bounding Volume Hierarchy
+// Bounding Volume Hierarchy
+struct BVHNode: Hittable {
     ptr<Hittable> left;
     ptr<Hittable> right;
     AABB box;

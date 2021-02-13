@@ -2,7 +2,8 @@
 
 #include "hittable.hpp"
 
-struct XYAARectangle: Hittable { // XY Axis-Aligned Rectangle
+// XY Axis-Aligned Rectangle
+struct XYAARectangle: Hittable {
     f64 x0, x1;
     f64 y0, y1;
     f64 z;
@@ -17,7 +18,8 @@ public:
     auto bounding_box(const f64 t0, const f64 t1) const -> std::optional<AABB> override;
 };
 
-struct YZAARectangle: Hittable { // YZ Axis-Aligned Rectangle
+// YZ Axis-Aligned Rectangle
+struct YZAARectangle: Hittable {
     f64 y0, y1;
     f64 z0, z1;
     f64 x;
@@ -32,7 +34,8 @@ public:
     auto bounding_box(const f64 t0, const f64 t1) const -> std::optional<AABB> override;
 };
 
-struct ZXAARectangle: Hittable { // ZX Axis-Aligned Rectangle
+// ZX Axis-Aligned Rectangle
+struct ZXAARectangle: Hittable {
     f64 z0, z1;
     f64 x0, x1;
     f64 y;

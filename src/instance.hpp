@@ -7,6 +7,7 @@
 #include "hittable.hpp"
 #include "transform.hpp"
 
+// Apply a transform to a hittable object
 struct Instance: Hittable, Transform {
     ptr<Hittable> hittable;
     ptr<Transform> transform;
