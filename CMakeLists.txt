@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.10.2)
 project(raytracer-cpp)
 SET(CMAKE_CXX_STANDARD 20)
 SET(CMAKE_CXX_COMPILER  "/usr/local/opt/llvm/bin/clang++")
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -Ofast")
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Ofast")
 
 if (DEFINED ENV{HIGH_QUALITY})
     SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DHIGH_QUALITY")

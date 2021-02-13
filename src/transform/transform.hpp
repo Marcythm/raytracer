@@ -9,11 +9,11 @@
 struct Transform {
     virtual ~Transform() = default;
 
-    virtual auto transform_point(const p3d &p) const -> p3d = 0;
-    virtual auto inverse_transform_point(const p3d &p) const -> p3d = 0;
+    virtual auto transform_point(const p3d &p) const -> p3d { return p; }
+    virtual auto inverse_transform_point(const p3d &p) const -> p3d { return p; }
 
-    virtual auto transform_vector(const Vec3 &v) const -> Vec3 = 0;
-    virtual auto inverse_transform_vector(const Vec3 &v) const -> Vec3 = 0;
+    virtual auto transform_vector(const Vec3 &v) const -> Vec3 { return v; }
+    virtual auto inverse_transform_vector(const Vec3 &v) const -> Vec3 { return v; }
 
     virtual auto transform_ray(const Ray &ray) const -> Ray {
         return Ray(transform_point(ray.origin), transform_vector(ray.direction), ray.time);
