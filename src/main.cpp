@@ -463,7 +463,7 @@ auto main() -> i32 {
             break;
     }
 
-    const i32 image_height = image_width * aspect_ratio;
+    const i32 image_height = image_width / aspect_ratio;
 
     // BVHNode bvh(scene, 0.0, 1.0);
 

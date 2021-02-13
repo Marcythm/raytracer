@@ -13,12 +13,15 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+      - name: Set Image Quality
+        run: |
+          export HIGH_QUALITY=1;
       - name: Build project
         run: |
-          cd src; export HIGH_QUALITY=1; make all; cd ..;
+          mkdir build; cd build; cmake ..; make -j7; cd ..;
       - name: Render Image
         run: |
-          ./src/main > image.ppm;
+          ./build/raytracer-cpp > image.ppm;
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
