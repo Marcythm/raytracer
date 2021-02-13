@@ -45,6 +45,7 @@ pub trait Hittable {
     fn bounding_box(&self, t0: f64, t1: f64) -> Option<AABB>;
 }
 
+/// A list of hittable objects
 #[derive(Clone, Default)]
 pub struct HittableList {
     pub hittables: Vec<Rc<dyn Hittable>>,

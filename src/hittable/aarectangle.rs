@@ -4,8 +4,9 @@ use crate::aabb::AABB;
 use crate::hittable::prelude::*;
 use crate::material::prelude::*;
 
+/// XY Axis-Aligned Rectangle
 #[derive(Clone)]
-pub struct XYAARectangle { // XY Axis-Aligned Rectangle
+pub struct XYAARectangle {
     pub x0       : f64,
     pub x1       : f64,
     pub y0       : f64,
@@ -48,8 +49,9 @@ impl Hittable for XYAARectangle {
     }
 }
 
+/// YZ Axis-Aligned Rectangle
 #[derive(Clone)]
-pub struct YZAARectangle { // YZ Axis-Aligned Rectangle
+pub struct YZAARectangle {
     pub y0       : f64,
     pub y1       : f64,
     pub z0       : f64,
@@ -92,8 +94,9 @@ impl Hittable for YZAARectangle {
     }
 }
 
+/// ZX Axis-Aligned Rectangle
 #[derive(Clone)]
-pub struct ZXAARectangle { // ZX Axis-Aligned Rectangle
+pub struct ZXAARectangle {
     pub z0       : f64,
     pub z1       : f64,
     pub x0       : f64,

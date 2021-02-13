@@ -3,8 +3,9 @@ use crate::ray::Ray;
 use crate::aabb::AABB;
 use crate::hittable::prelude::*;
 
+/// Bounding Volume Hierarchy
 #[derive(Clone)]
-pub struct BVHNode { // Bounding Volume Hierarchy
+pub struct BVHNode {
     pub left         : Rc<dyn Hittable>,
     pub right        : Rc<dyn Hittable>,
     pub bounding_box : AABB,

@@ -1,8 +1,9 @@
 use crate::utilities::prelude::*;
 use crate::transform::prelude::*;
 
+/// Rotation around X-axis
 #[derive(Clone)]
-pub struct RotationX { // Rotation around X-axis
+pub struct RotationX {
     pub sin_theta: f64,
     pub cos_theta: f64,
 }
@@ -55,8 +56,9 @@ impl Transform for RotationX {
     }
 }
 
+/// Rotation around Y-axis
 #[derive(Clone)]
-pub struct RotationY { // Rotation around Y-axis
+pub struct RotationY {
     pub sin_theta: f64,
     pub cos_theta: f64,
 }
@@ -109,8 +111,9 @@ impl Transform for RotationY {
     }
 }
 
+/// Rotation around Z-axis
 #[derive(Clone)]
-pub struct RotationZ { // Rotation around Z-axis
+pub struct RotationZ {
     pub sin_theta: f64,
     pub cos_theta: f64,
 }

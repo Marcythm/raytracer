@@ -1,6 +1,7 @@
 use std::ops::{Neg, Add, AddAssign, Sub, SubAssign, Mul, MulAssign, Div, DivAssign, Index, IndexMut};
 use crate::utilities::prelude::*;
 
+/// vector in three-dimensional space
 #[derive(Debug, Clone, Copy, Default)]
 pub struct Vec3 {
     pub x: f64,

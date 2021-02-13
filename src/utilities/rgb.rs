@@ -1,6 +1,7 @@
 use std::{fmt::{Display}, ops::{Add, AddAssign, Sub, SubAssign, Mul, MulAssign, Div, DivAssign}};
 use crate::utilities::prelude::*;
 
+/// RGB color
 #[derive(Debug, Clone, Copy, Default)]
 pub struct RGB {
     pub r: f64,

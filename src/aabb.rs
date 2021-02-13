@@ -3,8 +3,9 @@ use std::ops::{Index, IndexMut};
 use crate::utilities::prelude::*;
 use crate::ray::Ray;
 
+/// Axis-Aligned Bounding Box
 #[derive(Clone)]
-pub struct AABB { // Axis-Aligned Bounding Box
+pub struct AABB {
     pub min: P3d,
     pub max: P3d,
 }

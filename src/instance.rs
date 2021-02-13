@@ -4,6 +4,7 @@ use crate::aabb::AABB;
 use crate::hittable::prelude::*;
 use crate::transform::prelude::*;
 
+/// Apply a transform to a hittable object
 #[derive(Clone)]
 pub struct Instance {
     pub hittable  : Rc<dyn Hittable>,

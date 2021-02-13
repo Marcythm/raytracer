@@ -2,6 +2,7 @@ use std::ops::{Add, AddAssign, Sub, SubAssign, Mul, MulAssign, Div, DivAssign, I
 
 use crate::utilities::prelude::*;
 
+/// point in three-dimentional space
 #[derive(Debug, Clone, Copy, Default)]
 pub struct P3d {
     pub x: f64,
