@@ -10,11 +10,11 @@ use crate::ray::Ray;
 use crate::aabb::AABB;
 
 pub trait Transform {
-    fn transform_point(&self, p: P3d) -> P3d;
-    fn inverse_transform_point(&self, p: P3d) -> P3d;
+    fn transform_point(&self, p: P3d) -> P3d { p }
+    fn inverse_transform_point(&self, p: P3d) -> P3d { p }
 
-    fn transform_vector(&self, v: Vec3) -> Vec3;
-    fn inverse_transform_vector(&self, v: Vec3) -> Vec3;
+    fn transform_vector(&self, v: Vec3) -> Vec3 { v }
+    fn inverse_transform_vector(&self, v: Vec3) -> Vec3 { v }
 
     fn transform_ray(&self, ray: &Ray) -> Ray {
         Ray::new(
