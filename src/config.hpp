@@ -210,6 +210,7 @@ struct ConstantMedium;
 struct PDF;
 struct CosinePDF;
 struct HittablePDF;
+struct MixturePDF;
 
 /* constants */
 namespace constants {

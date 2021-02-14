@@ -1,6 +1,8 @@
 #include "ray.hpp"
+#include "cosine_pdf.hpp"
 #include "aarectangle.hpp"
 #include "hittable_pdf.hpp"
+#include "mixture_pdf.hpp"
 
 auto Ray::color(const Hittable &world, const RGB &background, const i32 depth) const -> RGB {
     if (depth <= 0) return RGB(0.0, 0.0, 0.0);
@@ -16,7 +18,10 @@ auto Ray::color(const Hittable &world, const RGB &background, const i32 depth) c
                 554.0,
                 ptr<Material>()
             );
-            const HittablePDF pdf(rec.p, light_shape);
+            const MixturePDF pdf(
+                std::make_shared<CosinePDF>(rec.normal),
+                std::make_shared<HittablePDF>(rec.p, light_shape)
+            );
 
             scattered = Ray(rec.p, pdf.generate(), time);
 

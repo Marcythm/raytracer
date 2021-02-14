@@ -37,6 +37,7 @@
 #include "pdf.hpp"
 #include "cosine_pdf.hpp"
 #include "hittable_pdf.hpp"
+#include "mixture_pdf.hpp"
 
 auto random_scene() -> HittableList {
     HittableList scene;
@@ -445,7 +446,7 @@ auto main() -> i32 {
             scene                   = cornell_box();
             aspect_ratio            = 1.0;
             image_width             = 600;
-            samples_per_pixel       = 200;
+            samples_per_pixel       = 1000;
             lookfrom                = p3d(278.0, 278.0, -800.0);
             lookat                  = p3d(278.0, 278.0,    0.0);
             vertical_field_of_view  = 40.0;
