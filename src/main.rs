@@ -416,7 +416,7 @@ fn main() {
     // Scene
     let scene;
 
-    match 0 {
+    match 6 {
         1 => {
             scene                   = random_scene(&mut rng);
             background              = RGB::new(  0.7, 0.8, 1.0);
@@ -488,7 +488,7 @@ fn main() {
 
     let image_height = (image_width as f64 / aspect_ratio) as i32;
 
-    let bvh = BVHNode::new(scene, 0.0, 1.0, &mut rng);
+    // let bvh = BVHNode::new(scene, 0.0, 1.0, &mut rng);
 
     let viewup  = Vec3::new( 0.0, 1.0, 0.0);
     let focus_distance = 10.0;
@@ -511,7 +511,7 @@ fn main() {
             for _ in 0..samples_per_pixel {
                 let u = (i as f64 + rng.gen_range(0.0, 1.0)) / (image_width - 1) as f64;
                 let v = (j as f64 + rng.gen_range(0.0, 1.0)) / (image_height - 1) as f64;
-                pixel_color += camera.get_ray(u, v, &mut rng).color(&bvh, background, MAX_DEPTH, &mut rng);
+                pixel_color += camera.get_ray(u, v, &mut rng).color(&scene, background, MAX_DEPTH, &mut rng);
             }
             println!("{}", pixel_color / samples_per_pixel as f64);
         }

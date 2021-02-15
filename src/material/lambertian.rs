@@ -25,10 +25,17 @@ impl Lambertian {
 }
 
 impl Material for Lambertian {
-    fn scatter(&self, ray: &Ray, rec: &HitRecord, rng: &mut SmallRng) -> Option<(Ray, RGB)> {
+    fn scatter(&self, ray: &Ray, rec: &HitRecord, rng: &mut SmallRng) -> Option<(Ray, RGB, f64)> {
+        let direction = (rec.normal + Vec3::random_unit_vector(rng)).unit();
         Some((
-            Ray::new(rec.p, rec.normal + Vec3::random_unit_vector(rng), ray.time),
+            Ray::new(rec.p, direction, ray.time),
             self.albedo.value(rec.u, rec.v, rec.p),
+            Vec3::dot(rec.normal, direction) / PI,
         ))
+    }
+
+    fn scattering_pdf(&self, _: &Ray, rec: &HitRecord, scattered: &Ray) -> f64 {
+        let cosine = Vec3::dot(rec.normal, scattered.direction.unit());
+        if cosine < 0.0 { 0.0 } else { cosine / PI }
     }
 }

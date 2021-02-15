@@ -12,6 +12,7 @@ impl Ray {
     pub fn new(origin: P3d, direction: Vec3, time: f64) -> Self {
         Self { origin, direction, time }
     }
+
     pub fn from_to(from: P3d, to: P3d, time: f64) -> Self {
         // generate a ray from origin to destination
         Self { origin: from, direction: to - from, time }
@@ -27,8 +28,11 @@ impl Ray {
         }
         if let Some(rec) = world.hit(&self, EPS, INFINITY) {
             rec.material.emitted(rec.u, rec.v, rec.p) +
-            if let Some((scattered, attenuation)) = rec.material.scatter(self, &rec, rng) {
-                attenuation * scattered.color(world, background, depth - 1, rng)
+            if let Some((scattered, attenuation, pdf_val)) = rec.material.scatter(self, &rec, rng) {
+                attenuation
+              * rec.material.scattering_pdf(self, &rec, &scattered)
+              * scattered.color(world, background, depth - 1, rng)
+              / pdf_val
             } else {
                 RGB::new(0.0, 0.0, 0.0)
             }

@@ -59,18 +59,18 @@ impl Add<P3d> for Vec3 {
 impl Sub for P3d {
     type Output = Vec3;
     fn sub(self, rhs: Self) -> Self::Output {
-        Vec3::new(
-            self.x - rhs.x,
-            self.y - rhs.y,
-            self.z - rhs.z,
-        )
+        Self::Output {
+            x: self.x - rhs.x,
+            y: self.y - rhs.y,
+            z: self.z - rhs.z,
+        }
     }
 }
 
 impl Sub<Vec3> for P3d {
     type Output = P3d;
     fn sub(self, rhs: Vec3) -> Self::Output {
-        P3d {
+        Self::Output {
             x: self.x - rhs.x,
             y: self.y - rhs.y,
             z: self.z - rhs.z,
@@ -108,7 +108,7 @@ impl MulAssign<f64> for P3d {
 impl Mul<P3d> for f64 {
     type Output = P3d;
     fn mul(self, rhs: P3d) -> Self::Output {
-        P3d {
+        Self::Output {
             x: self * rhs.x,
             y: self * rhs.y,
             z: self * rhs.z,

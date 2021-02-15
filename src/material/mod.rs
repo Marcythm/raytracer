@@ -13,10 +13,18 @@ use crate::ray::Ray;
 use crate::hittable::prelude::*;
 
 pub trait Material {
-    fn emitted(&self, _: f64, _: f64, _: P3d) -> RGB {
+    #[allow(unused_variables)]
+    fn emitted(&self, u: f64, v: f64, p: P3d) -> RGB {
         RGB::new(0.0, 0.0, 0.0)
     }
-    fn scatter(&self, _: &Ray, _: &HitRecord, _: &mut SmallRng) -> Option<(Ray, RGB)> {
+
+    #[allow(unused_variables)]
+    fn scatter(&self, ray: &Ray, rec: &HitRecord, rng: &mut SmallRng) -> Option<(Ray, RGB, f64)> {
         None
+    }
+
+    #[allow(unused_variables)]
+    fn scattering_pdf(&self, ray: &Ray, rec: &HitRecord, scattered: &Ray) -> f64 {
+        0.0
     }
 }
