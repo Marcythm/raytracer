@@ -13,13 +13,17 @@ pub mod transform;
 pub mod medium;
 pub mod pdf;
 
-use utilities::prelude::*;
-use camera::Camera;
-// use aabb::AABB;
-use bvhnode::BVHNode;
-use instance::Instance;
+pub mod prelude;
 
-use hittable::prelude::*;
+use prelude::*;
+
+// use utilities::prelude::*;
+// use camera::Camera;
+// use aabb::AABB;
+// use bvhnode::BVHNode;
+// use instance::Instance;
+
+// use hittable::prelude::*;
 use hittable::sphere::Sphere;
 use hittable::moving_sphere::MovingSphere;
 use hittable::aarectangle::XYAARectangle;
