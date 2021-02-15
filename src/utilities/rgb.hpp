@@ -42,9 +42,9 @@ public:
     }
 
     friend auto operator << (std::ostream &o, const Self &rhs) -> std::ostream& {
-        return o << static_cast<i32>(256.0 * std::clamp(std::pow(rhs.r, 1.0 / GAMMA), 0.0, 0.999)) << ' '
-                 << static_cast<i32>(256.0 * std::clamp(std::pow(rhs.g, 1.0 / GAMMA), 0.0, 0.999)) << ' '
-                 << static_cast<i32>(256.0 * std::clamp(std::pow(rhs.b, 1.0 / GAMMA), 0.0, 0.999));
+        return o << static_cast<i32>(256.0 * std::clamp(std::pow(rhs.r != rhs.r ? 0.0 : rhs.r, 1.0 / GAMMA), 0.0, 0.999)) << ' '
+                 << static_cast<i32>(256.0 * std::clamp(std::pow(rhs.g != rhs.g ? 0.0 : rhs.g, 1.0 / GAMMA), 0.0, 0.999)) << ' '
+                 << static_cast<i32>(256.0 * std::clamp(std::pow(rhs.b != rhs.b ? 0.0 : rhs.b, 1.0 / GAMMA), 0.0, 0.999));
     }
 
 public:
