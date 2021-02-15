@@ -224,7 +224,11 @@ auto cornell_box() -> std::tuple<HittableList, ptr<Hittable>> {
     // hittables.push(box2);
     hittables.push(glass_sphere);
 
-    return std::make_tuple(hittables, glass_sphere);
+    const auto lights = std::make_shared<HittableList>();
+    lights->push(glass_sphere);
+    lights->push(ZXAARectangle(227.0, 332.0, 213.0, 343.0, 554.0, light));
+
+    return std::make_tuple(hittables, lights);
 }
 
 auto cornell_smoke() -> HittableList {

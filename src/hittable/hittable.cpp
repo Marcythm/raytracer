@@ -37,3 +37,14 @@ auto HittableList::bounding_box(const f64 t0, const f64 t1) const -> std::option
 
     return box;
 }
+
+auto HittableList::pdf_value(const p3d &origin, const Vec3 &direction) const -> f64 {
+    f64 sum = 0.0;
+    for (const auto &hittable: hittables)
+        sum += hittable->pdf_value(origin, direction);
+    return sum / hittables.size();
+}
+
+auto HittableList::random(const p3d &origin) const -> Vec3 {
+    return hittables[random_i32(0, static_cast<i32>(hittables.size()) - 1)]->random(origin);
+}
