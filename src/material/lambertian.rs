@@ -30,12 +30,12 @@ impl Material for Lambertian {
         Some((
             Ray::new(rec.p, direction, ray.time),
             self.albedo.value(rec.u, rec.v, rec.p),
-            Vec3::dot(rec.normal, direction) / PI,
+            rec.normal.dot(direction) / PI,
         ))
     }
 
     fn scattering_pdf(&self, _: &Ray, rec: &HitRecord, scattered: &Ray) -> f64 {
-        let cosine = Vec3::dot(rec.normal, scattered.direction.unit());
+        let cosine = rec.normal.dot(scattered.direction.unit());
         if cosine < 0.0 { 0.0 } else { cosine / PI }
     }
 }

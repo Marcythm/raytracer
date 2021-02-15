@@ -24,7 +24,7 @@ impl Dielectric {
 impl Material for Dielectric {
     fn scatter(&self, ray: &Ray, rec: &HitRecord, rng: &mut SmallRng) -> Option<(Ray, RGB, f64)> {
         let unit_direction = ray.direction.unit();
-        let cos_theta = Vec3::dot(-unit_direction, rec.normal).min(1.0);
+        let cos_theta = -unit_direction.dot(rec.normal).min(1.0);
         let sin_theta = (1.0 - cos_theta * cos_theta).sqrt();
         let etai_over_etat = if rec.front_face { 1.0 / self.refractive_index } else { self.refractive_index };
 

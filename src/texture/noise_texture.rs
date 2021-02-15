@@ -84,7 +84,7 @@ impl Perlin {
                     accum += (i as f64 * u + (1 - i) as f64 * (1.0 - u))
                            * (j as f64 * v + (1 - j) as f64 * (1.0 - v))
                            * (k as f64 * w + (1 - k) as f64 * (1.0 - w))
-                           * Vec3::dot(c[i][j][k], Vec3::new(u - i as f64, v - j as f64, w - k as f64));
+                           * c[i][j][k].dot(Vec3::new(u - i as f64, v - j as f64, w - k as f64));
                 }
             }
         }

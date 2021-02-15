@@ -33,7 +33,7 @@ impl HitRecord {
     }
 
     pub fn set_face_normal(&mut self, ray: &Ray) {
-        self.front_face = Vec3::dot(ray.direction, self.normal) < 0.0;
+        self.front_face = ray.direction.dot(self.normal) < 0.0;
         if !self.front_face {
             self.normal = -self.normal;
         }
