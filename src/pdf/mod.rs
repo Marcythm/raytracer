@@ -1,0 +1,10 @@
+pub mod prelude {
+    pub use super::PDF;
+}
+
+use crate::utilities::prelude::*;
+
+pub trait PDF {
+    fn value(&self, direction: Vec3) -> f64;
+    fn generate(&self) -> Vec3;
+}

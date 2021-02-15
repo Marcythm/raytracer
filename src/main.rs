@@ -11,6 +11,7 @@ pub mod material;
 pub mod texture;
 pub mod transform;
 pub mod medium;
+pub mod pdf;
 
 use utilities::prelude::*;
 use camera::Camera;
@@ -46,6 +47,8 @@ use transform::flip::Flip;
 
 // use medium::prelude::*;
 use medium::constant_medium::ConstantMedium;
+
+// use pdf::prelude::*;
 
 fn random_scene(rng: &mut SmallRng) -> HittableList {
     let mut hittables = HittableList::default();
