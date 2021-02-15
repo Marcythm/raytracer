@@ -1,5 +1,6 @@
 pub mod translation;
 pub mod rotation;
+pub mod flip;
 
 pub mod prelude {
     pub use super::Transform;

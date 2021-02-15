@@ -42,6 +42,7 @@ use transform::translation::Translation;
 // use transform::rotation::RotationX;
 use transform::rotation::RotationY;
 // use transform::rotation::RotationZ;
+use transform::flip::Flip;
 
 // use medium::prelude::*;
 use medium::constant_medium::ConstantMedium;
@@ -196,7 +197,10 @@ fn cornell_box() -> HittableList {
 
     hittables.push(YZAARectangle::new(  0.0, 555.0,   0.0, 555.0, 555.0, green.clone()));
     hittables.push(YZAARectangle::new(  0.0, 555.0,   0.0, 555.0,   0.0,   red.clone()));
-    hittables.push(ZXAARectangle::new(227.0, 332.0, 213.0, 343.0, 554.0, light.clone()));
+    hittables.push(Instance::new(
+        Rc::new(ZXAARectangle::new(227.0, 332.0, 213.0, 343.0, 554.0, light.clone())),
+        Rc::new(Flip::new()),
+    ));
     hittables.push(ZXAARectangle::new(  0.0, 555.0,   0.0, 555.0,   0.0, white.clone()));
     hittables.push(ZXAARectangle::new(  0.0, 555.0,   0.0, 555.0, 555.0, white.clone()));
     hittables.push(XYAARectangle::new(  0.0, 555.0,   0.0, 555.0, 555.0, white.clone()));
