@@ -113,4 +113,19 @@ public:
             std::sqrt(1.0 - r2)
         );
     }
+
+    static auto random_to_sphere(const f64 radius, const f64 distance_squared) -> Self {
+        const f64 r1 = random_f64();
+        const f64 r2 = random_f64();
+        const f64 z = 1.0 + r2 * (std::sqrt(1.0 - radius * radius / distance_squared) - 1.0);
+
+        const f64 phi = 2.0 * PI * r1;
+        const f64 tmp = std::sqrt(1.0 - z * z);
+
+        return Self(
+            std::cos(phi) * tmp,
+            std::sin(phi) * tmp,
+            z
+        );
+    }
 };

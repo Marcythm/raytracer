@@ -38,3 +38,16 @@ auto Sphere::bounding_box(const f64, const f64) const -> std::optional<AABB> {
         p3d(center.x + radius, center.y + radius, center.z + radius)
     ));
 }
+
+auto Sphere::pdf_value(const p3d &origin, const Vec3 &direction) const -> f64 {
+    if (hit(Ray(origin, direction, 0.0), EPS, INF).has_value()) {
+        const f64 cos_theta_max = std::sqrt(1.0 - radius * radius / (center - origin).length2());
+        const f64 solid_angle = 2.0 * PI * (1.0 - cos_theta_max);
+        return 1.0 / solid_angle;
+    } else return 0;
+}
+
+auto Sphere::random(const p3d &origin) const -> Vec3 {
+    const Vec3 direction = center - origin;
+    return ONB(direction).transform(Vec3::random_to_sphere(radius, direction.length2()));
+}

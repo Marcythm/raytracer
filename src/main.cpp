@@ -193,35 +193,38 @@ auto cornell_box() -> std::tuple<HittableList, ptr<Hittable>> {
     hittables.push(ZXAARectangle(  0.0, 555.0,   0.0, 555.0, 555.0, white));
     hittables.push(XYAARectangle(  0.0, 555.0,   0.0, 555.0, 555.0, white));
 
-    const auto aluminum = std::make_shared<Metal>(RGB(0.8, 0.85, 0.88), 0.0);
-
     const auto box1 = std::make_shared<Instance>(
         std::make_shared<Instance>(
             std::make_shared<Cuboid>(
                 p3d(0.0, 0.0, 0.0),
                 p3d(165.0, 330.0, 165.0),
-                aluminum
+                white
             ),
             std::make_shared<RotationY>(15.0)
         ),
         std::make_shared<Translation>(Vec3(265.0, 0.0, 295.0))
     );
-    const auto box2 = std::make_shared<Instance>(
-        std::make_shared<Instance>(
-            std::make_shared<Cuboid>(
-                p3d(0.0, 0.0, 0.0),
-                p3d(165.0, 165.0, 165.0),
-                white
-            ),
-            std::make_shared<RotationY>(-18.0)
-        ),
-        std::make_shared<Translation>(Vec3(130.0, 0.0, 65.0))
+    // const auto box2 = std::make_shared<Instance>(
+    //     std::make_shared<Instance>(
+    //         std::make_shared<Cuboid>(
+    //             p3d(0.0, 0.0, 0.0),
+    //             p3d(165.0, 165.0, 165.0),
+    //             white
+    //         ),
+    //         std::make_shared<RotationY>(-18.0)
+    //     ),
+    //     std::make_shared<Translation>(Vec3(130.0, 0.0, 65.0))
+    // );
+    const auto glass = std::make_shared<Dielectric>(1.5);
+    const auto glass_sphere = std::make_shared<Sphere>(
+        p3d(190.0, 90.0, 190.0), 90.0, glass
     );
 
     hittables.push(box1);
-    hittables.push(box2);
+    // hittables.push(box2);
+    hittables.push(glass_sphere);
 
-    return std::make_tuple(hittables, std::make_shared<ZXAARectangle>(227.0, 332.0, 213.0, 343.0, 554.0, light));
+    return std::make_tuple(hittables, glass_sphere);
 }
 
 auto cornell_smoke() -> HittableList {

@@ -16,4 +16,7 @@ public:
 
     auto hit(const Ray &ray, const f64 t_min, const f64 t_max) const -> std::optional<HitRecord> override;
     auto bounding_box(const f64 t0, const f64 t1) const -> std::optional<AABB> override;
+
+    auto pdf_value(const p3d &origin, const Vec3 &direction) const -> f64 override;
+    auto random(const p3d &origin) const -> Vec3 override;
 };
