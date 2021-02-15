@@ -27,14 +27,33 @@ impl Ray {
             return RGB::new(0.0, 0.0, 0.0);
         }
         if let Some(rec) = world.hit(&self, EPS, INFINITY) {
-            rec.material.emitted(rec.u, rec.v, rec.p) +
-            if let Some((scattered, attenuation, pdf_val)) = rec.material.scatter(self, &rec, rng) {
-                attenuation
-              * rec.material.scattering_pdf(self, &rec, &scattered)
-              * scattered.color(world, background, depth - 1, rng)
-              / pdf_val
+            let emitted = rec.material.emitted(rec.u, rec.v, rec.p);
+            if let Some((_, attenuation, _)) = rec.material.scatter(self, &rec, rng) {
+                let on_light = P3d::new(rng.gen_range(213.0, 343.0), 554.0, rng.gen_range(227.0, 332.0));
+                let to_light = on_light - rec.p;
+                let distance_squared = to_light.length2();
+                let to_light = to_light.unit();
+
+                if to_light.dot(rec.normal) < 0.0 {
+                    emitted
+                } else {
+                    let light_area = (343.0 - 213.0) * (332.0 - 227.0);
+                    let light_cosine = to_light.y.abs();
+
+                    if light_cosine < EPS {
+                        emitted
+                    } else {
+                        let pdf_val = distance_squared / (light_cosine * light_area);
+                        let scattered = Ray::new(rec.p, to_light, self.time);
+
+                        emitted + attenuation
+                      * rec.material.scattering_pdf(self, &rec, &scattered)
+                      * scattered.color(world, background, depth - 1, rng)
+                      / pdf_val
+                    }
+                }
             } else {
-                RGB::new(0.0, 0.0, 0.0)
+                emitted
             }
         } else {
             background
