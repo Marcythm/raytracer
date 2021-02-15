@@ -178,7 +178,7 @@ auto simple_light() -> HittableList {
     return hittables;
 }
 
-auto cornell_box() -> HittableList {
+auto cornell_box() -> std::tuple<HittableList, ptr<Hittable>> {
     HittableList hittables;
 
     const auto red   = std::make_shared<Lambertian>  (RGB( 0.65,  0.05,  0.05));
@@ -188,20 +188,19 @@ auto cornell_box() -> HittableList {
 
     hittables.push(YZAARectangle(  0.0, 555.0,   0.0, 555.0, 555.0, green));
     hittables.push(YZAARectangle(  0.0, 555.0,   0.0, 555.0,   0.0,   red));
-    hittables.push(std::make_shared<Instance>(
-        std::make_shared<ZXAARectangle>(227.0, 332.0, 213.0, 343.0, 554.0, light),
-        std::make_shared<Flip>()
-    ));
+    hittables.push(ZXAARectangle(227.0, 332.0, 213.0, 343.0, 554.0, light));
     hittables.push(ZXAARectangle(  0.0, 555.0,   0.0, 555.0,   0.0, white));
     hittables.push(ZXAARectangle(  0.0, 555.0,   0.0, 555.0, 555.0, white));
     hittables.push(XYAARectangle(  0.0, 555.0,   0.0, 555.0, 555.0, white));
+
+    const auto aluminum = std::make_shared<Metal>(RGB(0.8, 0.85, 0.88), 0.0);
 
     const auto box1 = std::make_shared<Instance>(
         std::make_shared<Instance>(
             std::make_shared<Cuboid>(
                 p3d(0.0, 0.0, 0.0),
                 p3d(165.0, 330.0, 165.0),
-                white
+                aluminum
             ),
             std::make_shared<RotationY>(15.0)
         ),
@@ -222,7 +221,7 @@ auto cornell_box() -> HittableList {
     hittables.push(box1);
     hittables.push(box2);
 
-    return hittables;
+    return std::make_tuple(hittables, std::make_shared<ZXAARectangle>(227.0, 332.0, 213.0, 343.0, 554.0, light));
 }
 
 auto cornell_smoke() -> HittableList {
@@ -398,6 +397,7 @@ auto main() -> i32 {
 
     // Scene
     HittableList scene;
+    ptr<Hittable> lights;
 
     p3d lookfrom(13.0, 2.0, 3.0);
     p3d lookat(0.0, 0.0, 0.0);
@@ -443,7 +443,7 @@ auto main() -> i32 {
             vertical_field_of_view  = 20.0;
             break;
         case 6:
-            scene                   = cornell_box();
+            std::tie(scene, lights)  = cornell_box();
             aspect_ratio            = 1.0;
             image_width             = 600;
             samples_per_pixel       = 1000;
@@ -495,7 +495,7 @@ auto main() -> i32 {
             for (i32 s = 0; s < samples_per_pixel; ++s) {
                 const f64 u = (i + random_f64()) / (image_width - 1);
                 const f64 v = (j + random_f64()) / (image_height - 1);
-                pixel_color += camera.get_ray(u, v).color(scene, background, MAX_DEPTH);
+                pixel_color += camera.get_ray(u, v).color(scene, background, lights, MAX_DEPTH);
             }
             std::cout << pixel_color / samples_per_pixel << '\n';
         }

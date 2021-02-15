@@ -3,7 +3,6 @@
 #include "config.hpp"
 #include "lib.hpp"
 #include "hittable.hpp"
-#include "material.hpp"
 
 struct Ray {
     using Self = Ray;
@@ -20,5 +19,5 @@ public:
 
     auto at(const f64 t) const -> p3d { return origin + t * direction; }
 
-    auto color(const Hittable &world, const RGB &background, const i32 depth) const -> RGB;
+    auto color(const Hittable &world, const RGB &background, const ptr<Hittable> &lights, const i32 depth) const -> RGB;
 };

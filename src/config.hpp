@@ -184,6 +184,7 @@ struct YZAARectangle;
 struct ZXAARectangle;
 struct Cuboid;
 
+struct ScatterRecord;
 struct Material;
 struct Lambertian;
 struct Metal;

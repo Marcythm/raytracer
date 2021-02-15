@@ -15,5 +15,5 @@ public:
         return r0 + (1.0 - r0) * std::pow(1.0 - cosine, 5);
     }
 
-    auto scatter(const Ray &ray, const HitRecord &rec) const -> std::optional<std::tuple<Ray, RGB, f64>> override;
+    auto scatter(const Ray &ray, const HitRecord &rec) const -> std::optional<ScatterRecord> override;
 };

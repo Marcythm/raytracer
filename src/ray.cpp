@@ -1,35 +1,32 @@
 #include "ray.hpp"
-#include "cosine_pdf.hpp"
-#include "aarectangle.hpp"
+#include "hittable.hpp"
+#include "material.hpp"
 #include "hittable_pdf.hpp"
 #include "mixture_pdf.hpp"
 
-auto Ray::color(const Hittable &world, const RGB &background, const i32 depth) const -> RGB {
+auto Ray::color(const Hittable &world, const RGB &background, const ptr<Hittable> &lights, const i32 depth) const -> RGB {
     if (depth <= 0) return RGB(0.0, 0.0, 0.0);
-    if (const auto &hit = world.hit(*this, EPS, INFINITY); hit.has_value()) {
-        const auto &rec = hit.value();
-        const RGB emitted = rec.material->emitted(rec.u, rec.v, rec.p);
-        if (const auto &scatter = rec.material->scatter(*this, rec); scatter.has_value()) {
-            auto [scattered, attenuation, _] = scatter.value();
+    if (const auto &hit = world.hit(*this, EPS, INF); hit.has_value()) {
+        const auto &hit_rec = hit.value();
+        const RGB emitted = hit_rec.material->emitted(*this, hit_rec, hit_rec.u, hit_rec.v, hit_rec.p);
+        if (const auto &scatter = hit_rec.material->scatter(*this, hit_rec); scatter.has_value()) {
+            if (const auto scatter_rec = scatter.value(); scatter_rec.is_specular) {
+                return scatter_rec.attenuation
+                     * scatter_rec.specular_ray.color(world, background, lights, depth - 1);
+            } else {
+                const MixturePDF pdf(
+                    std::make_shared<HittablePDF>(hit_rec.p, lights),
+                    scatter_rec.pdf
+                );
 
-            const ptr<Hittable> light_shape = std::make_shared<ZXAARectangle>(
-                227.0, 332.0,
-                213.0, 343.0,
-                554.0,
-                ptr<Material>()
-            );
-            const MixturePDF pdf(
-                std::make_shared<CosinePDF>(rec.normal),
-                std::make_shared<HittablePDF>(rec.p, light_shape)
-            );
+                Ray scattered = Ray(hit_rec.p, pdf.generate(), time);
 
-            scattered = Ray(rec.p, pdf.generate(), time);
-
-            return emitted
-                 + attenuation
-                 * rec.material->scattering_pdf(*this, rec, scattered)
-                 * scattered.color(world, background, depth - 1)
-                 / pdf.value(scattered.direction);
+                return emitted
+                    + scatter_rec.attenuation
+                    * hit_rec.material->scattering_pdf(*this, hit_rec, scattered)
+                    * scattered.color(world, background, lights, depth - 1)
+                    / pdf.value(scattered.direction);
+            }
         } else return emitted;
     } return background;
 }

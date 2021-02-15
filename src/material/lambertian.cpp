@@ -1,12 +1,10 @@
 #include "lambertian.hpp"
+#include "cosine_pdf.hpp"
 
-auto Lambertian::scatter(const Ray &ray, const HitRecord &rec) const -> std::optional<std::tuple<Ray, RGB, f64>> {
-    ONB basis(rec.normal);
-    const Vec3 direction = basis.transform(Vec3::random_cosine_direction()).unit();
-    return std::optional(std::make_tuple(
-        Ray(rec.p, direction, ray.time),
+auto Lambertian::scatter(const Ray &ray, const HitRecord &rec) const -> std::optional<ScatterRecord> {
+    return std::optional(ScatterRecord(
         albedo->value(rec.u, rec.v, rec.p),
-        Vec3::dot(basis.w, direction) / PI
+        std::make_shared<CosinePDF>(rec.normal)
     ));
 }
 
