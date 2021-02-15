@@ -92,6 +92,20 @@ impl Vec3 {
             }
         }
     }
+
+    pub fn random_cosine_direction(rng: &mut SmallRng) -> Self {
+        let r1: f64 = rng.gen_range(0.0, 1.0);
+        let r2: f64 = rng.gen_range(0.0, 1.0);
+
+        let phi = 2.0 * PI * r1;
+        let tmp = r2.sqrt();
+
+        Self {
+            x: phi.cos() * tmp,
+            y: phi.sin() * tmp,
+            z: (1.0 - r2).sqrt(),
+        }
+    }
 }
 
 impl Neg for Vec3 {

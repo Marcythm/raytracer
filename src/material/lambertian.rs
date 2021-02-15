@@ -26,11 +26,12 @@ impl Lambertian {
 
 impl Material for Lambertian {
     fn scatter(&self, ray: &Ray, rec: &HitRecord, rng: &mut SmallRng) -> Option<(Ray, RGB, f64)> {
-        let direction = (rec.normal + Vec3::random_unit_vector(rng)).unit();
+        let basis = ONB::build_from(rec.normal);
+        let direction = basis.transform(Vec3::random_cosine_direction(rng)).unit();
         Some((
             Ray::new(rec.p, direction, ray.time),
             self.albedo.value(rec.u, rec.v, rec.p),
-            rec.normal.dot(direction) / PI,
+            basis.w.dot(direction) / PI,
         ))
     }
 
