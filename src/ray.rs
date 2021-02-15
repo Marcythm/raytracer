@@ -1,5 +1,7 @@
 use crate::utilities::prelude::*;
 use crate::hittable::prelude::*;
+use crate::pdf::prelude::*;
+use crate::pdf::cosine_pdf::CosinePDF;
 
 #[derive(Clone)]
 pub struct Ray {
@@ -29,29 +31,14 @@ impl Ray {
         if let Some(rec) = world.hit(&self, EPS, INFINITY) {
             let emitted = rec.material.emitted(rec.u, rec.v, rec.p);
             if let Some((_, attenuation, _)) = rec.material.scatter(self, &rec, rng) {
-                let on_light = P3d::new(rng.gen_range(213.0, 343.0), 554.0, rng.gen_range(227.0, 332.0));
-                let to_light = on_light - rec.p;
-                let distance_squared = to_light.length2();
-                let to_light = to_light.unit();
+                let pdf = CosinePDF::new(rec.normal);
+                let scattered = Ray::new(rec.p, pdf.generate(rng), self.time);
+                let pdf_val = pdf.value(scattered.direction);
 
-                if to_light.dot(rec.normal) < 0.0 {
-                    emitted
-                } else {
-                    let light_area = (343.0 - 213.0) * (332.0 - 227.0);
-                    let light_cosine = to_light.y.abs();
-
-                    if light_cosine < EPS {
-                        emitted
-                    } else {
-                        let pdf_val = distance_squared / (light_cosine * light_area);
-                        let scattered = Ray::new(rec.p, to_light, self.time);
-
-                        emitted + attenuation
-                      * rec.material.scattering_pdf(self, &rec, &scattered)
-                      * scattered.color(world, background, depth - 1, rng)
-                      / pdf_val
-                    }
-                }
+                emitted + attenuation
+                * rec.material.scattering_pdf(self, &rec, &scattered)
+                * scattered.color(world, background, depth - 1, rng)
+                / pdf_val
             } else {
                 emitted
             }

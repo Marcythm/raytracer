@@ -15,44 +15,60 @@ pub mod pdf;
 
 pub mod prelude;
 
-use prelude::*;
+use {
+    prelude::*,
+//     utilities::prelude::*,
+//     ray::Ray,
+//     camera::Camera,
+//     aabb::AABB,
+//     bvhnode::BVHNode,
+//     instance::Instance,
+};
 
-// use utilities::prelude::*;
-// use camera::Camera;
-// use aabb::AABB;
-// use bvhnode::BVHNode;
-// use instance::Instance;
+use hittable::{
+    // prelude::*,
+    sphere::Sphere,
+    moving_sphere::MovingSphere,
+    aarectangle::XYAARectangle,
+    aarectangle::YZAARectangle,
+    aarectangle::ZXAARectangle,
+    cuboid::Cuboid,
+};
 
-// use hittable::prelude::*;
-use hittable::sphere::Sphere;
-use hittable::moving_sphere::MovingSphere;
-use hittable::aarectangle::XYAARectangle;
-use hittable::aarectangle::YZAARectangle;
-use hittable::aarectangle::ZXAARectangle;
-use hittable::cuboid::Cuboid;
+use material::{
+    // prelude::*,
+    lambertian::Lambertian,
+    metal::Metal,
+    dielectric::Dielectric,
+    diffuse_light::DiffuseLight,
+    // isotropic::Isotropic,
+};
 
-// use material::prelude::*;
-use material::lambertian::Lambertian;
-use material::metal::Metal;
-use material::dielectric::Dielectric;
-use material::diffuse_light::DiffuseLight;
-// use material::istropic::Istropic;
+use texture::{
+    // prelude::*,
+    checker_texture::CheckerTexture,
+    noise_texture::NoiseTexture,
+};
 
-// use texture::prelude::*;
-use texture::checker_texture::CheckerTexture;
-use texture::noise_texture::NoiseTexture;
+use transform::{
+    // prelude::*,
+    translation::Translation,
+    // rotation::RotationX,
+    rotation::RotationY,
+    // rotation::RotationZ,
+    flip::Flip,
+};
 
-// use transform::prelude::*;
-use transform::translation::Translation;
-// use transform::rotation::RotationX;
-use transform::rotation::RotationY;
-// use transform::rotation::RotationZ;
-use transform::flip::Flip;
+use medium::{
+    // prelude::*,
+    constant_medium::ConstantMedium,
+};
 
-// use medium::prelude::*;
-use medium::constant_medium::ConstantMedium;
+// use pdf::{
+//     // prelude::*,
+//     // cosine_pdf::CosinePDF,
+// };
 
-// use pdf::prelude::*;
 
 fn random_scene(rng: &mut SmallRng) -> HittableList {
     let mut hittables = HittableList::default();
