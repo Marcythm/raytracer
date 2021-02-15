@@ -29,7 +29,7 @@ impl P3d {
 impl Add<Vec3> for P3d {
     type Output = Self;
     fn add(self, rhs: Vec3) -> Self::Output {
-        Self {
+        Self::Output {
             x: self.x + rhs.x,
             y: self.y + rhs.y,
             z: self.z + rhs.z,
@@ -48,7 +48,7 @@ impl AddAssign<Vec3> for P3d {
 impl Add<P3d> for Vec3 {
     type Output = P3d;
     fn add(self, rhs: P3d) -> Self::Output {
-        P3d {
+        Self::Output {
             x: self.x + rhs.x,
             y: self.y + rhs.y,
             z: self.z + rhs.z,
@@ -89,7 +89,7 @@ impl SubAssign<Vec3> for P3d {
 impl Mul<f64> for P3d {
     type Output = Self;
     fn mul(self, rhs: f64) -> Self::Output {
-        Self {
+        Self::Output {
             x: self.x * rhs,
             y: self.y * rhs,
             z: self.z * rhs,
@@ -119,7 +119,7 @@ impl Mul<P3d> for f64 {
 impl Div<f64> for P3d {
     type Output = Self;
     fn div(self, rhs: f64) -> Self::Output {
-        Self {
+        Self::Output {
             x: self.x / rhs,
             y: self.y / rhs,
             z: self.z / rhs,

@@ -28,7 +28,7 @@ impl RGB {
 impl Add for RGB {
     type Output = Self;
     fn add(self, rhs: Self) -> Self::Output {
-        Self {
+        Self::Output {
             r: self.r + rhs.r,
             g: self.g + rhs.g,
             b: self.b + rhs.b,
@@ -47,7 +47,7 @@ impl AddAssign for RGB {
 impl Sub for RGB {
     type Output = Self;
     fn sub(self, rhs: Self) -> Self::Output {
-        Self {
+        Self::Output {
             r: self.r - rhs.r,
             g: self.g - rhs.g,
             b: self.b - rhs.b,
@@ -66,7 +66,7 @@ impl SubAssign for RGB {
 impl Mul for RGB {
     type Output = Self;
     fn mul(self, rhs: Self) -> Self::Output {
-        Self {
+        Self::Output {
             r: self.r * rhs.r,
             g: self.g * rhs.g,
             b: self.b * rhs.b,
@@ -85,7 +85,7 @@ impl MulAssign for RGB {
 impl Mul<f64> for RGB {
     type Output = Self;
     fn mul(self, rhs: f64) -> Self::Output {
-        Self {
+        Self::Output {
             r: self.r * rhs,
             g: self.g * rhs,
             b: self.b * rhs,
@@ -104,7 +104,7 @@ impl MulAssign<f64> for RGB {
 impl Mul<RGB> for f64 {
     type Output = RGB;
     fn mul(self, rhs: RGB) -> Self::Output {
-        RGB {
+        Self::Output {
             r: self * rhs.r,
             g: self * rhs.g,
             b: self * rhs.b,
@@ -115,7 +115,7 @@ impl Mul<RGB> for f64 {
 impl Div<f64> for RGB {
     type Output = Self;
     fn div(self, rhs: f64) -> Self::Output {
-        Self {
+        Self::Output {
             r: self.r / rhs,
             g: self.g / rhs,
             b: self.b / rhs,
