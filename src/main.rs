@@ -234,7 +234,7 @@ fn cornell_box() -> (HittableList, Rc<dyn Hittable>) {
     // hittables.push(Cuboid::new(P3d::new(130.0, 0.0,  65.0), P3d::new(295.0, 165.0, 230.0), white.clone()));
     // hittables.push(Cuboid::new(P3d::new(265.0, 0.0, 295.0), P3d::new(430.0, 330.0, 460.0), white.clone()));
 
-    // let light_rec = Rc::new(ZXAARectangle::new(227.0, 332.0, 213.0, 343.0, 554.0, light.clone()));
+    let light_rec = Rc::new(ZXAARectangle::new(227.0, 332.0, 213.0, 343.0, 554.0, light.clone()));
 
     // let aluminum = Rc::new(Metal::new(RGB::new(0.8, 0.85, 0.88), 0.0));
 
@@ -266,7 +266,11 @@ fn cornell_box() -> (HittableList, Rc<dyn Hittable>) {
     //     Rc::new(Translation::new(Vec3::new(130.0, 0.0, 65.0))),
     // ));
 
-    (hittables, glass_sphere)
+    let mut lights = HittableList::default();
+    lights.push_ptr(light_rec.clone());
+    lights.push_ptr(glass_sphere.clone());
+
+    (hittables, Rc::new(lights))
 }
 
 fn cornell_smoke() -> HittableList {
@@ -498,7 +502,7 @@ fn main() {
             (scene, lights)         = cornell_box();
             aspect_ratio            = 1.0;
             image_width             = 600;
-            samples_per_pixel       = 200;
+            samples_per_pixel       = 1000;
             background              = RGB::new(   0.0,   0.0,    0.0);
             lookfrom                = P3d::new( 278.0, 278.0, -800.0);
             lookat                  = P3d::new( 278.0, 278.0,    0.0);

@@ -107,4 +107,16 @@ impl Hittable for HittableList {
                 )
         }
     }
+
+    fn pdf_value(&self, origin: P3d, direction: Vec3) -> f64 {
+        let mut sum = 0.0;
+        for hittable in &self.hittables {
+            sum += hittable.pdf_value(origin, direction);
+        }
+        sum / self.hittables.len() as f64
+    }
+
+    fn random(&self, origin: P3d, rng: &mut SmallRng) -> Vec3 {
+        self.hittables[rng.gen_range(0, self.hittables.len())].random(origin, rng)
+    }
 }
