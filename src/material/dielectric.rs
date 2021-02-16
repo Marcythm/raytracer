@@ -22,16 +22,22 @@ impl Dielectric {
 }
 
 impl Material for Dielectric {
-    fn scatter(&self, ray: &Ray, rec: &HitRecord, rng: &mut SmallRng) -> Option<(Ray, RGB, f64)> {
+    fn scatter(&self, ray: &Ray, rec: &HitRecord, rng: &mut SmallRng) -> Option<ScatterRecord> {
         let unit_direction = ray.direction.unit();
         let cos_theta = -unit_direction.dot(rec.normal).min(1.0);
         let sin_theta = (1.0 - cos_theta * cos_theta).sqrt();
         let etai_over_etat = if rec.front_face { 1.0 / self.refractive_index } else { self.refractive_index };
 
         if etai_over_etat * sin_theta > 1.0 || rng.gen_range(0.0, 1.0) < schlick(cos_theta, etai_over_etat) {
-            Some((Ray::new(rec.p, unit_direction.reflect_on(rec.normal), 0.0), RGB::new(1.0 , 1.0, 1.0), 0.0))
+            Some(ScatterRecord::Specular{
+                specular_ray: Ray::new(rec.p, unit_direction.reflect_on(rec.normal), 0.0),
+                attenuation: RGB::new(1.0 , 1.0, 1.0),
+            })
         } else {
-            Some((Ray::new(rec.p, unit_direction.refract_on(rec.normal, etai_over_etat), 0.0), RGB::new(1.0, 1.0, 1.0), 0.0))
+            Some(ScatterRecord::Specular{
+                specular_ray: Ray::new(rec.p, unit_direction.refract_on(rec.normal, etai_over_etat), 0.0),
+                attenuation: RGB::new(1.0, 1.0, 1.0),
+            })
         }
     }
 }

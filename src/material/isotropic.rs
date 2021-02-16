@@ -21,11 +21,10 @@ impl Isotropic {
 }
 
 impl Material for Isotropic {
-    fn scatter(&self, ray: &Ray, rec: &HitRecord, rng: &mut SmallRng) -> Option<(Ray, RGB, f64)> {
-        Some((
-            Ray::new(rec.p, Vec3::random_in_unit_sphere(rng), ray.time),
-            self.albedo.value(rec.u, rec.v, rec.p),
-            0.0,
-        ))
+    fn scatter(&self, ray: &Ray, rec: &HitRecord, rng: &mut SmallRng) -> Option<ScatterRecord> {
+        Some(ScatterRecord::Specular{
+            specular_ray: Ray::new(rec.p, Vec3::random_in_unit_sphere(rng), ray.time),
+            attenuation: self.albedo.value(rec.u, rec.v, rec.p),
+        })
     }
 }

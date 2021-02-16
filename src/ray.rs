@@ -1,8 +1,9 @@
 use crate::utilities::prelude::*;
 use crate::hittable::prelude::*;
+use crate::material::prelude::*;
 use crate::pdf::{
     prelude::*,
-    cosine_pdf::CosinePDF,
+    // cosine_pdf::CosinePDF,
     hittable_pdf::HittablePDF,
     mixture_pdf::MixturePDF,
 };
@@ -31,20 +32,33 @@ impl Ray {
     pub fn color<T: Hittable>(&self, world: &T, background: RGB, lights: Rc<dyn Hittable>, depth: i32, rng: &mut SmallRng) -> RGB {
         if depth <= 0 {
             RGB::new(0.0, 0.0, 0.0)
-        } else if let Some(rec) = world.hit(&self, EPS, INFINITY) {
-            let emitted = rec.material.emitted(rec.u, rec.v, rec.p);
-            if let Some((_, attenuation, _)) = rec.material.scatter(self, &rec, rng) {
-                let pdf0 = CosinePDF::new(rec.normal);
-                let pdf1 = HittablePDF::new(lights.clone(), rec.p);
-                let pdf = MixturePDF::new(Rc::new(pdf0), Rc::new(pdf1));
+        } else if let Some(hit_rec) = world.hit(&self, EPS, INFINITY) {
+            let emitted = hit_rec.material.emitted(self, &hit_rec, hit_rec.u, hit_rec.v, hit_rec.p);
+            if let Some(scatter_rec) = hit_rec.material.scatter(self, &hit_rec, rng) {
+                match scatter_rec {
+                    ScatterRecord::Specular {
+                        specular_ray,
+                        attenuation,
+                    } => {
+                        attenuation * specular_ray.color(world, background, lights, depth - 1, rng)
+                    },
+                    ScatterRecord::Diffuse {
+                        pdf,
+                        attenuation,
+                    } => {
+                        let light_pdf = HittablePDF::new(lights.clone(), hit_rec.p);
+                        let pdf = MixturePDF::new(pdf, Rc::new(light_pdf));
 
-                let scattered = Ray::new(rec.p, pdf.generate(rng), self.time);
-                let pdf_val = pdf.value(scattered.direction);
+                        let scattered = Ray::new(hit_rec.p, pdf.generate(rng), self.time);
+                        let pdf_val = pdf.value(scattered.direction);
 
-                emitted + attenuation
-                * rec.material.scattering_pdf(self, &rec, &scattered)
-                * scattered.color(world, background, lights, depth - 1, rng)
-                / pdf_val
+                        emitted + attenuation
+                        * hit_rec.material.scattering_pdf(self, &hit_rec, &scattered)
+                        * scattered.color(world, background, lights, depth - 1, rng)
+                        / pdf_val
+                    },
+                }
+
             } else {
                 emitted
             }

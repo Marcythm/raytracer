@@ -234,12 +234,14 @@ fn cornell_box() -> (HittableList, Rc<dyn Hittable>) {
     // hittables.push(Cuboid::new(P3d::new(130.0, 0.0,  65.0), P3d::new(295.0, 165.0, 230.0), white.clone()));
     // hittables.push(Cuboid::new(P3d::new(265.0, 0.0, 295.0), P3d::new(430.0, 330.0, 460.0), white.clone()));
 
+    let aluminum = Rc::new(Metal::new(RGB::new(0.8, 0.85, 0.88), 0.0));
+
     hittables.push(Instance::new(
         Rc::new(Instance::new(
             Rc::new(Cuboid::new(
                 P3d::new(0.0, 0.0, 0.0),
                 P3d::new(165.0, 330.0, 165.0),
-                white.clone(),
+                aluminum.clone(),
             )),
             Rc::new(RotationY::new(15.0)),
         )),

@@ -16,12 +16,11 @@ impl Metal {
 }
 
 impl Material for Metal {
-    fn scatter(&self, ray: &Ray, rec: &HitRecord, rng: &mut SmallRng) -> Option<(Ray, RGB, f64)> {
+    fn scatter(&self, ray: &Ray, rec: &HitRecord, rng: &mut SmallRng) -> Option<ScatterRecord> {
         let reflected = ray.direction.unit().reflect_on(rec.normal) + self.fuzz * Vec3::random_in_unit_sphere(rng);
-        if reflected.dot(rec.normal) > 0.0 {
-            Some((Ray::new(rec.p, reflected, 0.0), self.albedo, 0.0))
-        } else {
-            None
-        }
+        Some(ScatterRecord::Specular {
+            specular_ray: Ray::new(rec.p, reflected, 0.0),
+            attenuation: self.albedo,
+        })
     }
 }

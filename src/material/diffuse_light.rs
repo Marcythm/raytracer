@@ -1,4 +1,6 @@
 use crate::utilities::prelude::*;
+use crate::ray::Ray;
+use crate::hittable::prelude::*;
 use crate::material::prelude::*;
 use crate::texture::prelude::*;
 use crate::texture::constant_texture::ConstantTexture;
@@ -23,7 +25,7 @@ impl DiffuseLight {
 }
 
 impl Material for DiffuseLight {
-    fn emitted(&self, u: f64, v: f64, p: P3d) -> RGB {
+    fn emitted(&self, _: &Ray, _: &HitRecord, u: f64, v: f64, p: P3d) -> RGB {
         self.emit.value(u, v, p)
     }
 }

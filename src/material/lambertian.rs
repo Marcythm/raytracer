@@ -4,6 +4,7 @@ use crate::hittable::prelude::*;
 use crate::material::prelude::*;
 use crate::texture::prelude::*;
 use crate::texture::constant_texture::ConstantTexture;
+use crate::pdf::cosine_pdf::CosinePDF;
 
 #[derive(Clone)]
 pub struct Lambertian {
@@ -25,14 +26,11 @@ impl Lambertian {
 }
 
 impl Material for Lambertian {
-    fn scatter(&self, ray: &Ray, rec: &HitRecord, rng: &mut SmallRng) -> Option<(Ray, RGB, f64)> {
-        let basis = ONB::build_from(rec.normal);
-        let direction = basis.transform(Vec3::random_cosine_direction(rng)).unit();
-        Some((
-            Ray::new(rec.p, direction, ray.time),
-            self.albedo.value(rec.u, rec.v, rec.p),
-            basis.w.dot(direction) / PI,
-        ))
+    fn scatter(&self, _: &Ray, rec: &HitRecord, _: &mut SmallRng) -> Option<ScatterRecord> {
+        Some(ScatterRecord::Diffuse{
+            pdf: Rc::new(CosinePDF::new(rec.normal)),
+            attenuation: self.albedo.value(rec.u, rec.v, rec.p),
+        })
     }
 
     fn scattering_pdf(&self, _: &Ray, rec: &HitRecord, scattered: &Ray) -> f64 {
