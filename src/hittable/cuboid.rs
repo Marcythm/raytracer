@@ -1,11 +1,17 @@
-use crate::utilities::prelude::*;
-use crate::ray::Ray;
-use crate::aabb::AABB;
-use crate::hittable::prelude::*;
-use crate::material::prelude::*;
-use crate::hittable::aarectangle::XYAARectangle;
-use crate::hittable::aarectangle::YZAARectangle;
-use crate::hittable::aarectangle::ZXAARectangle;
+use super::super::{
+    utilities::prelude::*,
+    ray::Ray,
+    aabb::AABB,
+    hittable::{
+        prelude::*,
+        aarectangle::{
+            XYAARectangle,
+            YZAARectangle,
+            ZXAARectangle,
+        },
+    },
+    material::prelude::*,
+};
 
 #[derive(Clone)]
 pub struct Cuboid {

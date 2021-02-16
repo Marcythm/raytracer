@@ -1,10 +1,14 @@
-use crate::utilities::prelude::*;
-use crate::ray::Ray;
-use crate::hittable::prelude::*;
-use crate::material::prelude::*;
-use crate::texture::prelude::*;
-use crate::texture::constant_texture::ConstantTexture;
-use crate::pdf::cosine_pdf::CosinePDF;
+use super::super::{
+    utilities::prelude::*,
+    ray::Ray,
+    hittable::prelude::*,
+    material::prelude::*,
+    texture::{
+        prelude::*,
+        constant_texture::ConstantTexture,
+    },
+    pdf::cosine_pdf::CosinePDF,
+};
 
 #[derive(Clone)]
 pub struct Lambertian {

@@ -1,4 +1,4 @@
-use crate::utilities::vec3::Vec3;
+use super::vec3::Vec3;
 
 /// Orthonormal Basis
 #[derive(Clone)]

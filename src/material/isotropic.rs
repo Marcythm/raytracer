@@ -1,9 +1,13 @@
-use crate::utilities::prelude::*;
-use crate::ray::Ray;
-use crate::hittable::prelude::*;
-use crate::material::prelude::*;
-use crate::texture::prelude::*;
-use crate::texture::constant_texture::ConstantTexture;
+use super::super::{
+    utilities::prelude::*,
+    ray::Ray,
+    hittable::prelude::*,
+    material::prelude::*,
+    texture::{
+        prelude::*,
+        constant_texture::ConstantTexture,
+    },
+};
 
 #[derive(Clone)]
 pub struct Isotropic {

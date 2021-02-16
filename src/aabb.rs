@@ -1,7 +1,9 @@
 use std::ops::{Index, IndexMut};
 
-use crate::utilities::prelude::*;
-use crate::ray::Ray;
+use super::{
+    utilities::prelude::*,
+    ray::Ray,
+};
 
 /// Axis-Aligned Bounding Box
 #[derive(Clone)]

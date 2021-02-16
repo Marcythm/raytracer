@@ -6,9 +6,11 @@ pub mod prelude {
     pub use super::Transform;
 }
 
-use crate::utilities::prelude::*;
-use crate::ray::Ray;
-use crate::aabb::AABB;
+use super::{
+    prelude::*,
+    ray::Ray,
+    aabb::AABB,
+};
 
 pub trait Transform {
     fn transform_point(&self, p: P3d) -> P3d { p }

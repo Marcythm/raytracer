@@ -1,8 +1,10 @@
-use crate::utilities::prelude::*;
-use crate::ray::Ray;
-use crate::aabb::AABB;
-use crate::hittable::prelude::*;
-use crate::transform::prelude::*;
+use super::{
+    utilities::prelude::*,
+    ray::Ray,
+    aabb::AABB,
+    hittable::prelude::*,
+    transform::prelude::*,
+};
 
 /// Apply a transform to a hittable object
 #[derive(Clone)]

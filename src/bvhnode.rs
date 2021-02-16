@@ -1,7 +1,9 @@
-use crate::utilities::prelude::*;
-use crate::ray::Ray;
-use crate::aabb::AABB;
-use crate::hittable::prelude::*;
+use super::{
+    utilities::prelude::*,
+    ray::Ray,
+    aabb::AABB,
+    hittable::prelude::*,
+};
 
 /// Bounding Volume Hierarchy
 #[derive(Clone)]

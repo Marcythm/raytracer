@@ -1,7 +1,9 @@
-use crate::utilities::prelude::*;
-use crate::ray::Ray;
-use crate::aabb::AABB;
-use crate::transform::prelude::*;
+use super::super::{
+    utilities::prelude::*,
+    ray::Ray,
+    aabb::AABB,
+    transform::prelude::*,
+};
 
 #[derive(Clone)]
 pub struct Flip {

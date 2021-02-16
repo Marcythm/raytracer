@@ -1,7 +1,9 @@
-use crate::utilities::prelude::*;
-use crate::ray::Ray;
-use crate::hittable::prelude::*;
-use crate::material::prelude::*;
+use super::super::{
+    utilities::prelude::*,
+    ray::Ray,
+    hittable::prelude::*,
+    material::prelude::*,
+};
 
 pub fn schlick(cosine: f64, refractive_index: f64) -> f64 {
     // a polynomial approximation by Schlick

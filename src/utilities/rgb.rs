@@ -1,5 +1,5 @@
 use std::{fmt::{Display}, ops::{Add, AddAssign, Sub, SubAssign, Mul, MulAssign, Div, DivAssign}};
-use crate::utilities::prelude::*;
+use super::prelude::*;
 
 /// RGB color
 #[derive(Debug, Clone, Copy, Default)]

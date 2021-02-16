@@ -1,6 +1,10 @@
-use crate::utilities::prelude::*;
-use crate::texture::prelude::*;
-use crate::texture::constant_texture::ConstantTexture;
+use super::super::{
+    utilities::prelude::*,
+    texture::{
+        prelude::*,
+        constant_texture::ConstantTexture,
+    },
+};
 
 #[derive(Clone)]
 pub struct CheckerTexture {

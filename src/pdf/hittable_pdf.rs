@@ -1,6 +1,8 @@
-use crate::utilities::prelude::*;
-use crate::hittable::prelude::*;
-use super::prelude::*;
+use super::super::{
+    utilities::prelude::*,
+    hittable::prelude::*,
+    pdf::prelude::*,
+};
 
 #[derive(Clone)]
 pub struct HittablePDF {

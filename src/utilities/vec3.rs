@@ -1,5 +1,5 @@
 use std::ops::{Neg, Add, AddAssign, Sub, SubAssign, Mul, MulAssign, Div, DivAssign, Index, IndexMut};
-use crate::utilities::prelude::*;
+use super::prelude::*;
 
 /// vector in three-dimensional space
 #[derive(Debug, Clone, Copy, Default)]

@@ -1,11 +1,13 @@
-use crate::utilities::prelude::*;
-use crate::hittable::prelude::*;
-use crate::material::prelude::*;
-use crate::pdf::{
-    prelude::*,
-    // cosine_pdf::CosinePDF,
-    hittable_pdf::HittablePDF,
-    mixture_pdf::MixturePDF,
+use super::{
+    utilities::prelude::*,
+    hittable::prelude::*,
+    material::prelude::*,
+    pdf::{
+        prelude::*,
+        // cosine_pdf::CosinePDF,
+        hittable_pdf::HittablePDF,
+        mixture_pdf::MixturePDF,
+    },
 };
 
 #[derive(Clone)]

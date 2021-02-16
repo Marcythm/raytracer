@@ -1,11 +1,13 @@
-use crate::utilities::prelude::*;
-use crate::ray::Ray;
-use crate::aabb::AABB;
-use crate::hittable::prelude::*;
-use crate::material::prelude::*;
-use crate::material::isotropic::Isotropic;
-use crate::texture::prelude::*;
-use crate::medium::prelude::*;
+use super::super::{
+    utilities::prelude::*,
+    ray::Ray,
+    aabb::AABB,
+    hittable::prelude::*,
+    material::prelude::*,
+    material::isotropic::Isotropic,
+    texture::prelude::*,
+    medium::prelude::*,
+};
 
 #[derive(Clone)]
 pub struct ConstantMedium {

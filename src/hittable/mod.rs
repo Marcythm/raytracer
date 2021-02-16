@@ -4,15 +4,19 @@ pub mod aarectangle;
 pub mod cuboid;
 
 pub mod prelude {
-    pub use super::HitRecord;
-    pub use super::Hittable;
-    pub use super::HittableList;
+    pub use super::{
+        HitRecord,
+        Hittable,
+        HittableList,
+    };
 }
 
-use crate::utilities::prelude::*;
-use crate::ray::Ray;
-use crate::aabb::AABB;
-use crate::material::prelude::*;
+use super::{
+    utilities::prelude::*,
+    ray::Ray,
+    aabb::AABB,
+    material::prelude::*,
+};
 
 #[derive(Clone)]
 pub struct HitRecord {

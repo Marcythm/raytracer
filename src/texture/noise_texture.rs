@@ -1,5 +1,7 @@
-use crate::utilities::prelude::*;
-use crate::texture::prelude::*;
+use super::super::{
+    utilities::prelude::*,
+    texture::prelude::*,
+};
 use rand::seq::SliceRandom;
 
 #[derive(Debug, Clone)]

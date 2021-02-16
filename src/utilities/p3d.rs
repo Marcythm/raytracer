@@ -1,6 +1,5 @@
 use std::ops::{Add, AddAssign, Sub, SubAssign, Mul, MulAssign, Div, DivAssign, Index, IndexMut};
-
-use crate::utilities::prelude::*;
+use super::prelude::*;
 
 /// point in three-dimentional space
 #[derive(Debug, Clone, Copy, Default)]

@@ -1,5 +1,7 @@
-use crate::utilities::prelude::*;
-use super::prelude::*;
+use super::super::{
+    utilities::prelude::*,
+    pdf::prelude::*,
+};
 
 #[derive(Clone)]
 pub struct MixturePDF {

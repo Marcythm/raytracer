@@ -1,5 +1,7 @@
-use crate::utilities::prelude::*;
-use crate::texture::prelude::*;
+use super::super::{
+    utilities::prelude::*,
+    texture::prelude::*,
+};
 
 #[derive(Clone)]
 pub struct ConstantTexture {

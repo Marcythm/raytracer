@@ -1,8 +1,10 @@
-use crate::utilities::prelude::*;
-use crate::ray::Ray;
-use crate::aabb::AABB;
-use crate::hittable::prelude::*;
-use crate::material::prelude::*;
+use super::super::{
+    utilities::prelude::*,
+    ray::Ray,
+    aabb::AABB,
+    hittable::prelude::*,
+    material::prelude::*,
+};
 
 /// XY Axis-Aligned Rectangle
 #[derive(Clone)]

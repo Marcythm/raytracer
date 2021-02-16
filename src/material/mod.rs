@@ -5,14 +5,18 @@ pub mod diffuse_light;
 pub mod isotropic;
 
 pub mod prelude {
-    pub use super::ScatterRecord;
-    pub use super::Material;
+    pub use super::{
+        ScatterRecord,
+        Material,
+    };
 }
 
-use crate::utilities::prelude::*;
-use crate::ray::Ray;
-use crate::hittable::prelude::*;
-use crate::pdf::prelude::*;
+use super::{
+    utilities::prelude::*,
+    ray::Ray,
+    hittable::prelude::*,
+    pdf::prelude::*,
+};
 
 #[derive(Clone)]
 pub enum ScatterRecord {

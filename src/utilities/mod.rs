@@ -4,10 +4,12 @@ pub mod onb;
 pub mod rgb;
 
 pub mod prelude {
-    pub use super::p3d::P3d;
-    pub use super::vec3::Vec3;
-    pub use super::rgb::RGB;
-    pub use super::onb::ONB;
+    pub use super::{
+        p3d::P3d,
+        vec3::Vec3,
+        rgb::RGB,
+        onb::ONB,
+    };
 
     pub use rand::{Rng, rngs::SmallRng, SeedableRng};
     pub use std::rc::Rc;

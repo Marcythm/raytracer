@@ -1,5 +1,7 @@
-use crate::utilities::prelude::*;
-use crate::ray::Ray;
+use super::{
+    utilities::prelude::*,
+    ray::Ray,
+};
 
 #[derive(Clone)]
 pub struct Camera {

@@ -1,7 +1,9 @@
-use crate::utilities::prelude::*;
-use crate::ray::Ray;
-use crate::hittable::prelude::*;
-use crate::material::prelude::*;
+use super::super::{
+    utilities::prelude::*,
+    ray::Ray,
+    hittable::prelude::*,
+    material::prelude::*,
+};
 
 #[derive(Clone)]
 pub struct Metal {
