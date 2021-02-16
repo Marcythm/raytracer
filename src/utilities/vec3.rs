@@ -106,6 +106,21 @@ impl Vec3 {
             z: (1.0 - r2).sqrt(),
         }
     }
+
+    pub fn random_to_sphere(radius: f64, distance_squared: f64, rng: &mut SmallRng) -> Self {
+        let r1: f64 = rng.gen_range(0.0, 1.0);
+        let r2: f64 = rng.gen_range(0.0, 1.0);
+        let z = 1.0 + r2 * ((1.0 - radius.powi(2) / distance_squared).sqrt() - 1.0);
+
+        let phi = 2.0 * PI * r1;
+        let tmp = (1.0 - z.powi(2)).sqrt();
+
+        Self {
+            x: phi.cos() * tmp,
+            y: phi.sin() * tmp,
+            z,
+        }
+    }
 }
 
 impl Neg for Vec3 {
