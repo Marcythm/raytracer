@@ -134,9 +134,19 @@ impl DivAssign<f64> for RGB {
 impl Display for RGB {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         write!(f, "{} {} {}",
-            (256.0 * if self.r.is_nan() { 0.0 } else { self.r }.powf(1.0 / GAMMA).clamp(0.0, 0.999)) as i32,
-            (256.0 * if self.g.is_nan() { 0.0 } else { self.g }.powf(1.0 / GAMMA).clamp(0.0, 0.999)) as i32,
-            (256.0 * if self.b.is_nan() { 0.0 } else { self.b }.powf(1.0 / GAMMA).clamp(0.0, 0.999)) as i32,
+            (256.0 * if self.r.is_nan() { 0.0 } else { self.r }.powf(1.0 / GAMMA).clamp(0.0, 0.999)) as u8,
+            (256.0 * if self.g.is_nan() { 0.0 } else { self.g }.powf(1.0 / GAMMA).clamp(0.0, 0.999)) as u8,
+            (256.0 * if self.b.is_nan() { 0.0 } else { self.b }.powf(1.0 / GAMMA).clamp(0.0, 0.999)) as u8,
         )
+    }
+}
+
+impl From<RGB> for [u8; 3] {
+    fn from(col: RGB) -> Self {
+        [
+            (256.0 * if col.r.is_nan() { 0.0 } else { col.r }.powf(1.0 / GAMMA).clamp(0.0, 0.999)) as u8,
+            (256.0 * if col.g.is_nan() { 0.0 } else { col.g }.powf(1.0 / GAMMA).clamp(0.0, 0.999)) as u8,
+            (256.0 * if col.b.is_nan() { 0.0 } else { col.b }.powf(1.0 / GAMMA).clamp(0.0, 0.999)) as u8,
+        ]
     }
 }

@@ -31,7 +31,7 @@ impl Ray {
         self.origin + t * self.direction
     }
 
-    pub fn color<T: Hittable>(&self, world: &T, background: RGB, lights: Rc<dyn Hittable>, depth: i32, rng: &mut SmallRng) -> RGB {
+    pub fn color<T: Hittable>(&self, world: &T, background: RGB, lights: Rc<dyn Hittable>, depth: u32, rng: &mut SmallRng) -> RGB {
         if depth <= 0 {
             RGB::new(0.0, 0.0, 0.0)
         } else if let Some(hit_rec) = world.hit(&self, EPS, INFINITY) {

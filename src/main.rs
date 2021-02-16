@@ -72,6 +72,9 @@ use medium::{
 //     // mixture_pdf::MixturePDF,
 // };
 
+use image::{ImageBuffer, RgbImage};
+use indicatif::ProgressBar;
+
 
 fn random_scene(rng: &mut SmallRng) -> HittableList {
     let mut hittables = HittableList::default();
@@ -502,7 +505,7 @@ fn main() {
             (scene, lights)         = cornell_box();
             aspect_ratio            = 1.0;
             image_width             = 600;
-            samples_per_pixel       = 1000;
+            samples_per_pixel       = 10;
             background              = RGB::new(   0.0,   0.0,    0.0);
             lookfrom                = P3d::new( 278.0, 278.0, -800.0);
             lookat                  = P3d::new( 278.0, 278.0,    0.0);
@@ -530,7 +533,7 @@ fn main() {
         },
     }
 
-    let image_height = (image_width as f64 / aspect_ratio) as i32;
+    let image_height = (image_width as f64 / aspect_ratio) as u32;
 
     // let bvh = BVHNode::new(scene, 0.0, 1.0, &mut rng);
 
@@ -544,12 +547,10 @@ fn main() {
     );
 
     // Render
-    println!("P3");
-    println!("{} {}", image_width, image_height);
-    println!("255");
+    let mut image: RgbImage = ImageBuffer::new(image_width, image_height);
+    let indicator = ProgressBar::new(image_height as u64);
 
-    for j in (0..image_height).rev() {
-        eprintln!("Rendering: {} lines remaining", j);
+    for j in 0..image_height {
         for i in 0..image_width {
             let mut pixel_color = RGB::new(0.0, 0.0, 0.0);
             for _ in 0..samples_per_pixel {
@@ -557,8 +558,34 @@ fn main() {
                 let v = (j as f64 + rng.gen_range(0.0, 1.0)) / (image_height - 1) as f64;
                 pixel_color += camera.get_ray(u, v, &mut rng).color(&scene, background, lights.clone(), MAX_DEPTH, &mut rng);
             }
-            println!("{}", pixel_color / samples_per_pixel as f64);
+            image.put_pixel(
+                i,
+                image_height - j - 1,
+                image::Rgb(RGB::into(pixel_color / samples_per_pixel as f64))
+            );
         }
+        indicator.inc(1);
     }
-    eprintln!("\nDone.");
+
+    image.save("image.png").unwrap();
+    indicator.finish();
+
+    // // Render
+    // println!("P3");
+    // println!("{} {}", image_width, image_height);
+    // println!("255");
+
+    // for j in (0..image_height).rev() {
+    //     eprintln!("Rendering: {} lines remaining", j);
+    //     for i in 0..image_width {
+    //         let mut pixel_color = RGB::new(0.0, 0.0, 0.0);
+    //         for _ in 0..samples_per_pixel {
+    //             let u = (i as f64 + rng.gen_range(0.0, 1.0)) / (image_width - 1) as f64;
+    //             let v = (j as f64 + rng.gen_range(0.0, 1.0)) / (image_height - 1) as f64;
+    //             pixel_color += camera.get_ray(u, v, &mut rng).color(&scene, background, lights.clone(), MAX_DEPTH, &mut rng);
+    //         }
+    //         println!("{}", pixel_color / samples_per_pixel as f64);
+    //     }
+    // }
+    // eprintln!("\nDone.");
 }
