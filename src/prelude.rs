@@ -50,4 +50,5 @@ pub use super::pdf::{
     prelude::*,
     // cosine_pdf::CosinePDF,
     // hittable_pdf::HittablePDF,
+    // mixture_pdf::MixturePDF,
 };

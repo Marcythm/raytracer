@@ -69,6 +69,7 @@ use medium::{
 //     // prelude::*,
 //     // cosine_pdf::CosinePDF,
 //     // hittable_pdf::HittablePDF,
+//     // mixture_pdf::MixturePDF,
 // };
 
 
@@ -488,7 +489,7 @@ fn main() {
             (scene, lights)         = cornell_box();
             aspect_ratio            = 1.0;
             image_width             = 600;
-            samples_per_pixel       = 200;
+            samples_per_pixel       = 1000;
             background              = RGB::new(   0.0,   0.0,    0.0);
             lookfrom                = P3d::new( 278.0, 278.0, -800.0);
             lookat                  = P3d::new( 278.0, 278.0,    0.0);

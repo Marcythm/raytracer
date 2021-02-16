@@ -2,8 +2,9 @@ use crate::utilities::prelude::*;
 use crate::hittable::prelude::*;
 use crate::pdf::{
     prelude::*,
-    // cosine_pdf::CosinePDF,
-    hittable_pdf::HittablePDF
+    cosine_pdf::CosinePDF,
+    hittable_pdf::HittablePDF,
+    mixture_pdf::MixturePDF,
 };
 
 #[derive(Clone)]
@@ -33,8 +34,10 @@ impl Ray {
         } else if let Some(rec) = world.hit(&self, EPS, INFINITY) {
             let emitted = rec.material.emitted(rec.u, rec.v, rec.p);
             if let Some((_, attenuation, _)) = rec.material.scatter(self, &rec, rng) {
-                // let pdf = CosinePDF::new(rec.normal);
-                let pdf = HittablePDF::new(lights.clone(), rec.p);
+                let pdf0 = CosinePDF::new(rec.normal);
+                let pdf1 = HittablePDF::new(lights.clone(), rec.p);
+                let pdf = MixturePDF::new(Rc::new(pdf0), Rc::new(pdf1));
+
                 let scattered = Ray::new(rec.p, pdf.generate(rng), self.time);
                 let pdf_val = pdf.value(scattered.direction);
 
