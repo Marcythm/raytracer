@@ -43,6 +43,16 @@ impl HitRecord {
 pub trait Hittable {
     fn hit(&self, ray: &Ray, t_min: f64, t_max: f64) -> Option<HitRecord>;
     fn bounding_box(&self, t0: f64, t1: f64) -> Option<AABB>;
+
+    #[allow(unused_variables)]
+    fn pdf_value(&self, origin: P3d, direction: Vec3) -> f64 {
+        0.0
+    }
+
+    #[allow(unused_variables)]
+    fn random(&self, origin: P3d, rng: &mut SmallRng) -> Vec3 {
+        Vec3::new(1.0, 0.0, 0.0)
+    }
 }
 
 /// A list of hittable objects

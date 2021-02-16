@@ -1,7 +1,10 @@
 use crate::utilities::prelude::*;
 use crate::hittable::prelude::*;
-use crate::pdf::prelude::*;
-use crate::pdf::cosine_pdf::CosinePDF;
+use crate::pdf::{
+    prelude::*,
+    // cosine_pdf::CosinePDF,
+    hittable_pdf::HittablePDF
+};
 
 #[derive(Clone)]
 pub struct Ray {
@@ -24,20 +27,20 @@ impl Ray {
         self.origin + t * self.direction
     }
 
-    pub fn color<T: Hittable>(&self, world: &T, background: RGB, depth: i32, rng: &mut SmallRng) -> RGB {
+    pub fn color<T: Hittable>(&self, world: &T, background: RGB, lights: Rc<dyn Hittable>, depth: i32, rng: &mut SmallRng) -> RGB {
         if depth <= 0 {
-            return RGB::new(0.0, 0.0, 0.0);
-        }
-        if let Some(rec) = world.hit(&self, EPS, INFINITY) {
+            RGB::new(0.0, 0.0, 0.0)
+        } else if let Some(rec) = world.hit(&self, EPS, INFINITY) {
             let emitted = rec.material.emitted(rec.u, rec.v, rec.p);
             if let Some((_, attenuation, _)) = rec.material.scatter(self, &rec, rng) {
-                let pdf = CosinePDF::new(rec.normal);
+                // let pdf = CosinePDF::new(rec.normal);
+                let pdf = HittablePDF::new(lights.clone(), rec.p);
                 let scattered = Ray::new(rec.p, pdf.generate(rng), self.time);
                 let pdf_val = pdf.value(scattered.direction);
 
                 emitted + attenuation
                 * rec.material.scattering_pdf(self, &rec, &scattered)
-                * scattered.color(world, background, depth - 1, rng)
+                * scattered.color(world, background, lights, depth - 1, rng)
                 / pdf_val
             } else {
                 emitted

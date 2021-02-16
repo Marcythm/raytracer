@@ -47,6 +47,26 @@ impl Hittable for XYAARectangle {
             P3d::new(self.x1, self.y1, self.z + EPS),
         ))
     }
+
+    fn pdf_value(&self, origin: P3d, direction: Vec3) -> f64 {
+        if let Some(rec) = self.hit(&Ray::new(origin, direction, 0.0), EPS, INFINITY) {
+            let area = (self.x1 - self.x0) * (self.y1 - self.y0);
+            let distance_squared = rec.t.powi(2) * direction.length2();
+            let cosine = (direction.dot(rec.normal) / direction.length()).abs();
+
+            distance_squared / (cosine * area)
+        } else {
+            0.0
+        }
+    }
+
+    fn random(&self, origin: P3d, rng: &mut SmallRng) -> Vec3 {
+        P3d::new(
+            rng.gen_range(self.x0, self.x1),
+            rng.gen_range(self.y0, self.y1),
+            self.z,
+        ) - origin
+    }
 }
 
 /// YZ Axis-Aligned Rectangle
@@ -92,6 +112,26 @@ impl Hittable for YZAARectangle {
             P3d::new(self.x + EPS, self.y1, self.z1),
         ))
     }
+
+    fn pdf_value(&self, origin: P3d, direction: Vec3) -> f64 {
+        if let Some(rec) = self.hit(&Ray::new(origin, direction, 0.0), EPS, INFINITY) {
+            let area = (self.y1 - self.y0) * (self.z1 - self.z0);
+            let distance_squared = rec.t.powi(2) * direction.length2();
+            let cosine = (direction.dot(rec.normal) / direction.length()).abs();
+
+            distance_squared / (cosine * area)
+        } else {
+            0.0
+        }
+    }
+
+    fn random(&self, origin: P3d, rng: &mut SmallRng) -> Vec3 {
+        P3d::new(
+            self.x,
+            rng.gen_range(self.y0, self.y1),
+            rng.gen_range(self.z0, self.z1),
+        ) - origin
+    }
 }
 
 /// ZX Axis-Aligned Rectangle
@@ -136,5 +176,25 @@ impl Hittable for ZXAARectangle {
             P3d::new( self.x0, self.y - EPS, self.z0),
             P3d::new( self.x1, self.y + EPS, self.z1),
         ))
+    }
+
+    fn pdf_value(&self, origin: P3d, direction: Vec3) -> f64 {
+        if let Some(rec) = self.hit(&Ray::new(origin, direction, 0.0), EPS, INFINITY) {
+            let area = (self.z1 - self.z0) * (self.x1 - self.x0);
+            let distance_squared = rec.t.powi(2) * direction.length2();
+            let cosine = (direction.dot(rec.normal) / direction.length()).abs();
+
+            distance_squared / (cosine * area)
+        } else {
+            0.0
+        }
+    }
+
+    fn random(&self, origin: P3d, rng: &mut SmallRng) -> Vec3 {
+        P3d::new(
+            rng.gen_range(self.x0, self.x1),
+            self.y,
+            rng.gen_range(self.z0, self.z1),
+        ) - origin
     }
 }

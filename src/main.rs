@@ -1,3 +1,4 @@
+#![feature(destructuring_assignment)]
 pub mod utilities;
 
 pub mod ray;
@@ -67,6 +68,7 @@ use medium::{
 // use pdf::{
 //     // prelude::*,
 //     // cosine_pdf::CosinePDF,
+//     // hittable_pdf::HittablePDF,
 // };
 
 
@@ -210,7 +212,7 @@ fn simple_light() -> HittableList {
     hittables
 }
 
-fn cornell_box() -> HittableList {
+fn cornell_box() -> (HittableList, Rc<dyn Hittable>) {
     let mut hittables = HittableList::default();
 
     let red   = Rc::new(Lambertian::with_rgb(0.65, 0.05, 0.05));
@@ -254,7 +256,7 @@ fn cornell_box() -> HittableList {
         Rc::new(Translation::new(Vec3::new(130.0, 0.0, 65.0))),
     ));
 
-    hittables
+    (hittables, Rc::new(ZXAARectangle::new(227.0, 332.0, 213.0, 343.0, 554.0, light.clone())))
 }
 
 fn cornell_smoke() -> HittableList {
@@ -442,6 +444,7 @@ fn main() {
 
     // Scene
     let scene;
+    let mut lights = Rc::new(HittableList::default()) as Rc<dyn Hittable>;
 
     match 6 {
         1 => {
@@ -482,7 +485,7 @@ fn main() {
             vertical_field_of_view  = 20.0;
         },
         6 => {
-            scene                   = cornell_box();
+            (scene, lights)         = cornell_box();
             aspect_ratio            = 1.0;
             image_width             = 600;
             samples_per_pixel       = 200;
@@ -538,7 +541,7 @@ fn main() {
             for _ in 0..samples_per_pixel {
                 let u = (i as f64 + rng.gen_range(0.0, 1.0)) / (image_width - 1) as f64;
                 let v = (j as f64 + rng.gen_range(0.0, 1.0)) / (image_height - 1) as f64;
-                pixel_color += camera.get_ray(u, v, &mut rng).color(&scene, background, MAX_DEPTH, &mut rng);
+                pixel_color += camera.get_ray(u, v, &mut rng).color(&scene, background, lights.clone(), MAX_DEPTH, &mut rng);
             }
             println!("{}", pixel_color / samples_per_pixel as f64);
         }

@@ -49,4 +49,5 @@ pub use super::medium::{
 pub use super::pdf::{
     prelude::*,
     // cosine_pdf::CosinePDF,
+    // hittable_pdf::HittablePDF,
 };
