@@ -18,9 +18,9 @@ impl RGB {
 impl RGB {
     pub fn random(min: f64, max: f64, rng: &mut SmallRng) -> Self {
         Self {
-            r: rng.gen_range(min, max),
-            g: rng.gen_range(min, max),
-            b: rng.gen_range(min, max),
+            r: rng.gen_range(min..max),
+            g: rng.gen_range(min..max),
+            b: rng.gen_range(min..max),
         }
     }
 }

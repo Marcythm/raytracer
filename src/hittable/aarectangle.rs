@@ -64,8 +64,8 @@ impl Hittable for XYAARectangle {
 
     fn random(&self, origin: P3d, rng: &mut SmallRng) -> Vec3 {
         P3d::new(
-            rng.gen_range(self.x0, self.x1),
-            rng.gen_range(self.y0, self.y1),
+            rng.gen_range(self.x0..self.x1),
+            rng.gen_range(self.y0..self.y1),
             self.z,
         ) - origin
     }
@@ -130,8 +130,8 @@ impl Hittable for YZAARectangle {
     fn random(&self, origin: P3d, rng: &mut SmallRng) -> Vec3 {
         P3d::new(
             self.x,
-            rng.gen_range(self.y0, self.y1),
-            rng.gen_range(self.z0, self.z1),
+            rng.gen_range(self.y0..self.y1),
+            rng.gen_range(self.z0..self.z1),
         ) - origin
     }
 }
@@ -194,9 +194,9 @@ impl Hittable for ZXAARectangle {
 
     fn random(&self, origin: P3d, rng: &mut SmallRng) -> Vec3 {
         P3d::new(
-            rng.gen_range(self.x0, self.x1),
+            rng.gen_range(self.x0..self.x1),
             self.y,
-            rng.gen_range(self.z0, self.z1),
+            rng.gen_range(self.z0..self.z1),
         ) - origin
     }
 }

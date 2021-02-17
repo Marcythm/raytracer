@@ -30,7 +30,7 @@ impl Material for Dielectric {
         let sin_theta = (1.0 - cos_theta * cos_theta).sqrt();
         let etai_over_etat = if rec.front_face { 1.0 / self.refractive_index } else { self.refractive_index };
 
-        if etai_over_etat * sin_theta > 1.0 || rng.gen_range(0.0, 1.0) < schlick(cos_theta, etai_over_etat) {
+        if etai_over_etat * sin_theta > 1.0 || rng.gen_range(0.0..1.0) < schlick(cos_theta, etai_over_etat) {
             Some(ScatterRecord::Specular{
                 specular_ray: Ray::new(rec.p, unit_direction.reflect_on(rec.normal), 0.0),
                 attenuation: RGB::new(1.0 , 1.0, 1.0),

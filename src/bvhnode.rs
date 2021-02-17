@@ -31,7 +31,7 @@ impl BVHNode {
         } else {
             let left;
             let right;
-            let axis = rng.gen_range(0, 3);
+            let axis = rng.gen_range(0..3);
 
             if hittables.len() == 2 {
                 if hittables[0].bounding_box(time0, time1).unwrap().min[axis]

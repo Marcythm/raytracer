@@ -44,9 +44,9 @@ impl Vec3 {
 impl Vec3 {
     pub fn random(min: f64, max: f64, rng: &mut SmallRng) -> Self {
         Self {
-            x: rng.gen_range(min, max),
-            y: rng.gen_range(min, max),
-            z: rng.gen_range(min, max),
+            x: rng.gen_range(min..max),
+            y: rng.gen_range(min..max),
+            z: rng.gen_range(min..max),
         }
     }
 
@@ -60,8 +60,8 @@ impl Vec3 {
     }
 
     pub fn random_unit_vector(rng: &mut SmallRng) -> Self {
-        let a = rng.gen_range(0.0, 2.0 * PI);
-        let z = rng.gen_range(-1.0, 1.0);
+        let a = rng.gen_range(0.0..2.0 * PI);
+        let z = rng.gen_range(-1.0..1.0);
         let r = ((1.0 - z * z) as f64).sqrt();
 
         Self {
@@ -83,8 +83,8 @@ impl Vec3 {
     pub fn random_in_unit_disk(rng: &mut SmallRng) -> Self {
         loop {
             let p = Self {
-                x: rng.gen_range(-1.0, 1.0),
-                y: rng.gen_range(-1.0, 1.0),
+                x: rng.gen_range(-1.0..1.0),
+                y: rng.gen_range(-1.0..1.0),
                 z: 0.0,
             };
             if p.length2() < 1.0 {
@@ -94,8 +94,8 @@ impl Vec3 {
     }
 
     pub fn random_cosine_direction(rng: &mut SmallRng) -> Self {
-        let r1: f64 = rng.gen_range(0.0, 1.0);
-        let r2: f64 = rng.gen_range(0.0, 1.0);
+        let r1: f64 = rng.gen_range(0.0..1.0);
+        let r2: f64 = rng.gen_range(0.0..1.0);
 
         let phi = 2.0 * PI * r1;
         let tmp = r2.sqrt();
@@ -108,8 +108,8 @@ impl Vec3 {
     }
 
     pub fn random_to_sphere(radius: f64, distance_squared: f64, rng: &mut SmallRng) -> Self {
-        let r1: f64 = rng.gen_range(0.0, 1.0);
-        let r2: f64 = rng.gen_range(0.0, 1.0);
+        let r1: f64 = rng.gen_range(0.0..1.0);
+        let r2: f64 = rng.gen_range(0.0..1.0);
         let z = 1.0 + r2 * ((1.0 - radius.powi(2) / distance_squared).sqrt() - 1.0);
 
         let phi = 2.0 * PI * r1;

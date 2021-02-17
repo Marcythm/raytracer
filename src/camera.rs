@@ -53,6 +53,6 @@ impl Camera {
     pub fn get_ray(&self, w: f64, h: f64, rng: &mut SmallRng) -> Ray {
         let rd = self.lens_radius * Vec3::random_in_unit_disk(rng);
         let offset = rd.x * self.u + rd.y * self.v;
-        Ray::from_to(self.origin + offset, self.lower_left_corner + w * self.horizontal + h * self.vertical, rng.gen_range(self.time0, self.time1))
+        Ray::from_to(self.origin + offset, self.lower_left_corner + w * self.horizontal + h * self.vertical, rng.gen_range(self.time0..self.time1))
     }
 }

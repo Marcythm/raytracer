@@ -121,6 +121,6 @@ impl Hittable for HittableList {
     }
 
     fn random(&self, origin: P3d, rng: &mut SmallRng) -> Vec3 {
-        self.hittables[rng.gen_range(0, self.hittables.len())].random(origin, rng)
+        self.hittables[rng.gen_range(0..self.hittables.len())].random(origin, rng)
     }
 }

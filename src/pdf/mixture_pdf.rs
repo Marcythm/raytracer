@@ -21,7 +21,7 @@ impl PDF for MixturePDF {
     }
 
     fn generate(&self, rng: &mut SmallRng) -> Vec3 {
-        if rng.gen_range(0.0, 1.0) < 0.5 {
+        if rng.gen_range(0.0..1.0) < 0.5 {
             self.pdf0.generate(rng)
         } else {
             self.pdf1.generate(rng)

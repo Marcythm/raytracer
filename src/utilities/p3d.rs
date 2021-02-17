@@ -18,9 +18,9 @@ impl P3d {
 impl P3d {
     pub fn random(min: f64, max: f64, rng: &mut SmallRng) -> Self {
         Self {
-            x: rng.gen_range(min, max),
-            y: rng.gen_range(min, max),
-            z: rng.gen_range(min, max),
+            x: rng.gen_range(min..max),
+            y: rng.gen_range(min..max),
+            z: rng.gen_range(min..max),
         }
     }
 }
