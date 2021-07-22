@@ -1,0 +1,25 @@
+#include "Camera.hpp"
+
+Camera::Camera(
+    const P3d &lookfrom, const Vec3 &lookdir, const Vec3 &viewup,
+    const f64 vertical_field_of_view, const f64 aspect_ratio,
+    const f64 aperture, const f64 focus_distance,
+    const f64 t0, const f64 t1
+): origin(lookfrom),
+    w(-lookdir.unit()), u(Vec3::cross(viewup, w).unit()), v(Vec3::cross(w, u)),
+    lens_radius(aperture / 2.0), time0(t0), time1(t1) {
+    const f64 theta = deg2rad(vertical_field_of_view);
+    const f64 h = std::tan(theta / 2.0);
+    const f64 viewport_height = 2.0 * h;
+    const f64 viewport_width = aspect_ratio * viewport_height;
+
+    horizontal = focus_distance * viewport_width * u;
+    vertical = focus_distance * viewport_height * v;
+    lower_left_corner = origin - horizontal / 2.0 - vertical / 2.0 - focus_distance * w;
+}
+
+auto Camera::get_ray(const f64 s, const f64 t) const -> Ray {
+    const Vec3 rd = lens_radius * Vec3::random_in_unit_disk();
+    const Vec3 offset = u * rd.x + v * rd.y;
+    return Ray(origin + offset, lower_left_corner + s * horizontal + t * vertical, random_f64(time0, time1));
+}

@@ -8,26 +8,7 @@ if (DEFINED ENV{HIGH_QUALITY})
     SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DHIGH_QUALITY")
 endif()
 
-include_directories(
-    ${PROJECT_SOURCE_DIR}/third_party/
-    ${PROJECT_SOURCE_DIR}/src/
-    ${PROJECT_SOURCE_DIR}/src/utilities/
-    ${PROJECT_SOURCE_DIR}/src/hittable/
-    ${PROJECT_SOURCE_DIR}/src/material/
-    ${PROJECT_SOURCE_DIR}/src/texture/
-    ${PROJECT_SOURCE_DIR}/src/transform/
-    ${PROJECT_SOURCE_DIR}/src/medium/
-    ${PROJECT_SOURCE_DIR}/src/pdf/
-)
-file(GLOB src_dir
-    ${PROJECT_SOURCE_DIR}/src/*.cpp
-    ${PROJECT_SOURCE_DIR}/src/utilities/*.cpp
-    ${PROJECT_SOURCE_DIR}/src/hittable/*.cpp
-    ${PROJECT_SOURCE_DIR}/src/material/*.cpp
-    ${PROJECT_SOURCE_DIR}/src/texture/*.cpp
-    ${PROJECT_SOURCE_DIR}/src/transform/*.cpp
-    ${PROJECT_SOURCE_DIR}/src/medium/*.cpp
-    ${PROJECT_SOURCE_DIR}/src/pdf/*.cpp
-)
+include_directories(${PROJECT_SOURCE_DIR}/include/)
+file(GLOB src_dir ${PROJECT_SOURCE_DIR}/lib/*/*.cpp ${PROJECT_SOURCE_DIR}/lib/*.cpp)
 
-add_executable(raytracer-cpp ${src_dir} src/main.cpp)
+add_executable(raytracer-cpp ${src_dir} lib/main.cpp)
